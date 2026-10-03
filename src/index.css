@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #09090b;
+  --color-surface: #121216;
+  --color-surface2: #1a1a22;
+  --color-border: #24242c;
+  --color-gold: #c89b3c;
+  --color-gold-bright: #e5b95a;
+  --color-gold-dark: #9d7426;
+  --color-muted: #8a8a99;
+}
+
+:root {
+  --bg: #09090b;
+  --surface: #121216;
+  --surface2: #1a1a22;
+  --border: #24242c;
+  --gold: #c89b3c;
+  --gold-bright: #e5b95a;
+  --gold-glow: rgba(200, 155, 60, 0.18);
+  --text: #f0f0f4;
+  --muted: #8a8a99;
+  --tag-bg: rgba(200, 155, 60, 0.1);
+  --green: #22c55e;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #24242c;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3e3e4a;
+}
+
+/* Spotlight Card effect */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(18, 18, 22, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.spotlight-card:before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgba(200, 155, 60, 0.15),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.spotlight-card:hover {
+  border-color: rgba(200, 155, 60, 0.35);
+}
+
+.spotlight-card:hover:before {
+  opacity: 1;
+}
+
+/* Background patterns */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(90deg, hsla(0, 0%, 100%, 0.03) 1px, transparent 0),
+    linear-gradient(180deg, hsla(0, 0%, 100%, 0.03) 1px, transparent 0);
+}
+
+.bg-dot-pattern {
+  background-image: radial-gradient(rgba(200, 155, 60, 0.12) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Infinite Marquee */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 45s linear infinite;
+}
+
+.animate-marquee-infinite:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .animate-marquee-infinite {
+    animation-duration: 25s;
+  }
+}
+
+/* Custom Cursor */
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #c89b3c;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(200, 155, 60, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
+}
+
+/* Glow Utilities */
+.gold-glow-subtle {
+  box-shadow: 0 0 40px -10px rgba(200, 155, 60, 0.2);
+}
+
+.gold-glow-intense {
+  box-shadow: 0 0 60px -5px rgba(200, 155, 60, 0.35);
+}
