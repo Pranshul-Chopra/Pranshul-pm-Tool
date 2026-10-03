@@ -1,32 +1,11 @@
 import React from 'react';
 import { 
-  Cpu, 
-  Database, 
-  Terminal, 
-  ShieldCheck, 
-  Layers, 
-  FileText, 
   Zap, 
-  HardDrive,
-  Lock,
-  Code2
 } from 'lucide-react';
+import { siteConfig } from '../config/siteConfig';
 
 export function TechMarquee() {
-  const items = [
-    { label: 'FLASK 3.X LOCAL-ONLY BACKEND', icon: Terminal },
-    { label: 'ELECTRON WINDOW BRIDGE', icon: Code2 },
-    { label: 'SQLITE WAL CONNECTION POOLING', icon: Database },
-    { label: 'FTS5 BM25 HYBRID RETRIEVAL', icon: Zap },
-    { label: 'OFFLINE OLLAMA INFERENCE', icon: Cpu },
-    { label: 'NATIVE GOOGLE GEMINI REASONING', icon: Layers },
-    { label: 'SLIDING-WINDOW SEMANTIC CHUNKER', icon: FileText },
-    { label: '1-CLICK PROFESSIONAL DOCX EXPORT', icon: FileText },
-    { label: 'WIN32 DPAPI HARDWARE ENCRYPTION', icon: Lock },
-    { label: 'TWO-DATABASE SEGREGATION', icon: HardDrive },
-    { label: 'ZERO CLOUD TELEMETRY', icon: ShieldCheck },
-    { label: 'SUB-MILLISECOND ON-DEVICE QUERIES', icon: Zap },
-  ];
+  const items = siteConfig.techMarquee;
 
   return (
     <div className="py-6 border-y border-white/[0.08] bg-[#0c0c10]/60 relative overflow-hidden select-none">
@@ -36,18 +15,15 @@ export function TechMarquee() {
 
       <div className="animate-marquee-infinite flex items-center gap-8">
         {/* Render twice for continuous loop */}
-        {[...items, ...items].map((item, idx) => {
-          const Icon = item.icon;
-          return (
-            <div
-              key={idx}
-              className="flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface/80 border border-white/[0.06] hover:border-gold/40 text-xs font-mono text-zinc-300 hover:text-gold-bright transition-colors whitespace-nowrap cursor-default group"
-            >
-              <Icon className="w-3.5 h-3.5 text-gold group-hover:scale-110 transition-transform" />
-              <span className="tracking-wider">{item.label}</span>
-            </div>
-          );
-        })}
+        {[...items, ...items].map((label, idx) => (
+          <div
+            key={idx}
+            className="flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface/80 border border-white/[0.06] hover:border-gold/40 text-xs font-mono text-zinc-300 hover:text-gold-bright transition-colors whitespace-nowrap cursor-default group"
+          >
+            <Zap className="w-3.5 h-3.5 text-gold group-hover:scale-110 transition-transform" />
+            <span className="tracking-wider">{label}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -3,77 +3,25 @@ import {
   Terminal, 
   Database, 
   Cpu, 
-  Lock, 
   Layers, 
-  HardDrive, 
   ShieldCheck, 
-  Activity, 
-  Zap, 
-  ChevronRight 
 } from 'lucide-react';
+import { siteConfig } from '../config/siteConfig';
 
 export function ArchitectureVisual() {
   const [selectedLayer, setSelectedLayer] = useState('db');
 
-  const layers = [
-    {
-      id: 'shell',
-      title: 'Tier 1: Desktop Shell & Supervisor',
-      tech: 'Electron 32 &bull; Chromium &bull; Windows Native Bridge',
-      icon: Terminal,
-      latency: '< 5ms Startup IPC',
-      summary: 'Sandboxed window manager with cascading port discovery and graceful process lifecycle termination.',
-      specs: [
-        'Automatic Flask port discovery: sweeps 5050 to 5060 dynamically',
-        'Native Windows notification bridge via electron-notify IPC',
-        'Strict contextIsolation: true with preloaded safe API bridge',
-        'Windows taskkill /t tree-kill on window exit to eliminate orphaned Python processes',
-      ],
-    },
-    {
-      id: 'backend',
-      title: 'Tier 2: Headless Micro-Backend',
-      tech: 'Python Flask 3.x &bull; PyInstaller &bull; Localhost Only',
-      icon: Layers,
-      latency: '0.4ms Internal API Response',
-      summary: 'High-performance local service bound exclusively to 127.0.0.1 with security middleware.',
-      specs: [
-        'Local-only binding: rejects external LAN/WAN connections unconditionally',
-        'Origin & Sec-Fetch-Site validation header inspection on all REST mutations',
-        'Headless distribution packaged via PyInstaller with zero user Python dependency',
-        'Modular route controllers: /api/projects, /api/tasks, /api/ai, /api/documents',
-      ],
-    },
-    {
-      id: 'db',
-      title: 'Tier 3: Two-Database Storage Engine',
-      tech: 'SQLite 3 &bull; WAL Journal &bull; Connection Pooling',
-      icon: Database,
-      latency: '< 1ms Transaction Commit',
-      summary: 'Complete partition between operational project records and volatile AI reasoning traces.',
-      specs: [
-        'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (projects, tasks, decisions)',
-        'Context DB: %LOCALAPPDATA%\\AIContextTool\\ai_context.db (FTS5 BM25 index & traces)',
-        'PRAGMA journal_mode = WAL for simultaneous read/write concurrency without locking',
-        'Thread-safe connection pooling with automatic idempotent schema migrations',
-      ],
-    },
-    {
-      id: 'ai',
-      title: 'Tier 4: Air-Gapped AI & RAG Gateway',
-      tech: 'Ollama Offline &bull; Gemini 1.5 &bull; Win32 DPAPI',
-      icon: Cpu,
-      latency: 'Air-Gapped &bull; 0 Bytes Egress',
-      summary: 'Hybrid LLM gateway supporting 100% offline local inference with hardware-encrypted secrets.',
-      specs: [
-        'Local Ollama probe: auto-detects Llama 3, Mistral, Phi-3 running on 127.0.0.1:11434',
-        'Google Gemini 1.5 Pro cloud fallback for high-reasoning multimodal tasks',
-        'Win32 CryptProtectData encryption ties secrets to machine hardware and user logon SID',
-        'Section-aware sliding-window chunker with FTS5 BM25 retrieval token weighting',
-      ],
-    },
-  ];
+  const getLayerIcon = (id) => {
+    switch (id) {
+      case 'shell': return Terminal;
+      case 'backend': return Layers;
+      case 'db': return Database;
+      case 'ai': return Cpu;
+      default: return Database;
+    }
+  };
 
+  const layers = siteConfig.architectureLayers;
   const current = layers.find((l) => l.id === selectedLayer) || layers[0];
 
   return (
@@ -97,7 +45,7 @@ export function ArchitectureVisual() {
         {/* Left Column: Visual Stack Buttons */}
         <div className="lg:col-span-6 space-y-3">
           {layers.map((layer) => {
-            const Icon = layer.icon;
+            const Icon = getLayerIcon(layer.id);
             const isSelected = selectedLayer === layer.id;
             return (
               <div
@@ -118,9 +66,7 @@ export function ArchitectureVisual() {
                       <h3 className="text-sm font-bold text-white tracking-tight">
                         {layer.title}
                       </h3>
-                      <div className="text-[11px] font-mono text-gold-bright">
-                        {layer.tech}
-                      </div>
+                      <div className="text-[11px] font-mono text-gold-bright" dangerouslySetInnerHTML={{ __html: layer.tech }} />
                     </div>
                   </div>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-zinc-400 border border-white/[0.08]">
@@ -153,9 +99,7 @@ export function ArchitectureVisual() {
             <h4 className="text-2xl font-bold text-white mb-1">
               {current.title}
             </h4>
-            <div className="text-xs font-mono text-gold mb-3">
-              {current.tech}
-            </div>
+            <div className="text-xs font-mono text-gold mb-3" dangerouslySetInnerHTML={{ __html: current.tech }} />
             <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
               {current.summary}
             </p>

@@ -24,6 +24,29 @@ A high-performance, dark-mode showcase website for **PM Tool** (The Local-First 
 
 ---
 
+## ⚙️ Centralized Configuration & Versioning
+
+All site copy, versions, download links, SHA256 checksums, and roadmap entries are managed from **one central file**:
+👉 [`src/config/siteConfig.js`](file:///c:/Users/Pranshul%20Chopra/OneDrive/Desktop/Project/Pmt-Landing-Page/src/config/siteConfig.js)
+
+### How to Introduce a New Version (e.g., `v1.1.0`):
+1. Open [`src/config/siteConfig.js`](file:///c:/Users/Pranshul%20Chopra/OneDrive/Desktop/Project/Pmt-Landing-Page/src/config/siteConfig.js)
+2. Update the `release` block:
+   ```javascript
+   release: {
+     version: 'v1.1.0',
+     versionFull: 'v1.1.0-stable',
+     badge: 'CURRENT STABLE',
+     releaseDate: 'November 2026',
+     ...
+   }
+   ```
+3. Update `downloads` with the new file names, URLs, and SHA256 hash.
+4. Add or update milestones under `releases` (Timeline).
+5. Done! The entire website (Navbar, Hero buttons, Terminal window, Download cards, Hash verification, Timeline, and Footer) updates automatically.
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Framework:** React 19 + Vite 6

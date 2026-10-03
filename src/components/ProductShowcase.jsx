@@ -7,16 +7,9 @@ import {
   Cpu, 
   Download, 
   Check, 
-  Copy, 
   ChevronRight, 
-  ExternalLink, 
-  ShieldCheck, 
-  Sparkles,
-  Search,
-  Filter,
-  ArrowRight,
-  Sliders
 } from 'lucide-react';
+import { siteConfig } from '../config/siteConfig';
 
 export function ProductShowcase({ onCopyToast }) {
   const [activeModule, setActiveModule] = useState('prd-studio');
@@ -24,49 +17,18 @@ export function ProductShowcase({ onCopyToast }) {
   const [llmProvider, setLlmProvider] = useState('ollama');
   const [activeKanbanFilter, setActiveKanbanFilter] = useState('all');
 
-  const modules = [
-    {
-      id: 'prd-studio',
-      name: 'AI Copilot & PRD Studio',
-      tag: 'Reasoning Pipeline',
-      icon: Bot,
-      headline: 'Transform high-level product intent into publication-grade PRDs with verifiable citations.',
-      description: 'The reasoning engine connects active backlog initiatives directly to ingested company documents and ADRs. Output is structured, cited line-by-line, and exportable to beautifully styled Word (.docx) documents with one tap.',
-    },
-    {
-      id: 'knowledge-ingestion',
-      name: 'Knowledge Pipeline & Chunks',
-      tag: 'FTS5 & BM25',
-      icon: FileText,
-      headline: 'Multi-format document ingestion with section-aware sliding-window chunking.',
-      description: 'Parses .pdf, .docx, .md, .txt, .csv, and .json files directly from your disk into local SQLite FTS5 BM25 index tables. Zero file uploads to external vector cloud servers.',
-    },
-    {
-      id: 'backlog-kanban',
-      name: 'Initiatives & Kanban',
-      tag: 'Operational Store',
-      icon: Layers,
-      headline: 'A keyboard-driven product ticket board linked directly to architectural decisions.',
-      description: 'Manage sprints and initiatives without sluggish web SPAs. Every task can be traced directly to an Architectural Decision Record (ADR) or customer insight document.',
-    },
-    {
-      id: 'decision-ledger',
-      name: 'Organizational Decision Ledger',
-      tag: 'ADR & PDR',
-      icon: Database,
-      headline: 'Permanent, immutable memory for architectural and product strategy decisions.',
-      description: 'Never re-debate a decision that was settled six months ago. Search past trade-offs, rationale, and approved stakeholders with sub-millisecond query speed.',
-    },
-    {
-      id: 'llm-gateway',
-      name: 'Air-Gapped LLM Gateway',
-      tag: 'Privacy First',
-      icon: Cpu,
-      headline: 'Seamless orchestration across local offline Ollama and high-reasoning Gemini.',
-      description: 'Toggle instantly between 100% offline air-gapped models (Llama 3, Mistral, DeepSeek) for confidential roadmaps, and cloud APIs with DPAPI hardware-encrypted credentials.',
-    },
-  ];
+  const getModuleIcon = (id) => {
+    switch (id) {
+      case 'prd-studio': return Bot;
+      case 'knowledge-ingestion': return FileText;
+      case 'backlog-kanban': return Layers;
+      case 'decision-ledger': return Database;
+      case 'llm-gateway': return Cpu;
+      default: return Bot;
+    }
+  };
 
+  const modules = siteConfig.showcaseModules;
   const currentModule = modules.find((m) => m.id === activeModule) || modules[0];
 
   return (
@@ -80,14 +42,14 @@ export function ProductShowcase({ onCopyToast }) {
           Switch Between Live Operating Modules
         </h2>
         <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-          Inspect how PM Tool handles document ingestion, PRD synthesis, decision registers, and local LLM execution without web browser lag or subscription gates.
+          Inspect how {siteConfig.name} handles document ingestion, PRD synthesis, decision registers, and local LLM execution without web browser lag or subscription gates.
         </p>
       </div>
 
       {/* Module Selector Tabs */}
       <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
         {modules.map((mod) => {
-          const Icon = mod.icon;
+          const Icon = getModuleIcon(mod.id);
           const isActive = activeModule === mod.id;
           return (
             <button
@@ -186,7 +148,7 @@ export function ProductShowcase({ onCopyToast }) {
                   </div>
 
                   <p className="text-xs text-zinc-300 leading-relaxed">
-                    <strong>1. Scope:</strong> Enable two PM Tool desktop instances on the same subnet to perform bilateral SQLite differential state exchange without connecting to external cloud proxies.
+                    <strong>1. Scope:</strong> Enable two {siteConfig.name} desktop instances on the same subnet to perform bilateral SQLite differential state exchange without connecting to external cloud proxies.
                   </p>
 
                   <div className="space-y-1.5">

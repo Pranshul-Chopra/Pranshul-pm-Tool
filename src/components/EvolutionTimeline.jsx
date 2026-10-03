@@ -1,59 +1,9 @@
 import React from 'react';
-import { Sparkles, GitCommit, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
+import { siteConfig } from '../config/siteConfig';
 
 export function EvolutionTimeline() {
-  const versions = [
-    {
-      version: 'v1.0.0-mvp',
-      badge: 'CURRENT STABLE',
-      title: 'The Local-First Core, Knowledge Pipeline & PRD Studio',
-      tagline: 'Electron desktop shell, two-database architecture, and offline AI execution.',
-      date: 'Oct 2026',
-      decisionRationale:
-        'Product managers spend hours manually transferring requirements from messy PDFs into Jira and writing PRDs from scratch. We built a local desktop application that ingests internal documents, performs sub-millisecond BM25 retrieval, and generates publication-ready Word PRDs backed by local SQLite.',
-      highlights: [
-        'Electron desktop supervisor with cascading port sweep (5050–5060) and graceful tree-kill',
-        'Headless Python Flask backend bound strictly to 127.0.0.1 with security middleware',
-        'Two-database architecture segregating operational data from high-frequency AI traces',
-        'Multi-format file parsers (.pdf, .docx, .md, .txt, .csv, .json) with sliding-window chunking',
-        'Automated PRD generator with custom XML Word (.docx) styles, tables, and citations',
-        'Dual LLM Gateway supporting local offline Ollama and Google Gemini 1.5 Pro',
-        'Windows DPAPI CryptProtectData hardware-bound encryption for API secrets',
-      ],
-      isCurrent: true,
-    },
-    {
-      version: 'v1.1.0',
-      badge: 'ACTIVE DEVELOPMENT',
-      title: 'sqlite-vec Embeddings & Decision Dependency Graphs',
-      tagline: 'On-device vector search and visual architectural decision mapping.',
-      date: 'Q1 2027',
-      decisionRationale:
-        'Keyword search is fast, but semantic meaning captures intent across disparate terminology. We are introducing sqlite-vec directly inside the local database file to enable hybrid BM25 + dense vector ranking without requiring heavy Python vector service containers.',
-      highlights: [
-        'Embedded on-device vector embeddings via sqlite-vec extension',
-        'Interactive SVG Decision Dependency Graph linking ADRs to requirements',
-        'Multi-project workspace switcher with isolated SQLite schemas',
-        'Automated Sprint Retrospective synthesizer based on completed backlog tickets',
-      ],
-      isCurrent: false,
-    },
-    {
-      version: 'v1.2.0',
-      badge: 'FUTURE HORIZON',
-      title: 'P2P Encrypted Local Sync & Git-Backed PRD Versioning',
-      tagline: 'Serverless team collaboration over local Wi-Fi subnets.',
-      date: 'Q2 2027',
-      decisionRationale:
-        'Engineering and product teams work in the same physical office or local network. PM Tool will support bilateral peer-to-peer sync directly between machines over local Wi-Fi, completely bypassing cloud intermediaries.',
-      highlights: [
-        'Local subnet P2P differential synchronization with zero central servers',
-        'Git-backed version control integration for PRD diffs and stakeholder comments',
-        'Cross-platform portable binaries for macOS and Linux desktops',
-      ],
-      isCurrent: false,
-    },
-  ];
+  const versions = siteConfig.releases;
 
   return (
     <section id="evolution" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/[0.08]">
@@ -66,13 +16,13 @@ export function EvolutionTimeline() {
           Deliberate Engineering Evolution
         </h2>
         <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-          PM Tool was built on purposeful architectural decisions, stripping away cloud complexity to build an enduring desktop environment.
+          {siteConfig.name} was built on purposeful architectural decisions, stripping away cloud complexity to build an enduring desktop environment.
         </p>
       </div>
 
       {/* Timeline items */}
       <div className="space-y-8 relative before:absolute before:inset-0 before:left-4 sm:before:left-8 before:w-0.5 before:bg-white/[0.08]">
-        {versions.map((v, idx) => (
+        {versions.map((v) => (
           <div
             key={v.version}
             className="relative pl-10 sm:pl-20 group"

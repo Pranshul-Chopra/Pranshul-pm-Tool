@@ -4,68 +4,26 @@ import {
   Search, 
   Bot, 
   FileText, 
-  CheckCircle2, 
+  Layers, 
   ArrowRight,
-  Database,
-  Layers,
-  ChevronDown
 } from 'lucide-react';
+import { siteConfig } from '../config/siteConfig';
 
 export function UnifiedWorkspace() {
   const [activeStep, setActiveStep] = useState(0);
 
-  const steps = [
-    {
-      step: '01',
-      name: 'Local Ingestion',
-      headline: 'Ingest Organizational Files Without Cloud Uploads',
-      description:
-        'Drop PDF specifications, Word roadmaps, Markdown docs, and meeting transcripts into your local project workspace. Our native parsers extract section headings and tables instantly.',
-      example: 'Parsed: Enterprise_Architecture_v2.pdf (42 pages, 18 tables) in 0.38 seconds.',
-      connector: 'feeds into semantic sliding-window chunker',
-      icon: FileUp,
-    },
-    {
-      step: '02',
-      name: 'FTS5 Indexing',
-      headline: 'Tokenized BM25 Full-Text Retrieval',
-      description:
-        'Chunks are indexed into SQLite FTS5 BM25 virtual tables with token boundary preservation. Query sub-strings, technical acronyms, and requirements in sub-2ms.',
-      example: 'Index: 254 chunks with term frequency BM25 rankings saved to %LOCALAPPDATA%\\AIContextTool.',
-      connector: 'powers verified context retrieval',
-      icon: Search,
-    },
-    {
-      step: '03',
-      name: 'AI Synthesis',
-      headline: 'Context-Augmented Reasoning with Strict Citations',
-      description:
-        'Context Builder combines your active project state, recent ADR decisions, and relevant evidence chunks before querying Ollama (offline) or Gemini. Hallucinations are actively suppressed.',
-      example: 'Synthesized PRD draft with 6 verifiable line citations back to original company PDFs.',
-      connector: 'formats into professional publication artifacts',
-      icon: Bot,
-    },
-    {
-      step: '04',
-      name: 'PRD Export',
-      headline: '1-Click Publication-Grade Microsoft Word (.docx)',
-      description:
-        'The Document Generator engine constructs valid XML Word files with custom color palettes, styled tables, executive callout boxes, and document revision histories.',
-      example: 'Generated: PRD_Offline_P2P_Sync_v1.docx ready for executive stakeholder sign-off.',
-      connector: 'commits requirements directly to execution board',
-      icon: FileText,
-    },
-    {
-      step: '05',
-      name: 'Execution & Delivery',
-      headline: 'Commit Directly to Local SQLite Backlog',
-      description:
-        'With one click, requirements are transformed into relational tickets in pmtool.db, tagged with P0/P1 priorities, estimated effort, and linked directly to Architectural Decision Records.',
-      example: 'Created 8 actionable engineering tickets in pmtool.db with foreign key ADR linkages.',
-      connector: 'closes the loop with zero cloud subscription fees',
-      icon: Layers,
-    },
-  ];
+  const getStepIcon = (idx) => {
+    switch (idx) {
+      case 0: return FileUp;
+      case 1: return Search;
+      case 2: return Bot;
+      case 3: return FileText;
+      case 4: return Layers;
+      default: return FileUp;
+    }
+  };
+
+  const steps = siteConfig.executionSteps;
 
   return (
     <section id="pipelines" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/[0.08]">
@@ -78,14 +36,14 @@ export function UnifiedWorkspace() {
           From Raw Company Specs to Shipped Software
         </h2>
         <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-          The true power of PM Tool is not isolated features — it is the seamless pipeline connecting file ingestion, AI synthesis, Word generation, and SQLite backlog execution in a single local desktop frame.
+          The true power of {siteConfig.name} is not isolated features — it is the seamless pipeline connecting file ingestion, AI synthesis, Word generation, and SQLite backlog execution in a single local desktop frame.
         </p>
       </div>
 
       {/* Steps Grid / Accordion */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
         {steps.map((st, idx) => {
-          const Icon = st.icon;
+          const Icon = getStepIcon(idx);
           const isSelected = activeStep === idx;
           return (
             <div

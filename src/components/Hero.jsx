@@ -1,31 +1,30 @@
 import React, { useState } from 'react';
 import { 
   Download, 
-  ArrowRight, 
-  Terminal, 
   Sparkles, 
   Database, 
   Cpu, 
   ShieldCheck, 
   FileText, 
-  CheckCircle2, 
   Layers, 
   Bot,
   Search,
-  ExternalLink,
   ChevronRight
 } from 'lucide-react';
-import { GithubIcon } from './GithubIcon';
+import { GithubIcon } from './SocialIcons';
+import { siteConfig } from '../config/siteConfig';
 
 export function Hero({ onDownloadClick, onCopyToast }) {
   const [activeTab, setActiveTab] = useState('copilot');
-  const [copiedInstall, setCopiedInstall] = useState(false);
 
-  const handleCopyCmd = (text) => {
-    navigator.clipboard.writeText(text);
-    setCopiedInstall(true);
-    if (onCopyToast) onCopyToast('Command copied to clipboard');
-    setTimeout(() => setCopiedInstall(false), 2000);
+  const getBadgeIcon = (type) => {
+    switch (type) {
+      case 'db': return Database;
+      case 'cpu': return Cpu;
+      case 'search': return Search;
+      case 'shield': return ShieldCheck;
+      default: return Sparkles;
+    }
   };
 
   return (
@@ -39,25 +38,25 @@ export function Hero({ onDownloadClick, onCopyToast }) {
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-gold/30 mb-8 shadow-sm hover:border-gold transition-colors duration-200 cursor-default">
           <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
           <span className="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-zinc-300 font-medium">
-            Local-First AI Product Management Shell
+            {siteConfig.hero.pillBadge}
           </span>
           <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-gold/20 text-gold-bright font-semibold">
-            Windows 10/11
+            {siteConfig.hero.pillVersionTag}
           </span>
         </div>
 
         {/* Massive Title */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.1]">
-          Sovereign Product Intelligence. <br className="hidden sm:inline" />
+          {siteConfig.hero.headlineMain} <br className="hidden sm:inline" />
           <span className="bg-gradient-to-r from-gold via-gold-bright to-yellow-300 bg-clip-text text-transparent">
-            Zero Cloud Tax.
+            {siteConfig.hero.headlineAccent}
           </span>{' '}
-          Sub-Millisecond Speed.
+          {siteConfig.hero.headlineEnd}
         </h1>
 
         {/* Subtitle */}
         <p className="text-base sm:text-lg lg:text-xl text-zinc-400 max-w-3xl mx-auto font-normal leading-relaxed mb-10">
-          A high-performance local desktop command center for product managers. Synthesize organizational documents, generate publication-grade PRDs with verified citations, and orchestrate initiatives directly from your Windows desktop — backed by local SQLite and offline LLMs.
+          {siteConfig.hero.subtitle}
         </p>
 
         {/* CTA Button Group */}
@@ -68,11 +67,11 @@ export function Hero({ onDownloadClick, onCopyToast }) {
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-mono text-sm font-semibold text-zinc-950 bg-gradient-to-r from-gold via-gold-bright to-yellow-400 hover:brightness-110 shadow-lg shadow-gold/25 hover:shadow-gold/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
           >
             <Download className="w-4 h-4 stroke-[2.5]" />
-            <span>Download PM Tool v1.0.0 (.exe)</span>
+            <span>Download {siteConfig.name} {siteConfig.release.version} (.exe)</span>
           </a>
 
           <a
-            href="https://github.com/Pranshul-Chopra"
+            href={siteConfig.socials.github}
             target="_blank"
             rel="noreferrer"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-mono text-xs text-zinc-300 bg-surface/80 hover:bg-surface border border-white/10 hover:border-gold/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
@@ -92,22 +91,15 @@ export function Hero({ onDownloadClick, onCopyToast }) {
 
         {/* Feature Specs Ticker Badges */}
         <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-zinc-400">
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.03] border border-white/[0.08]">
-            <Database className="w-3.5 h-3.5 text-gold" />
-            100% On-Device SQLite WAL
-          </span>
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.03] border border-white/[0.08]">
-            <Cpu className="w-3.5 h-3.5 text-gold" />
-            Offline Ollama + Cloud Gemini
-          </span>
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.03] border border-white/[0.08]">
-            <Search className="w-3.5 h-3.5 text-gold" />
-            BM25 + Semantic Chunking
-          </span>
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.03] border border-white/[0.08]">
-            <ShieldCheck className="w-3.5 h-3.5 text-green-400" />
-            Zero Telemetry / Air-Gapped
-          </span>
+          {siteConfig.hero.specsBadges.map((badge, i) => {
+            const Icon = getBadgeIcon(badge.type);
+            return (
+              <span key={i} className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.03] border border-white/[0.08]">
+                <Icon className={`w-3.5 h-3.5 ${badge.type === 'shield' ? 'text-green-400' : 'text-gold'}`} />
+                {badge.text}
+              </span>
+            );
+          })}
         </div>
       </div>
 
@@ -120,19 +112,19 @@ export function Hero({ onDownloadClick, onCopyToast }) {
             <div className="w-3 h-3 rounded-full bg-yellow-500/80 border border-yellow-600/50" />
             <div className="w-3 h-3 rounded-full bg-green-500/80 border border-green-600/50" />
             <span className="ml-3 text-xs font-mono text-zinc-400 flex items-center gap-2">
-              <span className="text-gold font-semibold">PM Tool Desktop Shell</span>
+              <span className="text-gold font-semibold">{siteConfig.hero.simulator.windowTitle}</span>
               <span className="text-zinc-600">|</span>
-              <span className="text-zinc-500 truncate hidden sm:inline">Workspace: Core Platform v1.0.0</span>
+              <span className="text-zinc-500 truncate hidden sm:inline">{siteConfig.hero.simulator.workspaceTitle}</span>
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-green-500/10 text-green-400 border border-green-500/20 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              127.0.0.1:5050 [OK]
+              {siteConfig.hero.simulator.backendHost}
             </span>
             <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-gold/10 text-gold-bright border border-gold/25 hidden sm:inline-block">
-              Ollama: llama3.2 (Active)
+              {siteConfig.hero.simulator.activeModel}
             </span>
           </div>
         </div>
@@ -198,11 +190,10 @@ export function Hero({ onDownloadClick, onCopyToast }) {
             <div className="pt-3 border-t border-white/[0.06] mt-4 px-2">
               <div className="text-[10px] font-mono text-zinc-400 mb-1">LOCAL DISK REPOSITORY</div>
               <div className="text-[11px] font-mono text-zinc-300 truncate">
-                %LOCALAPPDATA%\PMTool\pmtool.db
+                {siteConfig.hero.simulator.localDbPath}
               </div>
               <div className="flex items-center justify-between text-[10px] text-zinc-400 mt-2 font-mono">
-                <span>Indexed Chunks: 128</span>
-                <span className="text-gold">0.4ms latency</span>
+                <span>{siteConfig.hero.simulator.dbStats}</span>
               </div>
             </div>
           </div>
@@ -211,7 +202,6 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           <div className="md:col-span-9 p-4 sm:p-6 bg-[#0a0a0e] flex flex-col justify-between">
             {activeTab === 'copilot' && (
               <div className="space-y-4">
-                {/* Copilot Header */}
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-gold animate-ping" />
@@ -224,7 +214,6 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                   </span>
                 </div>
 
-                {/* Prompt Card */}
                 <div className="bg-[#14141c] border border-white/10 rounded-xl p-3.5">
                   <div className="text-[10px] font-mono text-gold uppercase mb-1">Product Prompt</div>
                   <p className="text-xs font-mono text-zinc-200">
@@ -232,14 +221,16 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                   </p>
                 </div>
 
-                {/* AI Output preview */}
                 <div className="bg-[#111116] border border-gold/30 rounded-xl p-4 space-y-3 relative overflow-hidden">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
                       PRD-2026-04: Peer-to-Peer Offline Synchronization
                     </span>
-                    <button className="px-2.5 py-1 rounded bg-gold/20 hover:bg-gold/30 text-gold-bright border border-gold/40 text-[10px] font-mono flex items-center gap-1 transition-colors">
+                    <button 
+                      onClick={() => onCopyToast && onCopyToast('PRD exported as .docx successfully!')}
+                      className="px-2.5 py-1 rounded bg-gold/20 hover:bg-gold/30 text-gold-bright border border-gold/40 text-[10px] font-mono flex items-center gap-1 transition-colors"
+                    >
                       <Download className="w-3 h-3" />
                       Export Styled .docx
                     </button>
@@ -395,7 +386,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 <span>FTS5 BM25 Engine: Ready</span>
               </div>
               <div className="text-gold-bright flex items-center gap-1">
-                <span>Global Shortcut: Ctrl + Shift + P</span>
+                <span>{siteConfig.hero.simulator.shortcut}</span>
               </div>
             </div>
           </div>

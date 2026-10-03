@@ -4,121 +4,35 @@ import {
   FileText, 
   Database, 
   Search, 
-  ShieldCheck, 
-  Sliders, 
-  Zap, 
+  FileCode, 
   Layers, 
   Cpu, 
   Lock, 
   Terminal, 
-  FileCode,
-  ArrowUpRight 
+  Sparkles
 } from 'lucide-react';
+import { siteConfig } from '../config/siteConfig';
 
 export function CoreFeatures() {
   const [filter, setFilter] = useState('all');
 
-  const features = [
-    {
-      id: 'pipelines',
-      category: 'architecture',
-      title: 'The Three Independent Pipelines',
-      tagline: 'Separation of Knowledge, Action, and Reasoning.',
-      description:
-        'Instead of dumping unstructured files into an LLM context, PM Tool isolates operations into three deterministic pipelines: the Knowledge Pipeline (ingestion & chunking), Action Pipeline (permissioned tool execution), and Reasoning Pipeline (context-augmented synthesis).',
-      icon: GitBranch,
-      highlight: 'Core Architecture',
-    },
-    {
-      id: 'prd-export',
-      category: 'reasoning',
-      title: 'Automated PRD Studio & DOCX Exporter',
-      tagline: 'From unstructured intent to publication-grade Microsoft Word files.',
-      description:
-        'Turns high-level feature requests into comprehensive PRDs featuring problem statements, non-functional constraints, user stories, and acceptance criteria. Formats with executive XML styles, corporate headings, and tabular specs ready for stakeholder distribution.',
-      icon: FileText,
-      highlight: '1-Click Word Export',
-    },
-    {
-      id: 'dual-db',
-      category: 'architecture',
-      title: 'Two-Database Storage Segregation',
-      tagline: 'Clean boundary between relational records and AI trace telemetry.',
-      description:
-        'Separates mission-critical relational PM data (%LOCALAPPDATA%\\PMTool\\pmtool.db) from volatile, high-frequency AI reasoning traces and FTS5 BM25 document indexes (ai_context.db). Zero risk of DB bloat or schema pollution.',
-      icon: Database,
-      highlight: 'SQLite WAL Mode',
-    },
-    {
-      id: 'bm25-search',
-      category: 'knowledge',
-      title: 'Local FTS5 BM25 Retrieval Engine',
-      tagline: 'Sub-millisecond keyword and semantic search over corporate files.',
-      description:
-        'Leverages SQLite FTS5 full-text search with tokenized BM25 ranking. Query past meeting notes, architecture RFCs, and customer research transcripts in under 2ms without spinning up heavy vector containers.',
-      icon: Search,
-      highlight: 'Sub-2ms Search',
-    },
-    {
-      id: 'parsers',
-      category: 'knowledge',
-      title: 'Deep Multi-Format File Ingestors',
-      tagline: 'Native parsing for PDF, Word, Markdown, Text, CSV, and JSON.',
-      description:
-        'Robust local parsers inspect table layouts, header structures, and section hierarchies. Feeds a section-aware sliding-window chunker with 100-token semantic overlap to ensure zero context loss at chunk boundaries.',
-      icon: FileCode,
-      highlight: 'Native Parsers',
-    },
-    {
-      id: 'decision-reg',
-      category: 'operations',
-      title: 'Organizational Decision Register (ADR/PDR)',
-      tagline: 'Permanent institutional memory for strategy and trade-offs.',
-      description:
-        'Capture Architectural Decision Records and Product Decisions with context, alternatives considered, chosen path, and stakeholder rationale. Automatically surfaces relevant past decisions when drafting new PRDs.',
-      icon: Layers,
-      highlight: 'Traceable History',
-    },
-    {
-      id: 'llm-gateway',
-      category: 'reasoning',
-      title: 'Cascading Dual-LLM Gateway',
-      tagline: 'Offline Ollama autonomy with native Google Gemini cloud scaling.',
-      description:
-        'Run 100% offline air-gapped models (Llama 3, Mistral, DeepSeek) for confidential internal specs. When high-reasoning multimodal analysis is needed, cascade effortlessly to Google Gemini 1.5 Pro via native GenAI endpoints.',
-      icon: Cpu,
-      highlight: 'Hybrid Intelligence',
-    },
-    {
-      id: 'dpapi-security',
-      category: 'security',
-      title: 'Hardware-Bound Win32 DPAPI Encryption',
-      tagline: 'Zero plaintext API keys stored on your filesystem.',
-      description:
-        'When optional cloud LLM keys are supplied, they are protected with Windows CryptProtectData, binding encryption keys to the user logon SID and local machine hardware tokens. Cannot be copied or read by external processes.',
-      icon: Lock,
-      highlight: 'Win32 DPAPI',
-    },
-    {
-      id: 'electron-shell',
-      category: 'architecture',
-      title: 'Isolated Desktop Shell & Supervisor',
-      tagline: 'Electron Chromium shell managing an isolated Flask backend.',
-      description:
-        'The Electron supervisor automatically discovers open ports (starting at 5050), launches the headless Flask service, establishes an isolated IPC notification bridge, and guarantees clean process tree-killing on application exit.',
-      icon: Terminal,
-      highlight: 'Native Windows Shell',
-    },
-  ];
+  const getFeatureIcon = (id) => {
+    switch (id) {
+      case 'pipelines': return GitBranch;
+      case 'prd-export': return FileText;
+      case 'dual-db': return Database;
+      case 'bm25-search': return Search;
+      case 'parsers': return FileCode;
+      case 'decision-reg': return Layers;
+      case 'llm-gateway': return Cpu;
+      case 'dpapi-security': return Lock;
+      case 'electron-shell': return Terminal;
+      default: return Sparkles;
+    }
+  };
 
-  const categories = [
-    { id: 'all', label: 'All Capabilities' },
-    { id: 'architecture', label: 'Architecture & Storage' },
-    { id: 'knowledge', label: 'Knowledge & RAG' },
-    { id: 'reasoning', label: 'AI Reasoning & PRD' },
-    { id: 'operations', label: 'Product Operations' },
-    { id: 'security', label: 'Security & Privacy' },
-  ];
+  const categories = siteConfig.featureCategories;
+  const features = siteConfig.features;
 
   const filteredFeatures =
     filter === 'all'
@@ -136,7 +50,7 @@ export function CoreFeatures() {
           Engineered for Deep Product Output
         </h2>
         <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-          Every tool inside PM Tool was crafted to eliminate context switching, prevent cloud data leaks, and turn messy organizational documents into structured execution.
+          Every tool inside {siteConfig.name} was crafted to eliminate context switching, prevent cloud data leaks, and turn messy organizational documents into structured execution.
         </p>
       </div>
 
@@ -160,7 +74,7 @@ export function CoreFeatures() {
       {/* 3x3 Feature Grid with Spotlight Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredFeatures.map((feat) => {
-          const Icon = feat.icon;
+          const Icon = getFeatureIcon(feat.id);
           return (
             <div
               key={feat.id}

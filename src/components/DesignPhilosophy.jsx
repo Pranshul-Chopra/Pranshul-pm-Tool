@@ -1,29 +1,19 @@
 import React from 'react';
 import { Layers, Sliders, ShieldCheck, Eye } from 'lucide-react';
+import { siteConfig } from '../config/siteConfig';
 
 export function DesignPhilosophy() {
-  const tenets = [
-    {
-      title: 'Eliminate Context Switching',
-      desc: 'Every second spent hunting across 20 browser tabs, disconnected Jira issues, and buried Google Drive specs is product focus destroyed. PM Tool unifies your entire context in one native desktop frame.',
-      icon: Layers,
-    },
-    {
-      title: 'Useful Complexity Over Shallow Simplicity',
-      desc: 'Toy task apps hide all necessary controls behind vast empty white space. We believe professional product software must be information-dense, keyboard-navigable, and packed with deterministic utility.',
-      icon: Sliders,
-    },
-    {
-      title: 'Air-Gapped Security as a Non-Negotiable',
-      desc: 'Data privacy is not an enterprise upcharge. We architected PM Tool so that all indexing, AI reasoning, and decision tracking execute natively on your machine without requiring remote authorization.',
-      icon: ShieldCheck,
-    },
-    {
-      title: 'Sovereign Aesthetic Craft',
-      desc: 'Software you inspect for 8 hours a day should honor your attention. Deep obsidian palettes, offline IBM Plex typography, and tactile micro-interactions preserve flow and prevent visual fatigue.',
-      icon: Eye,
-    },
-  ];
+  const getTenetIcon = (idx) => {
+    switch (idx) {
+      case 0: return Layers;
+      case 1: return Sliders;
+      case 2: return ShieldCheck;
+      case 3: return Eye;
+      default: return Layers;
+    }
+  };
+
+  const tenets = siteConfig.designTenets;
 
   return (
     <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/[0.08]">
@@ -41,7 +31,7 @@ export function DesignPhilosophy() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {tenets.map((tenet, idx) => {
-          const Icon = tenet.icon;
+          const Icon = getTenetIcon(idx);
           return (
             <div
               key={idx}

@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Terminal, 
   Download, 
   Menu, 
   X, 
-  Layers, 
-  Cpu, 
-  Database, 
-  ShieldCheck, 
-  ExternalLink 
 } from 'lucide-react';
-import { GithubIcon } from './GithubIcon';
+import { GithubIcon } from './SocialIcons';
+import { siteConfig } from '../config/siteConfig';
 
 export function Navbar({ onDownloadClick }) {
   const [scrolled, setScrolled] = useState(false);
@@ -23,15 +18,6 @@ export function Navbar({ onDownloadClick }) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const navLinks = [
-    { name: 'Product', href: '#demo' },
-    { name: 'Features', href: '#features' },
-    { name: 'Pipelines', href: '#pipelines' },
-    { name: 'Architecture', href: '#architecture' },
-    { name: 'Comparison', href: '#compare' },
-    { name: 'Roadmap', href: '#evolution' },
-  ];
 
   return (
     <nav
@@ -46,28 +32,28 @@ export function Navbar({ onDownloadClick }) {
         <a href="#" className="flex items-center gap-3 group">
           <div className="w-9 h-9 rounded-lg bg-surface border border-gold/30 flex items-center justify-center shadow-inner group-hover:border-gold transition-colors duration-200">
             <span className="font-mono font-bold text-gold text-lg group-hover:text-gold-bright transition-colors">
-              PM
+              {siteConfig.shortName}
             </span>
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="font-bold text-white tracking-tight text-base sm:text-lg group-hover:text-gold-bright transition-colors">
-                PM Tool
+                {siteConfig.name}
               </span>
               <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-gold/10 text-gold-bright border border-gold/25 font-medium flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                v1.0.0
+                {siteConfig.release.version}
               </span>
             </div>
             <span className="text-[11px] text-zinc-400 hidden sm:block">
-              Local-First Product Copilot
+              {siteConfig.tagline}
             </span>
           </div>
         </a>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-7">
-          {navLinks.map((link) => (
+          {siteConfig.navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
@@ -81,7 +67,7 @@ export function Navbar({ onDownloadClick }) {
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-3">
           <a
-            href="https://github.com/Pranshul-Chopra"
+            href={siteConfig.socials.github}
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono text-zinc-300 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 transition-all duration-200"
@@ -96,7 +82,7 @@ export function Navbar({ onDownloadClick }) {
             className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-semibold font-mono text-zinc-950 bg-gradient-to-r from-gold to-gold-bright hover:brightness-110 shadow-sm shadow-gold/25 hover:shadow-gold/40 transition-all duration-200"
           >
             <Download className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Get PM Tool (.exe)</span>
+            <span>Get {siteConfig.name} (.exe)</span>
           </a>
         </div>
 
@@ -116,7 +102,7 @@ export function Navbar({ onDownloadClick }) {
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#09090b]/95 backdrop-blur-xl border-b border-white/[0.08] px-4 pt-3 pb-6 space-y-3 transition-all">
           <div className="grid grid-cols-2 gap-2 pt-2 pb-3 border-b border-white/10">
-            {navLinks.map((link) => (
+            {siteConfig.navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
@@ -130,7 +116,7 @@ export function Navbar({ onDownloadClick }) {
 
           <div className="flex flex-col gap-2 pt-2">
             <a
-              href="https://github.com/Pranshul-Chopra"
+              href={siteConfig.socials.github}
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-mono text-zinc-300 bg-white/[0.04] border border-white/10"

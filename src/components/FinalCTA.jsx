@@ -1,6 +1,7 @@
 import React from 'react';
-import { Download, MessageSquare, Sparkles, Terminal } from 'lucide-react';
-import { GithubIcon } from './GithubIcon';
+import { Download, MessageSquare, Sparkles } from 'lucide-react';
+import { GithubIcon } from './SocialIcons';
+import { siteConfig } from '../config/siteConfig';
 
 export function FinalCTA({ onDownloadClick }) {
   return (
@@ -35,11 +36,11 @@ export function FinalCTA({ onDownloadClick }) {
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl font-mono text-sm font-bold text-zinc-950 bg-gradient-to-r from-gold via-gold-bright to-yellow-400 hover:brightness-110 shadow-xl shadow-gold/25 hover:shadow-gold/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
         >
           <Download className="w-4 h-4 stroke-[2.5]" />
-          <span>Download PM Tool v1.0.0 (.exe)</span>
+          <span>Download {siteConfig.name} {siteConfig.release.version} (.exe)</span>
         </a>
 
         <a
-          href="https://github.com/Pranshul-Chopra"
+          href={siteConfig.socials.github}
           target="_blank"
           rel="noreferrer"
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-mono text-xs text-zinc-300 bg-surface/90 hover:bg-surface border border-white/10 hover:border-gold/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
@@ -49,7 +50,7 @@ export function FinalCTA({ onDownloadClick }) {
         </a>
 
         <a
-          href="https://docs.google.com/forms"
+          href={siteConfig.socials.feedbackForm}
           target="_blank"
           rel="noreferrer"
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-mono text-xs text-zinc-400 hover:text-white bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] transition-colors"
@@ -60,7 +61,7 @@ export function FinalCTA({ onDownloadClick }) {
       </div>
 
       <div className="text-xs font-mono text-zinc-500">
-        100% Free &bull; Open Source &bull; Windows 10/11 Native &bull; No Telemetry
+        100% Free &bull; Open Source &bull; {siteConfig.release.platform} Native &bull; No Telemetry
       </div>
     </section>
   );
