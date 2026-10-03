@@ -41,20 +41,20 @@ export function CurrentState({ onCopyToast }) {
             <div className="flex items-center gap-3">
               <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
               <span className="text-sm font-mono uppercase text-white font-bold tracking-wider">
-                {siteConfig.name} {siteConfig.release.version} Stable
+                {siteConfig.name} {siteConfig.release.version} ({siteConfig.release.badge})
               </span>
             </div>
             <span className="text-xs font-mono px-2.5 py-1 rounded bg-gold/15 text-gold-bright border border-gold/30">
-              Verified Production Build
+              Windows Desktop Package
             </span>
           </div>
 
           <div>
             <h3 className="text-2xl font-bold text-white mb-2">
-              Shipped, Functional & Verified on {siteConfig.release.platform}
+              Packaged for {siteConfig.release.platform}
             </h3>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Self-contained executable bundles with headless Flask backend and Electron shell. Runs with zero prerequisites or external cloud accounts.
+              Standalone installer and portable executable containing the Electron shell and local Flask service. Core local workflows run without mandatory cloud accounts.
             </p>
           </div>
 
@@ -117,7 +117,7 @@ export function CurrentState({ onCopyToast }) {
 
           {/* System Specs */}
           <div className="pt-2 text-xs font-mono text-zinc-400 space-y-1.5">
-            <div className="text-[10px] uppercase text-zinc-500 font-bold">System Prerequisites:</div>
+            <div className="text-[10px] uppercase text-zinc-500 font-bold">System Notes:</div>
             <div className="flex flex-wrap gap-4 text-zinc-300">
               {siteConfig.downloads.systemPrerequisites.map((req, i) => (
                 <span key={i}>&bull; {req}</span>
@@ -132,14 +132,14 @@ export function CurrentState({ onCopyToast }) {
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-gold-bright" />
               <span className="text-sm font-mono uppercase text-white font-bold tracking-wider">
-                Where It Goes Next
+                Planned Roadmap
               </span>
             </div>
-            <span className="text-[10px] font-mono text-zinc-400">Active R&D</span>
+            <span className="text-[10px] font-mono text-zinc-400">Future R&D</span>
           </div>
 
           <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-            Active engineering explorations designed to evolve {siteConfig.name} into an autonomous, proactive organizational copilot.
+            Active explorations to extend {siteConfig.name} with on-device vector embeddings, scope checking, and local sync.
           </p>
 
           <div className="space-y-4 font-mono text-xs">

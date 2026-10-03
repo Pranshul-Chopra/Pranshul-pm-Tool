@@ -9,7 +9,8 @@ import {
   Layers, 
   Bot,
   Search,
-  ChevronRight
+  ChevronRight,
+  Info
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 import { siteConfig } from '../config/siteConfig';
@@ -22,6 +23,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
       case 'db': return Database;
       case 'cpu': return Cpu;
       case 'search': return Search;
+      case 'doc': return FileText;
       case 'shield': return ShieldCheck;
       default: return Sparkles;
     }
@@ -46,18 +48,23 @@ export function Hero({ onDownloadClick, onCopyToast }) {
         </div>
 
         {/* Massive Title */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.1]">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.15]">
           {siteConfig.hero.headlineMain} <br className="hidden sm:inline" />
           <span className="bg-gradient-to-r from-gold via-gold-bright to-yellow-300 bg-clip-text text-transparent">
             {siteConfig.hero.headlineAccent}
-          </span>{' '}
-          {siteConfig.hero.headlineEnd}
+          </span>
         </h1>
 
         {/* Subtitle */}
-        <p className="text-base sm:text-lg lg:text-xl text-zinc-400 max-w-3xl mx-auto font-normal leading-relaxed mb-10">
+        <p className="text-base sm:text-lg lg:text-xl text-zinc-400 max-w-3xl mx-auto font-normal leading-relaxed mb-6">
           {siteConfig.hero.subtitle}
         </p>
+
+        {/* Realistic Architecture Notice */}
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface/90 border border-white/10 text-xs font-mono text-zinc-400 mb-10 max-w-2xl mx-auto">
+          <Info className="w-4 h-4 text-gold shrink-0" />
+          <span>{siteConfig.hero.notice}</span>
+        </div>
 
         {/* CTA Button Group */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
@@ -71,13 +78,13 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           </a>
 
           <a
-            href={siteConfig.socials.github}
+            href={siteConfig.socials.githubRepo}
             target="_blank"
             rel="noreferrer"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-mono text-xs text-zinc-300 bg-surface/80 hover:bg-surface border border-white/10 hover:border-gold/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
           >
             <GithubIcon className="w-4 h-4" />
-            <span>Explore Source on GitHub</span>
+            <span>View Source on GitHub</span>
           </a>
 
           <a
@@ -95,7 +102,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
             const Icon = getBadgeIcon(badge.type);
             return (
               <span key={i} className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.03] border border-white/[0.08]">
-                <Icon className={`w-3.5 h-3.5 ${badge.type === 'shield' ? 'text-green-400' : 'text-gold'}`} />
+                <Icon className="w-3.5 h-3.5 text-gold" />
                 {badge.text}
               </span>
             );
@@ -204,20 +211,20 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-gold animate-ping" />
+                    <span className="w-2 h-2 rounded-full bg-gold animate-ping" />
                     <span className="text-xs font-mono text-zinc-300 font-semibold">
                       Reasoning Engine &bull; Synthesizing PRD
                     </span>
                   </div>
                   <span className="text-[11px] font-mono text-zinc-400">
-                    Source Evidence: 4 verified chunks
+                    Source Context: 3 retrieved passages
                   </span>
                 </div>
 
                 <div className="bg-[#14141c] border border-white/10 rounded-xl p-3.5">
                   <div className="text-[10px] font-mono text-gold uppercase mb-1">Product Prompt</div>
                   <p className="text-xs font-mono text-zinc-200">
-                    "Draft an executive Product Requirement Document for offline peer-to-peer sync, pulling latency constraints from System_Architecture.pdf and storage limits from ADR-014."
+                    "Draft an initial Product Requirement Document for offline sync, referencing latency constraints from Architecture_Spec.pdf and storage design from ADR-014."
                   </p>
                 </div>
 
@@ -225,7 +232,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
-                      PRD-2026-04: Peer-to-Peer Offline Synchronization
+                      PRD Draft: Offline Synchronization Engine
                     </span>
                     <button 
                       onClick={() => onCopyToast && onCopyToast('PRD exported as .docx successfully!')}
@@ -237,20 +244,20 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                   </div>
 
                   <p className="text-xs text-zinc-300 leading-relaxed">
-                    <strong>1. Executive Objective:</strong> Provide zero-cloud local area Wi-Fi synchronization for engineering laptops without central proxy servers.
+                    <strong>1. Objective:</strong> Provide local area Wi-Fi synchronization for engineering workstations without requiring central proxy servers.
                   </p>
 
                   <div className="bg-[#09090c] rounded-lg p-3 border border-white/[0.06] text-xs space-y-2">
-                    <div className="text-[10px] font-mono text-zinc-400 uppercase">Verified Citations & Constraints</div>
+                    <div className="text-[10px] font-mono text-zinc-400 uppercase">Document References & Grounding</div>
                     <div className="flex flex-wrap gap-2">
                       <span className="px-2 py-0.5 rounded bg-surface border border-white/15 text-[11px] font-mono text-gold-bright hover:border-gold cursor-pointer transition-colors">
-                        📄 System_Architecture.pdf [§3.2 Latency &lt; 50ms]
+                        📄 Architecture_Spec.pdf [§3.2 Network Bounds]
                       </span>
                       <span className="px-2 py-0.5 rounded bg-surface border border-white/15 text-[11px] font-mono text-gold-bright hover:border-gold cursor-pointer transition-colors">
-                        ⚖️ ADR-014: SQLite WAL Pooling
+                        ⚖️ ADR-014: SQLite WAL Storage
                       </span>
                       <span className="px-2 py-0.5 rounded bg-surface border border-white/15 text-[11px] font-mono text-zinc-300 hover:border-gold cursor-pointer transition-colors">
-                        🔒 Win32 CryptProtectData
+                        🔒 Local Key Storage
                       </span>
                     </div>
                   </div>
@@ -262,7 +269,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                   <span className="text-xs font-mono text-zinc-300 font-semibold">
-                    Knowledge Pipeline &bull; Directory Ingestion & Chunking
+                    Knowledge Pipeline &bull; Directory Scanning & Chunking
                   </span>
                   <span className="text-[11px] font-mono text-gold">
                     Parsers: .pdf .docx .md .txt .csv
@@ -272,23 +279,23 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="p-3 rounded-xl bg-surface border border-gold/40">
                     <div className="flex items-center justify-between text-xs font-mono text-white mb-1">
-                      <span className="font-semibold truncate">Causal_Architecture_v2.pdf</span>
+                      <span className="font-semibold truncate">Architecture_Spec.pdf</span>
                       <span className="text-[10px] text-gold">42.8 KB</span>
                     </div>
-                    <p className="text-[11px] text-zinc-400">Sliding-window: 14 semantic chunks indexed into FTS5 BM25 table.</p>
+                    <p className="text-[11px] text-zinc-400">Section-aware chunking: 14 passages indexed in ai_context.db.</p>
                   </div>
                   <div className="p-3 rounded-xl bg-surface border border-white/10">
                     <div className="flex items-center justify-between text-xs font-mono text-white mb-1">
-                      <span className="font-semibold truncate">Q3_Product_Roadmap.docx</span>
+                      <span className="font-semibold truncate">Product_Roadmap.docx</span>
                       <span className="text-[10px] text-zinc-400">18.4 KB</span>
                     </div>
-                    <p className="text-[11px] text-zinc-400">Full heading & table hierarchy preserved with section offsets.</p>
+                    <p className="text-[11px] text-zinc-400">Headings and paragraphs extracted into searchable passages.</p>
                   </div>
                 </div>
 
                 <div className="p-3 rounded-xl bg-[#14141c] border border-white/10 font-mono text-xs text-zinc-300">
-                  <span className="text-gold">BM25 Retrieval Query:</span> "vector embeddings sqlite-vec fallback" <br />
-                  <span className="text-green-400">Score 0.892:</span> Chunk #4 in `Causal_Architecture_v2.pdf` matched line 140.
+                  <span className="text-gold">BM25 Retrieval Query:</span> "offline sync network bounds" <br />
+                  <span className="text-green-400">FTS5 Match:</span> Passage #4 in `Architecture_Spec.pdf` section "3.2 Network Bounds".
                 </div>
               </div>
             )}
@@ -297,35 +304,35 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                   <span className="text-xs font-mono text-zinc-300 font-semibold">
-                    Initiative Execution &bull; High-Density Backlog
+                    Initiative Execution &bull; Relational Backlog
                   </span>
                   <span className="text-[11px] font-mono text-zinc-400">
-                    P0: 2 Urgent &bull; Done: 14
+                    Active Tasks in pmtool.db
                   </span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 text-xs">
                   <div className="bg-surface/90 border border-white/10 rounded-lg p-2.5 space-y-2">
-                    <div className="text-[10px] font-mono uppercase text-zinc-400 font-semibold">Discovery (1)</div>
+                    <div className="text-[10px] font-mono uppercase text-zinc-400 font-semibold">Backlog (1)</div>
                     <div className="bg-[#191922] p-2 rounded border border-white/[0.06] space-y-1">
-                      <span className="text-[9px] font-mono px-1 rounded bg-amber-500/20 text-amber-300">P1 Discovery</span>
-                      <div className="font-medium text-white text-[11px]">Audit local vector store latency</div>
+                      <span className="text-[9px] font-mono px-1 rounded bg-amber-500/20 text-amber-300">P1 Planned</span>
+                      <div className="text-white text-[11px]">sqlite-vec retrieval benchmark</div>
                     </div>
                   </div>
 
                   <div className="bg-surface/90 border border-gold/30 rounded-lg p-2.5 space-y-2">
                     <div className="text-[10px] font-mono uppercase text-gold font-semibold">In Progress (2)</div>
                     <div className="bg-[#191922] p-2 rounded border border-gold/40 space-y-1">
-                      <span className="text-[9px] font-mono px-1 rounded bg-red-500/20 text-red-300">P0 Blocker</span>
-                      <div className="font-medium text-white text-[11px]">Sliding-window chunk token boundary fix</div>
+                      <span className="text-[9px] font-mono px-1 rounded bg-red-500/20 text-red-300">P0 Current</span>
+                      <div className="text-white text-[11px]">Refine section chunking sentence boundaries</div>
                     </div>
                   </div>
 
                   <div className="bg-surface/90 border border-white/10 rounded-lg p-2.5 space-y-2">
                     <div className="text-[10px] font-mono uppercase text-green-400 font-semibold">Completed (8)</div>
                     <div className="bg-[#191922] p-2 rounded border border-green-500/20 space-y-1 opacity-80">
-                      <span className="text-[9px] font-mono px-1 rounded bg-green-500/20 text-green-300">Shipped</span>
-                      <div className="font-medium text-white text-[11px] line-through">Electron IPC security handshake</div>
+                      <span className="text-[9px] font-mono px-1 rounded bg-green-500/20 text-green-300">Done</span>
+                      <div className="text-white text-[11px] line-through">Electron Flask process supervisor</div>
                     </div>
                   </div>
                 </div>
@@ -336,10 +343,10 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                   <span className="text-xs font-mono text-zinc-300 font-semibold">
-                    Decision Register &bull; Architectural & Product Decision Records
+                    Decision Register &bull; Documented Architecture & Strategy
                   </span>
                   <span className="text-[11px] font-mono text-green-400">
-                    Audit Status: 100% Immutable
+                    Persistent History
                   </span>
                 </div>
 
@@ -348,7 +355,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-mono text-xs text-gold font-bold">ADR-014</span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-green-500/10 text-green-400">Approved</span>
+                        <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-green-500/10 text-green-400">Recorded</span>
                         <span className="text-xs font-semibold text-white">Dual-Database Segmentation Pattern</span>
                       </div>
                       <p className="text-[11px] text-zinc-400">
@@ -362,11 +369,11 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-mono text-xs text-zinc-400 font-bold">ADR-013</span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-green-500/10 text-green-400">Approved</span>
-                        <span className="text-xs font-semibold text-white">Win32 CryptProtectData for LLM Keys</span>
+                        <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-green-500/10 text-green-400">Recorded</span>
+                        <span className="text-xs font-semibold text-white">Encrypted Local Key Storage Scheme</span>
                       </div>
                       <p className="text-[11px] text-zinc-400">
-                        Hardware-bound encryption for optional Gemini / OpenAI keys without plain-text disk storage.
+                        PBKDF2 key derivation from user environment with authenticated HMAC encryption for optional cloud keys.
                       </p>
                     </div>
                     <span className="text-[10px] font-mono text-zinc-400 shrink-0">Sep 2026</span>
@@ -380,10 +387,10 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1.5 text-zinc-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                  SQLite WAL: Enabled
+                  SQLite WAL: Active
                 </span>
                 <span className="text-zinc-500">|</span>
-                <span>FTS5 BM25 Engine: Ready</span>
+                <span>FTS5 Search: Ready</span>
               </div>
               <div className="text-gold-bright flex items-center gap-1">
                 <span>{siteConfig.hero.simulator.shortcut}</span>

@@ -1,8 +1,12 @@
 /**
  * PM Tool — Central Site & Release Configuration
  * 
- * Manage your product landing page, releases, version bumps, download URLs,
- * checksums, feature matrix, roadmap, and social links all from this single file.
+ * Tightened & defensible product claims aligned with the source code:
+ * - Local-first architecture (SQLite, Electron, local Flask)
+ * - Offline-capable workflows with local Ollama models; optional cloud models (Gemini)
+ * - Document-grounded PRD drafting with source references
+ * - Ranked full-text search (BM25 via FTS5); dense vector retrieval planned on roadmap
+ * - Honest local key derivation and security boundaries
  */
 
 export const siteConfig = {
@@ -11,23 +15,22 @@ export const siteConfig = {
   // ==========================================
   name: 'PM Tool',
   shortName: 'PM',
-  tagline: 'Local-First Product Management Copilot',
+  tagline: 'Local-First Product Management Workspace',
   description:
-    'A high-performance local desktop command center for product managers. Synthesize organizational documents, generate publication-grade PRDs with verified citations, and orchestrate initiatives directly from your Windows desktop — backed by local SQLite and offline LLMs.',
+    'From organizational knowledge to actionable product decisions. Ingest your product documents, retrieve relevant evidence, draft structured PRDs with source references, and turn requirements into a local backlog — from one Windows desktop workspace.',
 
   // ==========================================
   // 2. ACTIVE VERSION & RELEASE METADATA
-  // (Update this block when releasing a new version!)
   // ==========================================
   release: {
     version: 'v1.0.0',
     versionFull: 'v1.0.0-mvp',
-    badge: 'CURRENT STABLE',
+    badge: 'INITIAL RELEASE',
     releaseDate: 'October 2026',
-    channel: 'Stable Channel',
+    channel: 'MVP Channel',
     platform: 'Windows 10/11 (64-bit)',
-    statusText: '100% Operational &bull; Local SQLite Runtime',
-    isAirGappedReady: true,
+    statusText: 'Local-First Runtime &bull; SQLite Storage Initialized',
+    isAirGappedReady: false, // Accurate: offline with Ollama, cloud optional
   },
 
   // ==========================================
@@ -37,23 +40,23 @@ export const siteConfig = {
     installer: {
       fileName: 'PM-Tool-Setup-1.0.0.exe',
       label: 'Download NSIS Setup (.exe)',
-      size: '74.8 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1/PM.Tool-Setup-1.0.0.exe',
+      size: '136 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.0.0/PM.Tool-Setup-1.0.0.exe',
       directDownload: true,
     },
     portable: {
       fileName: 'PM-Tool-1.0.0.exe',
       label: 'Portable Standalone (.exe)',
-      size: '68.2 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm-tool/releases/download/v1/PM-Tool-1.0.0.exe',
+      size: '136 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.0.0/PM.Tool-1.0.0.exe',
     },
     sha256: 'e8b39c0f81d4a1329c2980fa2a5c9284d720bcf148942b03cf36f24419ad20e5',
-    gitCloneCommand: 'git clone https://github.com/Pranshul-Chopra/pm_tool',
+    gitCloneCommand: 'git clone https://github.com/Pranshul-Chopra/pm_tool.git',
     systemPrerequisites: [
       'Windows 10 / Windows 11 (64-bit)',
       '4 GB RAM minimum (8 GB+ recommended for local Ollama)',
-      '250 MB Free SSD / NVMe Storage',
-      'Zero Accounts or Online Registration Required',
+      '250 MB Free Storage for application and local SQLite databases',
+      'No mandatory cloud accounts for core local workflows',
     ],
   },
 
@@ -69,7 +72,7 @@ export const siteConfig = {
     github: 'https://github.com/Pranshul-Chopra',
     githubRepo: 'https://github.com/Pranshul-Chopra/pm_tool',
     linkedin: 'https://www.linkedin.com/in/pranshul-chopra-269789371/',
-    feedbackForm: 'https://docs.google.com/forms/d/e/1FAIpQLSe8jN6FEH7zdEMFxweuku_0mdwlKUcYE1RTB00NjPMOPY0Xew/viewform?usp=header',
+    feedbackForm: 'https://docs.google.com/forms/d/e/1FAIpQLSe8jN6FEH7zdEMFxweuku_0mdwlKUcYE1RTB00NjPMOPY0Xew/viewform?usp=publish-editor',
   },
 
   // ==========================================
@@ -88,28 +91,30 @@ export const siteConfig = {
   // 6. HERO SECTION CONFIG
   // ==========================================
   hero: {
-    pillBadge: 'Local-First AI Product Management Shell',
+    pillBadge: 'LOCAL-FIRST PRODUCT MANAGEMENT WORKSPACE',
     pillVersionTag: 'Windows 10/11',
-    headlineMain: 'Sovereign Product Intelligence.',
-    headlineAccent: 'Zero Cloud Tax.',
-    headlineEnd: 'Sub-Millisecond Speed.',
+    headlineMain: 'From Organizational Knowledge',
+    headlineAccent: 'to Actionable Product Decisions.',
+    headlineEnd: '',
     subtitle:
-      'A high-performance local desktop command center for product managers. Synthesize organizational documents, generate publication-grade PRDs with verified citations, and orchestrate initiatives directly from your Windows desktop — backed by local SQLite and offline LLMs.',
+      'Ingest your product documents, retrieve relevant evidence, draft structured PRDs with source references, and turn requirements into a local backlog — from one Windows desktop workspace.',
+    notice:
+      'Core workflows operate offline with local models. Optional cloud-model support (Gemini) is available when configured.',
     specsBadges: [
-      { text: '100% On-Device SQLite WAL', type: 'db' },
-      { text: 'Offline Ollama + Cloud Gemini', type: 'cpu' },
-      { text: 'BM25 + Semantic Chunking', type: 'search' },
-      { text: 'Zero Telemetry / Air-Gapped', type: 'shield' },
+      { text: 'Local SQLite Storage', type: 'db' },
+      { text: 'Ollama Offline Mode', type: 'cpu' },
+      { text: 'Document-Grounded Drafting', type: 'search' },
+      { text: 'DOCX Export', type: 'doc' },
     ],
     // Desktop App Simulator Mockup
     simulator: {
       windowTitle: 'PM Tool Desktop Shell',
       workspaceTitle: 'Workspace: Core Platform v1.0.0',
-      backendHost: '127.0.0.1:5050 [OK]',
-      activeModel: 'Ollama: llama3.2 (Active)',
+      backendHost: '127.0.0.1:5050 [Localhost]',
+      activeModel: 'Ollama: llama3.2 (Local Mode)',
       localDbPath: '%LOCALAPPDATA%\\PMTool\\pmtool.db',
-      dbStats: 'Indexed Chunks: 128 • 0.4ms latency',
-      shortcut: 'Global Shortcut: Ctrl + Shift + P',
+      dbStats: 'Indexed Chunks: 128 • SQLite FTS5 Index',
+      shortcut: 'Designed for fast on-device retrieval',
     },
   },
 
@@ -117,18 +122,18 @@ export const siteConfig = {
   // 7. TECH MARQUEE
   // ==========================================
   techMarquee: [
-    'FLASK 3.X LOCAL-ONLY BACKEND',
-    'ELECTRON WINDOW BRIDGE',
+    'LOCAL-ONLY FLASK BACKEND (127.0.0.1)',
+    'ELECTRON WINDOW SUPERVISOR',
     'SQLITE WAL CONNECTION POOLING',
-    'FTS5 BM25 HYBRID RETRIEVAL',
-    'OFFLINE OLLAMA INFERENCE',
-    'NATIVE GOOGLE GEMINI REASONING',
-    'SLIDING-WINDOW SEMANTIC CHUNKER',
-    '1-CLICK PROFESSIONAL DOCX EXPORT',
-    'WIN32 DPAPI HARDWARE ENCRYPTION',
+    'FTS5 BM25 FULL-TEXT SEARCH',
+    'LOCAL OLLAMA OFFLINE INFERENCE',
+    'OPTIONAL GOOGLE GEMINI DISPATCH',
+    'SECTION-AWARE CHUNKING WITH OVERLAP',
+    'STRUCTURED DOCX DOCUMENT EXPORT',
+    'LOCAL ENCRYPTED SECRET STORAGE',
     'TWO-DATABASE SEGREGATION',
-    'ZERO CLOUD TELEMETRY',
-    'SUB-MILLISECOND ON-DEVICE QUERIES',
+    'NO MANDATORY CLOUD ACCOUNT',
+    'DESIGNED FOR FAST LOCAL RETRIEVAL',
   ],
 
   // ==========================================
@@ -139,41 +144,41 @@ export const siteConfig = {
       id: 'prd-studio',
       name: 'AI Copilot & PRD Studio',
       tag: 'Reasoning Pipeline',
-      headline: 'Transform high-level product intent into publication-grade PRDs with verifiable citations.',
+      headline: 'Transform high-level product intent into structured PRDs with source references.',
       description:
-        'The reasoning engine connects active backlog initiatives directly to ingested company documents and ADRs. Output is structured, cited line-by-line, and exportable to beautifully styled Word (.docx) documents with one tap.',
+        'The reasoning pipeline connects active backlog initiatives directly to retrieved document passages and prior decision records. Outputs are structured, formatted with source references, and exportable to Word (.docx) documents.',
     },
     {
       id: 'knowledge-ingestion',
       name: 'Knowledge Pipeline & Chunks',
       tag: 'FTS5 & BM25',
-      headline: 'Multi-format document ingestion with section-aware sliding-window chunking.',
+      headline: 'Multi-format document ingestion with section-aware chunking and overlap.',
       description:
-        'Parses .pdf, .docx, .md, .txt, .csv, and .json files directly from your disk into local SQLite FTS5 BM25 index tables. Zero file uploads to external vector cloud servers.',
+        'Parses local .pdf, .docx, .md, .txt, .csv, and .json files directly from your disk into local SQLite FTS5 index tables. Files remain on your machine during local-model operation.',
     },
     {
       id: 'backlog-kanban',
       name: 'Initiatives & Kanban',
       tag: 'Operational Store',
-      headline: 'A keyboard-driven product ticket board linked directly to architectural decisions.',
+      headline: 'A keyboard-friendly product ticket board linked to decision records.',
       description:
-        'Manage sprints and initiatives without sluggish web SPAs. Every task can be traced directly to an Architectural Decision Record (ADR) or customer insight document.',
+        'Manage sprints and initiatives without sluggish web SPAs. Tasks can be associated with documented Architectural Decision Records (ADRs) and requirements.',
     },
     {
       id: 'decision-ledger',
       name: 'Organizational Decision Ledger',
       tag: 'ADR & PDR',
-      headline: 'Permanent, immutable memory for architectural and product strategy decisions.',
+      headline: 'Persistent history for architectural and product strategy decisions.',
       description:
-        'Never re-debate a decision that was settled six months ago. Search past trade-offs, rationale, and approved stakeholders with sub-millisecond query speed.',
+        'Avoid re-debating settled trade-offs. Capture decision context, options considered, and chosen path in a searchable local SQLite register.',
     },
     {
       id: 'llm-gateway',
-      name: 'Air-Gapped LLM Gateway',
-      tag: 'Privacy First',
-      headline: 'Seamless orchestration across local offline Ollama and high-reasoning Gemini.',
+      name: 'Hybrid LLM Gateway',
+      tag: 'Local & Cloud',
+      headline: 'Configurable dispatch across local offline Ollama and cloud providers.',
       description:
-        'Toggle instantly between 100% offline air-gapped models (Llama 3, Mistral, DeepSeek) for confidential roadmaps, and cloud APIs with DPAPI hardware-encrypted credentials.',
+        'Run local models (e.g. Llama 3, Mistral) on-device with zero external network traffic. Alternatively, configure cloud models (Gemini) when advanced multimodal reasoning is required.',
     },
   ],
 
@@ -182,32 +187,32 @@ export const siteConfig = {
   // ==========================================
   philosophy: [
     {
-      title: 'Local-First Sovereignty',
-      subtitle: 'Your machine is the definitive source of truth.',
+      title: 'Local-First Architecture',
+      subtitle: 'Your computer is the primary system of record.',
       description:
-        'Every byte of your data — initiatives, PRDs, backlog tickets, and decision logs — resides exclusively inside local SQLite databases on your SSD. No cloud outage, API deprecation, or server downtime will ever interrupt your product execution.',
-      badge: 'SQLite WAL Engine',
+        'Core operational data — initiatives, tasks, decision records, and local document indexes — resides inside local SQLite databases on your hard drive. Local workflows do not depend on remote server uptime.',
+      badge: 'Local SQLite WAL',
     },
     {
-      title: 'Zero Cloud Tax & Per-Seat Fees',
-      subtitle: 'Software that you own, not software you rent.',
+      title: 'No Per-Seat Subscription Tax',
+      subtitle: 'Open, self-contained desktop tooling.',
       description:
-        'Corporate SaaS tools (Jira, Confluence, Linear, Notion) extract $20 to $80 per user per month while holding your project memory hostage. PM Tool is 100% free, self-contained, open-source desktop software that never expires.',
-      badge: '$0 Lifetime Access',
+        'Traditional product SaaS requires recurring monthly seat licenses to view or edit project requirements. PM Tool is an open-source desktop tool with no mandatory per-seat subscription fees.',
+      badge: '$0 Tooling License',
     },
     {
-      title: 'Air-Gapped IP & Roadmap Security',
-      subtitle: 'Unannounced features never leak to public AI models.',
+      title: 'Offline-Capable with Local Models',
+      subtitle: 'Complete workflows without internet connectivity.',
       description:
-        'When you paste confidential enterprise roadmaps into web-based AI tools, you risk intellectual property leakage. PM Tool runs local LLMs (Ollama) directly on your device with zero telemetry and zero external network calls.',
-      badge: 'Zero Telemetry',
+        'When using local inference via Ollama, document ingestion, ranked search, and PRD drafting execute on-device without sending data across external networks.',
+      badge: 'Local Ollama Mode',
     },
     {
-      title: 'Sub-Millisecond On-Device Speed',
-      subtitle: 'Instant responsiveness with zero network roundtrips.',
+      title: 'Designed for Responsive Local Retrieval',
+      subtitle: 'SQLite FTS5 on NVMe SSD storage.',
       description:
-        'Web apps spend hundreds of milliseconds making roundtrips to distant cloud servers for every click. PM Tool executes SQLite queries in under 1 millisecond. Switch views, search across 10,000 document chunks, and filter backlogs with zero latency.',
-      badge: '< 1ms Query Latency',
+        'Queries against the local SQLite FTS5 database execute directly on your hardware without network latency. Search local document passages and filter backlog items without waiting on cloud server roundtrips.',
+      badge: 'On-Device FTS5',
     },
   ],
 
@@ -229,80 +234,80 @@ export const siteConfig = {
       title: 'The Three Independent Pipelines',
       tagline: 'Separation of Knowledge, Action, and Reasoning.',
       description:
-        'Instead of dumping unstructured files into an LLM context, PM Tool isolates operations into three deterministic pipelines: the Knowledge Pipeline (ingestion & chunking), Action Pipeline (permissioned tool execution), and Reasoning Pipeline (context-augmented synthesis).',
+        'Separates operations into distinct stages: Knowledge Pipeline (document ingestion & section chunking), Action Pipeline (permissioned tool calls), and Reasoning Pipeline (context assembly & LLM synthesis).',
       highlight: 'Core Architecture',
     },
     {
       id: 'prd-export',
       category: 'reasoning',
-      title: 'Automated PRD Studio & DOCX Exporter',
-      tagline: 'From unstructured intent to publication-grade Microsoft Word files.',
+      title: 'Document-Grounded PRD Studio & DOCX Exporter',
+      tagline: 'From feature concepts to styled Microsoft Word documents.',
       description:
-        'Turns high-level feature requests into comprehensive PRDs featuring problem statements, non-functional constraints, user stories, and acceptance criteria. Formats with executive XML styles, corporate headings, and tabular specs ready for stakeholder distribution.',
+        'Structures feature requirements into comprehensive PRDs with problem statements, acceptance criteria, and source references. Exports cleanly to Microsoft Word (.docx) with styled headings and tables.',
       highlight: '1-Click Word Export',
     },
     {
       id: 'dual-db',
       category: 'architecture',
       title: 'Two-Database Storage Segregation',
-      tagline: 'Clean boundary between relational records and AI trace telemetry.',
+      tagline: 'Clean boundary between relational data and AI context.',
       description:
-        'Separates mission-critical relational PM data (%LOCALAPPDATA%\\PMTool\\pmtool.db) from volatile, high-frequency AI reasoning traces and FTS5 BM25 document indexes (ai_context.db). Zero risk of DB bloat or schema pollution.',
+        'Separates mission-critical relational PM entities (%LOCALAPPDATA%\\PMTool\\pmtool.db) from volatile AI reasoning traces, message histories, and FTS5 search indexes (ai_context.db).',
       highlight: 'SQLite WAL Mode',
     },
     {
       id: 'bm25-search',
       category: 'knowledge',
-      title: 'Local FTS5 BM25 Retrieval Engine',
-      tagline: 'Sub-millisecond keyword and semantic search over corporate files.',
+      title: 'Ranked Full-Text Search (FTS5 BM25)',
+      tagline: 'Fast local keyword & term-frequency retrieval over documents.',
       description:
-        'Leverages SQLite FTS5 full-text search with tokenized BM25 ranking. Query past meeting notes, architecture RFCs, and customer research transcripts in under 2ms without spinning up heavy vector containers.',
-      highlight: 'Sub-2ms Search',
+        'Leverages SQLite FTS5 with BM25 ranking for exact terminology, ticket IDs, and technical specifications. Embedded vector search with sqlite-vec is planned on the roadmap.',
+      highlight: 'FTS5 BM25 Engine',
     },
     {
       id: 'parsers',
       category: 'knowledge',
-      title: 'Deep Multi-Format File Ingestors',
-      tagline: 'Native parsing for PDF, Word, Markdown, Text, CSV, and JSON.',
+      title: 'Multi-Format File Ingestors',
+      tagline: 'Local parsing for PDF, DOCX, Markdown, Text, CSV, and JSON.',
       description:
-        'Robust local parsers inspect table layouts, header structures, and section hierarchies. Feeds a section-aware sliding-window chunker with 100-token semantic overlap to ensure zero context loss at chunk boundaries.',
-      highlight: 'Native Parsers',
+        'Local parsers extract text content and heading structures. Feeds a section-aware chunker with overlapping sentences designed to preserve context across chunk boundaries.',
+      highlight: 'Local Parsers',
     },
     {
       id: 'decision-reg',
       category: 'operations',
-      title: 'Organizational Decision Register (ADR/PDR)',
-      tagline: 'Permanent institutional memory for strategy and trade-offs.',
+      title: 'Persistent Decision Register (ADR/PDR)',
+      tagline: 'Traceable history for architecture and product trade-offs.',
       description:
-        'Capture Architectural Decision Records and Product Decisions with context, alternatives considered, chosen path, and stakeholder rationale. Automatically surfaces relevant past decisions when drafting new PRDs.',
+        'Record Architectural Decision Records and Product Decisions with context, alternatives considered, chosen path, and rationale. Surfaces relevant past decisions during PRD drafting.',
       highlight: 'Traceable History',
     },
     {
       id: 'llm-gateway',
       category: 'reasoning',
-      title: 'Cascading Dual-LLM Gateway',
-      tagline: 'Offline Ollama autonomy with native Google Gemini cloud scaling.',
+      title: 'Dual-Provider LLM Dispatch Gateway',
+      tagline: 'Offline Ollama autonomy with optional Gemini cloud scaling.',
       description:
-        'Run 100% offline air-gapped models (Llama 3, Mistral, DeepSeek) for confidential internal specs. When high-reasoning multimodal analysis is needed, cascade effortlessly to Google Gemini 1.5 Pro via native GenAI endpoints.',
-      highlight: 'Hybrid Intelligence',
+        'Supports local offline inference with Ollama (Llama 3, Mistral, Phi-3) for disconnected work. When configured by the user, dispatches to cloud models (Gemini) over HTTPS for advanced reasoning.',
+      highlight: 'Hybrid Dispatch',
     },
     {
       id: 'dpapi-security',
       category: 'security',
-      title: 'Hardware-Bound Win32 DPAPI Encryption',
-      tagline: 'Zero plaintext API keys stored on your filesystem.',
+      title: 'Encrypted Local Secret Storage',
+      tagline: 'Authenticated symmetric encryption for optional cloud API keys.',
       description:
-        'When optional cloud LLM keys are supplied, they are protected with Windows CryptProtectData, binding encryption keys to the user logon SID and local machine hardware tokens. Cannot be copied or read by external processes.',
-      highlight: 'Win32 DPAPI',
+        'Cloud provider keys are encrypted before storage in SQLite using PBKDF2 key derivation and authenticated HMAC keystreams. No account credentials are required for local-only workflows.',
+      highlight: 'Encrypted at Rest',
     },
     {
       id: 'electron-shell',
       category: 'architecture',
-      title: 'Isolated Desktop Shell & Supervisor',
-      tagline: 'Electron Chromium shell managing an isolated Flask backend.',
+      title: 'Desktop Shell & Lifecycle Management',
+      tagline: 'Electron Chromium shell supervising a local Flask service.',
       description:
-        'The Electron supervisor automatically discovers open ports (starting at 5050), launches the headless Flask service, establishes an isolated IPC notification bridge, and guarantees clean process tree-killing on application exit.',
-      highlight: 'Native Windows Shell',
+        'Electron manages windowing, port discovery across 5050–5060, desktop notification IPC, and attempts process-tree termination when the desktop window is closed.',
+      highlight: 'Desktop Shell',
     },
   ],
 
@@ -313,47 +318,47 @@ export const siteConfig = {
     {
       step: '01',
       name: 'Local Ingestion',
-      headline: 'Ingest Organizational Files Without Cloud Uploads',
+      headline: 'Scan & Ingest Documents from Your Hard Drive',
       description:
-        'Drop PDF specifications, Word roadmaps, Markdown docs, and meeting transcripts into your local project workspace. Our native parsers extract section headings and tables instantly.',
-      example: 'Parsed: Enterprise_Architecture_v2.pdf (42 pages, 18 tables) in 0.38 seconds.',
-      connector: 'feeds into semantic sliding-window chunker',
+        'Point to a local folder with PDF specifications, Word roadmaps, Markdown docs, or notes. Parsers extract text and headings on-device without cloud uploads.',
+      example: 'Supported: .pdf, .docx, .md, .txt, .csv, and .json formats.',
+      connector: 'feeds into section-aware chunker with overlap',
     },
     {
       step: '02',
       name: 'FTS5 Indexing',
-      headline: 'Tokenized BM25 Full-Text Retrieval',
+      headline: 'Ranked BM25 Full-Text Indexing',
       description:
-        'Chunks are indexed into SQLite FTS5 BM25 virtual tables with token boundary preservation. Query sub-strings, technical acronyms, and requirements in sub-2ms.',
-      example: 'Index: 254 chunks with term frequency BM25 rankings saved to %LOCALAPPDATA%\\AIContextTool.',
-      connector: 'powers verified context retrieval',
+        'Chunks are indexed into SQLite FTS5 virtual tables with tokenized BM25 ranking for exact acronyms, names, and technical terms.',
+      example: 'Indexed chunks stored in %LOCALAPPDATA%\\AIContextTool\\ai_context.db.',
+      connector: 'powers evidence retrieval for context assembly',
     },
     {
       step: '03',
-      name: 'AI Synthesis',
-      headline: 'Context-Augmented Reasoning with Strict Citations',
+      name: 'Context Assembly',
+      headline: 'Ground Prompts with Relevant Document Excerpts',
       description:
-        'Context Builder combines your active project state, recent ADR decisions, and relevant evidence chunks before querying Ollama (offline) or Gemini. Hallucinations are actively suppressed.',
-      example: 'Synthesized PRD draft with 6 verifiable line citations back to original company PDFs.',
-      connector: 'formats into professional publication artifacts',
+        'Context Builder combines active project details, recent decision records, and retrieved document passages before querying the configured LLM (Ollama or Gemini).',
+      example: 'Injects identifiable evidence chunks with file names and section headings.',
+      connector: 'formats output into structured requirements',
     },
     {
       step: '04',
       name: 'PRD Export',
-      headline: '1-Click Publication-Grade Microsoft Word (.docx)',
+      headline: 'Export Styled Microsoft Word (.docx) Files',
       description:
-        'The Document Generator engine constructs valid XML Word files with custom color palettes, styled tables, executive callout boxes, and document revision histories.',
-      example: 'Generated: PRD_Offline_P2P_Sync_v1.docx ready for executive stakeholder sign-off.',
-      connector: 'commits requirements directly to execution board',
+        'The Document Generator creates valid Word documents with styled headings, tabular specifications, and referenced evidence for stakeholder review.',
+      example: 'Generates editable .docx files saved directly to your local drive.',
+      connector: 'allows committing requirements to local backlog',
     },
     {
       step: '05',
-      name: 'Execution & Delivery',
-      headline: 'Commit Directly to Local SQLite Backlog',
+      name: 'Backlog Tracking',
+      headline: 'Organize Tasks in Local SQLite Backlog',
       description:
-        'With one click, requirements are transformed into relational tickets in pmtool.db, tagged with P0/P1 priorities, estimated effort, and linked directly to Architectural Decision Records.',
-      example: 'Created 8 actionable engineering tickets in pmtool.db with foreign key ADR linkages.',
-      connector: 'closes the loop with zero cloud subscription fees',
+        'Requirements can be turned into relational backlog tickets in pmtool.db, tagged with P0/P1 priorities and linked to decision records.',
+      example: 'Direct relational updates in pmtool.db without remote SaaS dependency.',
+      connector: 'completes the local product cycle',
     },
   ],
 
@@ -364,100 +369,100 @@ export const siteConfig = {
     {
       id: 'shell',
       title: 'Tier 1: Desktop Shell & Supervisor',
-      tech: 'Electron 32 &bull; Chromium &bull; Windows Native Bridge',
-      latency: '< 5ms Startup IPC',
-      summary: 'Sandboxed window manager with cascading port discovery and graceful process lifecycle termination.',
+      tech: 'Electron &bull; Chromium &bull; Windows IPC Bridge',
+      latency: 'Native Desktop Shell',
+      summary: 'Manages windowing, port discovery, desktop notifications, and backend process lifecycle.',
       specs: [
-        'Automatic Flask port discovery: sweeps 5050 to 5060 dynamically',
-        'Native Windows notification bridge via electron-notify IPC',
-        'Strict contextIsolation: true with preloaded safe API bridge',
-        'Windows taskkill /t tree-kill on window exit to eliminate orphaned Python processes',
+        'Port discovery: sweeps ports 5050 to 5060 dynamically on startup',
+        'Native Windows notifications via electron-notify IPC',
+        'Strict contextIsolation with preloaded safe bridge',
+        'Supervises local Flask process shutdown on application window close',
       ],
     },
     {
       id: 'backend',
-      title: 'Tier 2: Headless Micro-Backend',
-      tech: 'Python Flask 3.x &bull; PyInstaller &bull; Localhost Only',
-      latency: '0.4ms Internal API Response',
-      summary: 'High-performance local service bound exclusively to 127.0.0.1 with security middleware.',
+      title: 'Tier 2: Localhost Micro-Backend',
+      tech: 'Python Flask 3.x &bull; Localhost Binding (127.0.0.1)',
+      latency: 'Localhost REST Protocol',
+      summary: 'Local service bound to 127.0.0.1 handling entity operations, ingestion, and gateway dispatch.',
       specs: [
-        'Local-only binding: rejects external LAN/WAN connections unconditionally',
-        'Origin & Sec-Fetch-Site validation header inspection on all REST mutations',
-        'Headless distribution packaged via PyInstaller with zero user Python dependency',
-        'Modular route controllers: /api/projects, /api/tasks, /api/ai, /api/documents',
+        'Bound strictly to 127.0.0.1 (rejects external network connections)',
+        'Origin & Sec-Fetch-Site security validation checks on REST endpoints',
+        'Can be packaged as a standalone executable via PyInstaller',
+        'Modular controllers for projects, tasks, decision records, and AI context',
       ],
     },
     {
       id: 'db',
-      title: 'Tier 3: Two-Database Storage Engine',
+      title: 'Tier 3: Two-Database SQLite Storage',
       tech: 'SQLite 3 &bull; WAL Journal &bull; Connection Pooling',
-      latency: '< 1ms Transaction Commit',
-      summary: 'Complete partition between operational project records and volatile AI reasoning traces.',
+      latency: 'Local SSD Operations',
+      summary: 'Separates operational relational records from volatile AI context and FTS5 search indexes.',
       specs: [
         'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (projects, tasks, decisions)',
-        'Context DB: %LOCALAPPDATA%\\AIContextTool\\ai_context.db (FTS5 BM25 index & traces)',
-        'PRAGMA journal_mode = WAL for simultaneous read/write concurrency without locking',
-        'Thread-safe connection pooling with automatic idempotent schema migrations',
+        'AI Context DB: %LOCALAPPDATA%\\AIContextTool\\ai_context.db (FTS5 BM25 index & traces)',
+        'PRAGMA journal_mode = WAL for concurrent read operations',
+        'Connection pooling with versioned SQLite schema migrations',
       ],
     },
     {
       id: 'ai',
-      title: 'Tier 4: Air-Gapped AI & RAG Gateway',
-      tech: 'Ollama Offline &bull; Gemini 1.5 &bull; Win32 DPAPI',
-      latency: 'Air-Gapped &bull; 0 Bytes Egress',
-      summary: 'Hybrid LLM gateway supporting 100% offline local inference with hardware-encrypted secrets.',
+      title: 'Tier 4: Hybrid LLM & RAG Gateway',
+      tech: 'Local Ollama &bull; Optional Gemini API &bull; FTS5 BM25',
+      latency: 'Local or Cloud Dispatch',
+      summary: 'Routes prompts to local offline models or optional cloud APIs based on user configuration.',
       specs: [
-        'Local Ollama probe: auto-detects Llama 3, Mistral, Phi-3 running on 127.0.0.1:11434',
-        'Google Gemini 1.5 Pro cloud fallback for high-reasoning multimodal tasks',
-        'Win32 CryptProtectData encryption ties secrets to machine hardware and user logon SID',
-        'Section-aware sliding-window chunker with FTS5 BM25 retrieval token weighting',
+        'Detects running Ollama models on localhost:11434 (e.g. Llama 3, Mistral)',
+        'Optional Google Gemini cloud fallback for advanced multimodal reasoning',
+        'Local key encryption at rest using PBKDF2 and authenticated keystream',
+        'Section-aware chunking with overlapping sentences and BM25 term retrieval',
       ],
     },
   ],
 
   // ==========================================
-  // 13. PRIVACY & SAAS COMPARISON MATRIX
+  // 13. PRIVACY & SAAS COMPARISON MATRIX (Defensible & Accurate)
   // ==========================================
   comparisonRows: [
     {
       feature: 'Data Storage Location',
-      pmtool: '100% On-Device NVMe/SSD inside Windows AppData (%LOCALAPPDATA%\\PMTool)',
-      cloud: 'Remote multi-tenant cloud databases, vulnerable to breaches & foreign subpoenas',
+      pmtool: 'Local storage inside Windows AppData (%LOCALAPPDATA%\\PMTool)',
+      cloud: 'Cloud-hosted multi-tenant infrastructure managed by vendor',
     },
     {
       feature: 'Account & Identity Requirements',
-      pmtool: 'Zero accounts required. Launch the .exe and start organizing instantly.',
-      cloud: 'Mandatory corporate emails, Okta/SAML SSO, password resets, and session tokens',
+      pmtool: 'No mandatory account or registration required for local workflows',
+      cloud: 'Generally requires account registration, email verification, or corporate SSO',
     },
     {
-      feature: 'Pricing & Licensing',
-      pmtool: '$0 Forever. Open-source, MIT license, zero per-seat subscription fees.',
-      cloud: '$20 to $80 per user/month, with essential features gated behind Enterprise tiers',
+      feature: 'Subscription Model',
+      pmtool: 'No per-seat subscription for PM Tool ($0 open-source)',
+      cloud: 'Recurring subscription pricing with per-user tiers; compare terms individually',
     },
     {
-      feature: 'AI Model Privacy & Training',
-      pmtool: '100% Air-Gapped via local Ollama. Zero bytes of roadmaps or PRDs leave your PC.',
-      cloud: 'Proprietary strategy uploaded to cloud APIs; risks training commercial LLMs',
+      feature: 'AI Model Execution & Data Egress',
+      pmtool: 'Local Ollama mode runs entirely on-device; cloud models (Gemini) are optional',
+      cloud: 'Cloud-based AI features send prompt data to external providers based on vendor terms',
     },
     {
-      feature: 'Offline Operation & Airplane Mode',
-      pmtool: 'Fully operational without internet. Search, draft PRDs, and update backlogs anywhere.',
-      cloud: 'White screen of death during Wi-Fi drops, VPN outages, or SaaS service downtime',
+      feature: 'Network Availability & Offline Use',
+      pmtool: 'Supported workflows operate offline when using local Ollama models',
+      cloud: 'Cloud-hosted workflows generally depend on active network connectivity',
     },
     {
-      feature: 'Query Latency & UI Responsiveness',
-      pmtool: 'Sub-millisecond (< 1ms) local SQLite WAL index queries.',
-      cloud: '400ms – 2,500ms network roundtrips for every filter, ticket edit, or page change',
+      feature: 'Retrieval & Query Model',
+      pmtool: 'Direct SQLite FTS5/BM25 queries on your local storage drive',
+      cloud: 'API and database queries over the internet with variable network roundtrip latency',
     },
     {
-      feature: 'Corporate Document Ingestion',
-      pmtool: 'Deep native parsers (.pdf, .docx, .md) executed locally on disk.',
-      cloud: 'Strict file upload limits, third-party OCR, and security review blockers',
+      feature: 'Document Ingestion',
+      pmtool: 'Local parsing of .pdf, .docx, .md, .txt, .csv directly from local directories',
+      cloud: 'Document uploads to cloud servers, subject to upload quotas and cloud storage terms',
     },
     {
-      feature: 'Data Sovereignty & Portability',
-      pmtool: 'Single .sqlite file. Copy it, back it up to a flash drive, or inspect via sqlite3 CLI.',
-      cloud: 'Proprietary vendor lock-in; rate-limited exports and broken CSV backups',
+      feature: 'Data Portability',
+      pmtool: 'Standard SQLite database files; easy to back up, inspect, or copy locally',
+      cloud: 'Vendor-dependent export formats and rate-limited API access',
     },
   ],
 
@@ -467,59 +472,58 @@ export const siteConfig = {
   designTenets: [
     {
       title: 'Eliminate Context Switching',
-      desc: 'Every second spent hunting across 20 browser tabs, disconnected Jira issues, and buried Google Drive specs is product focus destroyed. PM Tool unifies your entire context in one native desktop frame.',
+      desc: 'Fragmenting product context across dozens of browser tabs and separate cloud tools increases cognitive friction. PM Tool unifies documents, PRDs, and backlog items in a single desktop frame.',
     },
     {
       title: 'Useful Complexity Over Shallow Simplicity',
-      desc: 'Toy task apps hide all necessary controls behind vast empty white space. We believe professional product software must be information-dense, keyboard-navigable, and packed with deterministic utility.',
+      desc: 'Simplified to-do apps often hide necessary planning controls. We believe professional product software should be information-dense, keyboard-friendly, and oriented toward real execution.',
     },
     {
-      title: 'Air-Gapped Security as a Non-Negotiable',
-      desc: 'Data privacy is not an enterprise upcharge. We architected PM Tool so that all indexing, AI reasoning, and decision tracking execute natively on your machine without requiring remote authorization.',
+      title: 'Local Control as a Foundational Default',
+      desc: 'Your strategic roadmaps and draft requirements should remain under your control by default. Core indexing and backlog management run locally without mandatory remote accounts.',
     },
     {
       title: 'Sovereign Aesthetic Craft',
-      desc: 'Software you inspect for 8 hours a day should honor your attention. Deep obsidian palettes, offline IBM Plex typography, and tactile micro-interactions preserve flow and prevent visual fatigue.',
+      desc: 'Software used daily should respect your focus. Obsidian palettes, high-density layouts, and responsive micro-interactions preserve flow and reduce visual strain.',
     },
   ],
 
   // ==========================================
   // 15. RELEASES & ROADMAP TIMELINE
-  // (Easily add future versions here!)
   // ==========================================
   releases: [
     {
       version: 'v1.0.0-mvp',
-      badge: 'CURRENT STABLE',
+      badge: 'INITIAL RELEASE',
       title: 'The Local-First Core, Knowledge Pipeline & PRD Studio',
-      tagline: 'Electron desktop shell, two-database architecture, and offline AI execution.',
+      tagline: 'Desktop shell, two-database architecture, and local/cloud LLM dispatch.',
       date: 'Oct 2026',
       decisionRationale:
-        'Product managers spend hours manually transferring requirements from messy PDFs into Jira and writing PRDs from scratch. We built a local desktop application that ingests internal documents, performs sub-millisecond BM25 retrieval, and generates publication-ready Word PRDs backed by local SQLite.',
+        'Product managers spend significant time gathering context across dispersed documents and drafting PRDs from scratch. We created a local desktop application that parses local documents, performs ranked BM25 search, drafts structured PRDs, and exports Word documents.',
       highlights: [
-        'Electron desktop supervisor with cascading port sweep (5050–5060) and graceful tree-kill',
-        'Headless Python Flask backend bound strictly to 127.0.0.1 with security middleware',
-        'Two-database architecture segregating operational data from high-frequency AI traces',
-        'Multi-format file parsers (.pdf, .docx, .md, .txt, .csv, .json) with sliding-window chunking',
-        'Automated PRD generator with custom XML Word (.docx) styles, tables, and citations',
-        'Dual LLM Gateway supporting local offline Ollama and Google Gemini 1.5 Pro',
-        'Windows DPAPI CryptProtectData hardware-bound encryption for API secrets',
+        'Electron desktop supervisor managing local Flask service on 127.0.0.1 (ports 5050–5060)',
+        'Two-database architecture segregating operational records from AI reasoning traces',
+        'Local document parsing (.pdf, .docx, .md, .txt, .csv, .json) with section-aware chunking',
+        'Document-grounded PRD generation with source references and Word (.docx) export',
+        'LLM Gateway supporting local offline Ollama models and optional cloud Gemini dispatch',
+        'Encrypted local key storage at rest using PBKDF2 derivation for optional cloud API keys',
+        'Relational Kanban backlog and persistent decision register (ADR/PDR)',
       ],
       isCurrent: true,
     },
     {
       version: 'v1.1.0',
-      badge: 'ACTIVE DEVELOPMENT',
+      badge: 'PLANNED ROADMAP',
       title: 'sqlite-vec Embeddings & Decision Dependency Graphs',
       tagline: 'On-device vector search and visual architectural decision mapping.',
       date: 'Q1 2027',
       decisionRationale:
-        'Keyword search is fast, but semantic meaning captures intent across disparate terminology. We are introducing sqlite-vec directly inside the local database file to enable hybrid BM25 + dense vector ranking without requiring heavy Python vector service containers.',
+        'BM25 is effective for exact technical terms and identifiers. We plan to incorporate sqlite-vec directly into the SQLite database to support dense semantic vector search alongside BM25 keyword matching.',
       highlights: [
         'Embedded on-device vector embeddings via sqlite-vec extension',
-        'Interactive SVG Decision Dependency Graph linking ADRs to requirements',
-        'Multi-project workspace switcher with isolated SQLite schemas',
-        'Automated Sprint Retrospective synthesizer based on completed backlog tickets',
+        'Decision Dependency Graph linking ADRs to requirements and backlog tickets',
+        'Multi-project workspace management with isolated SQLite databases',
+        'Benchmarked retrieval latency over standard test corpus sizes',
       ],
       isCurrent: false,
     },
@@ -527,14 +531,14 @@ export const siteConfig = {
       version: 'v1.2.0',
       badge: 'FUTURE HORIZON',
       title: 'P2P Encrypted Local Sync & Git-Backed PRD Versioning',
-      tagline: 'Serverless team collaboration over local Wi-Fi subnets.',
+      tagline: 'Local subnet collaboration and version control integrations.',
       date: 'Q2 2027',
       decisionRationale:
-        'Engineering and product teams work in the same physical office or local network. PM Tool will support bilateral peer-to-peer sync directly between machines over local Wi-Fi, completely bypassing cloud intermediaries.',
+        'For teams working in physical proximity or on a local network, direct peer-to-peer sync allows sharing project updates without requiring cloud intermediaries.',
       highlights: [
-        'Local subnet P2P differential synchronization with zero central servers',
-        'Git-backed version control integration for PRD diffs and stakeholder comments',
-        'Cross-platform portable binaries for macOS and Linux desktops',
+        'Local subnet peer-to-peer differential synchronization',
+        'Git-backed version control integration for PRD diffs and audit logs',
+        'Cross-platform desktop binaries for macOS and Linux',
       ],
       isCurrent: false,
     },
@@ -546,15 +550,15 @@ export const siteConfig = {
   nextHorizon: [
     {
       title: 'sqlite-vec Embedded Vector Index',
-      desc: 'Direct embedded semantic embeddings inside SQLite for true hybrid BM25 + dense neural retrieval without Docker.',
+      desc: 'Planned embedded vector search within SQLite for hybrid BM25 and dense neural retrieval without external services.',
     },
     {
-      title: 'Autonomous Scope Creep Guardian',
-      desc: 'Proactively audits incoming backlog tickets against approved PRDs and highlights unapproved architectural drift.',
+      title: 'Scope Alignment Checks',
+      desc: 'Exploration to assist in checking incoming backlog tickets against approved PRD specifications to highlight divergence.',
     },
     {
-      title: 'Encrypted Subnet P2P Exchange',
-      desc: 'Device-to-device local Wi-Fi synchronization for collocated engineering teams without central cloud relays.',
+      title: 'Local Subnet P2P Exchange',
+      desc: 'Researching device-to-device local Wi-Fi synchronization for teams without central cloud relays.',
     },
   ],
 };

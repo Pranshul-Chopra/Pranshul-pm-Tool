@@ -13,19 +13,19 @@ export function FinalCTA({ onDownloadClick }) {
       <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-gold/30 mb-8 cursor-default">
         <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
         <span className="text-xs font-mono uppercase tracking-wider text-zinc-300">
-          The Sovereign Product Workspace
+          The Local-First Product Workspace
         </span>
       </div>
 
       <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-        Take Sovereign Control of Your <br />
+        Take Local Control of Your <br />
         <span className="bg-gradient-to-r from-gold via-gold-bright to-yellow-300 bg-clip-text text-transparent">
           Product Intelligence.
         </span>
       </h2>
 
       <p className="text-zinc-400 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-        Experience a distraction-free, local-first computing environment built to respect your attention, accelerate PRD drafting, and preserve your intellectual property.
+        From organizational knowledge to actionable product decisions. Ingest your product documents, retrieve relevant evidence, and draft structured PRDs — from one Windows desktop workspace.
       </p>
 
       {/* CTA Buttons */}
@@ -40,7 +40,7 @@ export function FinalCTA({ onDownloadClick }) {
         </a>
 
         <a
-          href={siteConfig.socials.github}
+          href={siteConfig.socials.githubRepo}
           target="_blank"
           rel="noreferrer"
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-mono text-xs text-zinc-300 bg-surface/90 hover:bg-surface border border-white/10 hover:border-gold/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
@@ -61,7 +61,7 @@ export function FinalCTA({ onDownloadClick }) {
       </div>
 
       <div className="text-xs font-mono text-zinc-500">
-        100% Free &bull; Open Source &bull; {siteConfig.release.platform} Native &bull; No Telemetry
+        Open Source &bull; {siteConfig.release.platform} Native &bull; Local SQLite Storage &bull; Optional Cloud Inference
       </div>
     </section>
   );

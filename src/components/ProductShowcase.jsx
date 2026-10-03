@@ -89,7 +89,7 @@ export function ProductShowcase({ onCopyToast }) {
             <div className="pt-4 border-t border-white/[0.08] space-y-3 font-mono text-xs text-zinc-300">
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-gold shrink-0" />
-                <span>Zero latency local IPC protocol</span>
+                <span>Localhost-bound communication (127.0.0.1)</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-gold shrink-0" />
@@ -97,7 +97,7 @@ export function ProductShowcase({ onCopyToast }) {
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-gold shrink-0" />
-                <span>Air-gapped operation with 0% data leakage</span>
+                <span>Local model workflows run without internet access</span>
               </div>
             </div>
 
@@ -133,7 +133,7 @@ export function ProductShowcase({ onCopyToast }) {
                 </div>
 
                 <div className="bg-[#09090d] rounded-lg p-3 border border-white/[0.08] text-xs font-mono">
-                  <div className="text-[10px] text-zinc-400 mb-1">PROMPT CONTEXT</div>
+                  <div className="text-[10px] text-gold uppercase mb-1">PROMPT CONTEXT</div>
                   <div className="text-zinc-200">
                     "Synthesize requirements for Local Wi-Fi P2P sync. Enforce offline encryption per ADR-013 and latency limits from Architecture_Spec.pdf."
                   </div>
@@ -144,7 +144,7 @@ export function ProductShowcase({ onCopyToast }) {
                     <span className="text-xs font-bold text-gold-bright font-mono">
                       ## PRD-2026: Local Peer-to-Peer Sync Engine
                     </span>
-                    <span className="text-[10px] font-mono text-zinc-400">Confidence: 99.4%</span>
+                    <span className="text-[10px] font-mono text-zinc-400">Context-Grounded Draft</span>
                   </div>
 
                   <p className="text-xs text-zinc-300 leading-relaxed">
@@ -152,7 +152,7 @@ export function ProductShowcase({ onCopyToast }) {
                   </p>
 
                   <div className="space-y-1.5">
-                    <div className="text-[10px] font-mono text-zinc-400 uppercase">Interactive Evidence Citations (Click to view source)</div>
+                    <div className="text-[10px] font-mono text-zinc-400 uppercase">Document References (Click to preview source)</div>
                     <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() => setSelectedCitation('spec')}
@@ -162,7 +162,7 @@ export function ProductShowcase({ onCopyToast }) {
                             : 'bg-surface text-gold-bright border-gold/30 hover:border-gold'
                         }`}
                       >
-                        📄 Architecture_Spec.pdf [§3.4: P2P latency &lt; 80ms]
+                        📄 Architecture_Spec.pdf [§3.4 Excerpt]
                       </button>
                       <button
                         onClick={() => setSelectedCitation('adr')}
@@ -172,7 +172,7 @@ export function ProductShowcase({ onCopyToast }) {
                             : 'bg-surface text-gold-bright border-gold/30 hover:border-gold'
                         }`}
                       >
-                        ⚖️ ADR-013: Win32 DPAPI Key Storage
+                        ⚖️ ADR-013: Local Encrypted Key Storage
                       </button>
                     </div>
                   </div>
@@ -180,15 +180,15 @@ export function ProductShowcase({ onCopyToast }) {
                   {selectedCitation && (
                     <div className="p-3 bg-[#0a0a0f] rounded-lg border border-gold/40 text-xs font-mono text-zinc-300 animate-fadeIn">
                       <div className="text-[10px] text-gold uppercase mb-1">
-                        Verified Raw Chunk Preview:
+                        Retrieved Context Excerpt:
                       </div>
                       {selectedCitation === 'spec' ? (
                         <p className="text-zinc-300">
-                          "Under section 3.4 (Network Constraints), all peer-to-peer discovery packets must broadcast on UDP 5051 with AES-GCM session tokens. In-flight payload latency must not exceed 80ms on 802.11ac."
+                          "Under section 3.4 (Network Constraints), all peer-to-peer discovery packets must broadcast on local subnet with session tokens. Workflows should operate without requiring central cloud relays."
                         </p>
                       ) : (
                         <p className="text-zinc-300">
-                          "Under ADR-013, master decryption keys for local peer handshakes must utilize Windows CryptProtectData tied to current user logon security context."
+                          "Under ADR-013, API keys for optional cloud providers are encrypted at rest with user-derived keys before storage in SQLite tables."
                         </p>
                       )}
                     </div>
@@ -201,9 +201,9 @@ export function ProductShowcase({ onCopyToast }) {
             {activeModule === 'knowledge-ingestion' && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                  <span className="text-xs font-mono text-white font-semibold">Local Storage Ingestion Engine</span>
+                  <span className="text-xs font-mono text-white font-semibold">Local Document Ingestion Engine</span>
                   <span className="text-[10px] font-mono text-gold px-2 py-0.5 rounded bg-gold/10 border border-gold/20">
-                    FTS5 BM25 Active
+                    FTS5 BM25 Search
                   </span>
                 </div>
 
@@ -213,7 +213,7 @@ export function ProductShowcase({ onCopyToast }) {
                       <span className="font-bold">Enterprise_Spec.pdf</span>
                       <span className="text-gold">Chunked (8)</span>
                     </div>
-                    <div className="text-[11px] text-zinc-400">Sliding window: 500 tokens, 100 token overlap.</div>
+                    <div className="text-[11px] text-zinc-400">Section-aware chunking with sentence overlap.</div>
                     <div className="mt-2 text-[10px] font-mono text-green-400">Status: Indexed in SQLite FTS5</div>
                   </div>
 
@@ -222,21 +222,21 @@ export function ProductShowcase({ onCopyToast }) {
                       <span className="font-bold">Engineering_Roadmap.docx</span>
                       <span className="text-zinc-400">Chunked (14)</span>
                     </div>
-                    <div className="text-[11px] text-zinc-400">Table hierarchies and headings extracted cleanly.</div>
+                    <div className="text-[11px] text-zinc-400">Heading structures and paragraphs indexed locally.</div>
                     <div className="mt-2 text-[10px] font-mono text-green-400">Status: Indexed in SQLite FTS5</div>
                   </div>
                 </div>
 
                 <div className="bg-[#14141c] p-3 rounded-lg border border-white/10 text-xs font-mono space-y-1.5">
-                  <div className="text-gold text-[10px] uppercase font-bold">FTS5 BM25 Ranking Score</div>
+                  <div className="text-gold text-[10px] uppercase font-bold">FTS5 BM25 Ranked Query</div>
                   <div className="text-zinc-300">
-                    Query: <span className="text-white">"DPAPI encryption token exchange"</span>
+                    Query: <span className="text-white">"offline key exchange"</span>
                   </div>
                   <div className="text-green-400 text-[11px]">
-                    &bull; Match 1: Enterprise_Spec.pdf (Chunk #3, score: -14.281, rank: 1)
+                    &bull; Match 1: Enterprise_Spec.pdf (Chunk #3, section "Security")
                   </div>
                   <div className="text-zinc-400 text-[11px]">
-                    &bull; Match 2: Engineering_Roadmap.docx (Chunk #7, score: -8.110, rank: 2)
+                    &bull; Match 2: Engineering_Roadmap.docx (Chunk #7, section "Architecture")
                   </div>
                 </div>
               </div>
@@ -267,33 +267,33 @@ export function ProductShowcase({ onCopyToast }) {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs font-mono">
                   {/* Column 1 */}
                   <div className="bg-[#09090d] p-2.5 rounded-lg border border-white/10 space-y-2">
-                    <div className="text-[10px] uppercase text-zinc-400 font-bold">Backlog (3)</div>
+                    <div className="text-[10px] uppercase text-zinc-400 font-bold">Backlog (2)</div>
                     <div className="bg-surface p-2 rounded border border-white/[0.06] space-y-1">
                       <span className="text-[9px] px-1 rounded bg-blue-500/20 text-blue-300">P2 Feature</span>
                       <div className="text-white text-[11px]">CSV / JSON Export CLI</div>
                     </div>
                     <div className="bg-surface p-2 rounded border border-white/[0.06] space-y-1">
-                      <span className="text-[9px] px-1 rounded bg-amber-500/20 text-amber-300">P1 Pipeline</span>
-                      <div className="text-white text-[11px]">Chroma Vector Fallback</div>
+                      <span className="text-[9px] px-1 rounded bg-amber-500/20 text-amber-300">P1 Roadmap</span>
+                      <div className="text-white text-[11px]">sqlite-vec Vector Exploration</div>
                     </div>
                   </div>
 
                   {/* Column 2 */}
                   <div className="bg-[#09090d] p-2.5 rounded-lg border border-gold/30 space-y-2">
-                    <div className="text-[10px] uppercase text-gold font-bold">Active Sprint (2)</div>
+                    <div className="text-[10px] uppercase text-gold font-bold">In Progress (2)</div>
                     <div className="bg-surface p-2 rounded border border-gold/40 space-y-1 shadow-sm">
-                      <span className="text-[9px] px-1 rounded bg-red-500/20 text-red-300">P0 Blocker</span>
-                      <div className="text-white text-[11px]">PyInstaller Headless Flask Spec</div>
+                      <span className="text-[9px] px-1 rounded bg-red-500/20 text-red-300">P0 Current</span>
+                      <div className="text-white text-[11px]">Headless Flask PyInstaller Spec</div>
                     </div>
                     <div className="bg-surface p-2 rounded border border-white/[0.06] space-y-1">
                       <span className="text-[9px] px-1 rounded bg-amber-500/20 text-amber-300">P1 Docx</span>
-                      <div className="text-white text-[11px]">Styled Heading Level 3 XML</div>
+                      <div className="text-white text-[11px]">Table formatting in Word export</div>
                     </div>
                   </div>
 
                   {/* Column 3 */}
                   <div className="bg-[#09090d] p-2.5 rounded-lg border border-white/10 space-y-2 col-span-2 sm:col-span-1">
-                    <div className="text-[10px] uppercase text-green-400 font-bold">Shipped (8)</div>
+                    <div className="text-[10px] uppercase text-green-400 font-bold">Completed (8)</div>
                     <div className="bg-surface p-2 rounded border border-green-500/20 space-y-1 opacity-75">
                       <span className="text-[9px] px-1 rounded bg-green-500/20 text-green-300">Done</span>
                       <div className="text-white text-[11px] line-through">Electron Main Window IPC</div>
@@ -320,16 +320,16 @@ export function ProductShowcase({ onCopyToast }) {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-gold">ADR-004</span>
-                        <span className="px-1.5 py-0.2 rounded bg-green-500/20 text-green-400 text-[10px]">APPROVED</span>
+                        <span className="px-1.5 py-0.2 rounded bg-green-500/20 text-green-400 text-[10px]">RECORDED</span>
                         <span className="text-white font-semibold">Local SQLite WAL over Cloud Postgres</span>
                       </div>
                       <span className="text-zinc-500 text-[11px]">2026-10-01</span>
                     </div>
                     <p className="text-zinc-400 text-[11px]">
-                      <strong>Context:</strong> Cloud database sync introduces latency, authentication failure modes, and security compliance hurdles for enterprise roadmaps.
+                      <strong>Context:</strong> Cloud database sync introduces latency, authentication failure modes, and external dependency for local workflows.
                     </p>
                     <p className="text-zinc-300 text-[11px]">
-                      <strong>Consequence:</strong> 100% on-device performance, zero per-seat subscription cost, total privacy guarantee.
+                      <strong>Consequence:</strong> On-device database performance with no recurring seat fees for data storage.
                     </p>
                   </div>
 
@@ -337,13 +337,13 @@ export function ProductShowcase({ onCopyToast }) {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-zinc-400">ADR-003</span>
-                        <span className="px-1.5 py-0.2 rounded bg-green-500/20 text-green-400 text-[10px]">APPROVED</span>
+                        <span className="px-1.5 py-0.2 rounded bg-green-500/20 text-green-400 text-[10px]">RECORDED</span>
                         <span className="text-white font-semibold">Electron Desktop Shell + Local Flask</span>
                       </div>
                       <span className="text-zinc-500 text-[11px]">2026-09-28</span>
                     </div>
                     <p className="text-zinc-400 text-[11px]">
-                      <strong>Context:</strong> Need native desktop notification integration, tray minimization, and isolated local process management.
+                      <strong>Context:</strong> Native desktop notification integration and isolated local process management on Windows.
                     </p>
                   </div>
                 </div>
@@ -354,7 +354,7 @@ export function ProductShowcase({ onCopyToast }) {
             {activeModule === 'llm-gateway' && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                  <span className="text-xs font-mono text-white font-semibold">Multi-Provider LLM Gateway</span>
+                  <span className="text-xs font-mono text-white font-semibold">Hybrid LLM Gateway</span>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setLlmProvider('ollama')}
@@ -364,7 +364,7 @@ export function ProductShowcase({ onCopyToast }) {
                           : 'bg-white/[0.04] text-zinc-400 hover:text-white'
                       }`}
                     >
-                      Offline Ollama (Air-Gapped)
+                      Offline Ollama (Local)
                     </button>
                     <button
                       onClick={() => setLlmProvider('gemini')}
@@ -374,7 +374,7 @@ export function ProductShowcase({ onCopyToast }) {
                           : 'bg-white/[0.04] text-zinc-400 hover:text-white'
                       }`}
                     >
-                      Google Gemini 1.5 Pro
+                      Google Gemini (Optional Cloud)
                     </button>
                   </div>
                 </div>
@@ -383,34 +383,36 @@ export function ProductShowcase({ onCopyToast }) {
                   <div className="flex items-center justify-between">
                     <span className="text-zinc-400">Active Provider:</span>
                     <span className="text-gold-bright font-bold">
-                      {llmProvider === 'ollama' ? 'Local Ollama &bull; 127.0.0.1:11434' : 'Native Google GenAI SDK'}
+                      {llmProvider === 'ollama' ? 'Local Ollama &bull; 127.0.0.1:11434' : 'Google GenAI Cloud Dispatch'}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-zinc-400">Data Egress:</span>
+                    <span className="text-zinc-400">Network Traffic:</span>
                     <span className={llmProvider === 'ollama' ? 'text-green-400 font-bold' : 'text-amber-400'}>
-                      {llmProvider === 'ollama' ? '0 BYTES LEAVING MACHINE (AIR-GAPPED)' : 'Encrypted HTTPS via TLS 1.3'}
+                      {llmProvider === 'ollama' ? 'LOCAL-ONLY INFERENCE (NO OUTBOUND CALLS)' : 'OUTBOUND HTTPS CALL TO CLOUD PROVIDER'}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-zinc-400">Secret Encryption:</span>
+                    <span className="text-zinc-400">Secret Storage:</span>
                     <span className="text-zinc-200">
-                      Windows DPAPI CryptProtectData (Hardware Tied)
+                      PBKDF2 Key Derivation + Authenticated Keystream (At Rest)
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-zinc-400">Inference Speed:</span>
-                    <span className="text-gold-bright">48 tokens/second (RTX / Apple Silicon / CPU)</span>
+                    <span className="text-zinc-400">Generation Throughput:</span>
+                    <span className="text-gold-bright">
+                      {llmProvider === 'ollama' ? 'Dependent on host hardware & selected model' : 'Network & provider API dependent'}
+                    </span>
                   </div>
 
                   <div className="pt-2 border-t border-white/[0.08] flex items-center justify-between text-[11px]">
-                    <span className="text-zinc-500">Probe Health Check:</span>
+                    <span className="text-zinc-500">Service Status:</span>
                     <span className="text-green-400 flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                      Responsive (latency: 12ms)
+                      {llmProvider === 'ollama' ? 'Localhost daemon active' : 'API endpoint configured'}
                     </span>
                   </div>
                 </div>
