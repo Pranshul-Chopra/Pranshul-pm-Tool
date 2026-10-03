@@ -18,15 +18,16 @@ export function CoreFeatures() {
 
   const getFeatureIcon = (id) => {
     switch (id) {
-      case 'pipelines': return GitBranch;
-      case 'prd-export': return FileText;
-      case 'dual-db': return Database;
-      case 'bm25-search': return Search;
-      case 'parsers': return FileCode;
-      case 'decision-reg': return Layers;
-      case 'llm-gateway': return Cpu;
-      case 'dpapi-security': return Lock;
-      case 'electron-shell': return Terminal;
+      case 'sprint-kanban-board': return Layers;
+      case 'story-breakdown-tool': return Sparkles;
+      case 'doc-summarizer-tool': return FileText;
+      case 'dual-db-sqlite': return Database;
+      case 'llm-gateway-hybrid': return Cpu;
+      case 'fts5-bm25-retrieval': return Search;
+      case 'pbkdf2-encryption': return Lock;
+      case 'multi-format-parsers': return FileCode;
+      case 'electron-updater-pipe': return GitBranch;
+      case 'port-collision-shield': return Terminal;
       default: return Sparkles;
     }
   };

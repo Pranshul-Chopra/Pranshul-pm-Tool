@@ -10,13 +10,13 @@ export function PrivacyCompare() {
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
         <span className="text-xs font-mono uppercase tracking-widest text-gold-bright px-3 py-1 rounded-full bg-gold/10 border border-gold/20 inline-block mb-3">
-          Sovereignty Audit
+          Architecture & Privacy Comparison
         </span>
         <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
-          Your Product Data Stays Yours.
+          Local-First vs. Cloud SaaS Workflows
         </h2>
         <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-          Productivity software should never be a multi-tenant surveillance network in disguise. Here is how {siteConfig.name} contrasts with legacy cloud subscriptions (Jira, Confluence, Linear, Notion).
+          How {siteConfig.name}'s local-first architecture compares with traditional cloud-hosted productivity tools. PM Tool keeps operational data on your computer, with optional cloud inference only when explicitly configured.
         </p>
       </div>
 

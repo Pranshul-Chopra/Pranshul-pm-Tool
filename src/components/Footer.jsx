@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mail, MessageSquare, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import { PmtLogo } from './PmtLogo';
 import { siteConfig } from '../config/siteConfig';
 
 export function Footer({ onDownloadClick }) {
@@ -11,9 +12,7 @@ export function Footer({ onDownloadClick }) {
         {/* Brand & Creator Attribution */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-2">
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded bg-surface border border-gold/40 flex items-center justify-center font-mono font-bold text-gold text-xs">
-              {siteConfig.shortName}
-            </div>
+            <PmtLogo size="sm" />
             <span className="font-bold text-white text-base tracking-tight">
               {siteConfig.name}
             </span>

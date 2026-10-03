@@ -5,6 +5,7 @@ import {
   X, 
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
+import { PmtLogo } from './PmtLogo';
 import { siteConfig } from '../config/siteConfig';
 
 export function Navbar({ onDownloadClick }) {
@@ -28,13 +29,9 @@ export function Navbar({ onDownloadClick }) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Brand Logo with authentic PmT Icon */}
         <a href="#" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-lg bg-surface border border-gold/30 flex items-center justify-center shadow-inner group-hover:border-gold transition-colors duration-200">
-            <span className="font-mono font-bold text-gold text-lg group-hover:text-gold-bright transition-colors">
-              {siteConfig.shortName}
-            </span>
-          </div>
+          <PmtLogo />
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="font-bold text-white tracking-tight text-base sm:text-lg group-hover:text-gold-bright transition-colors">
@@ -67,7 +64,7 @@ export function Navbar({ onDownloadClick }) {
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-3">
           <a
-            href={siteConfig.socials.github}
+            href={siteConfig.socials.githubRepo}
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono text-zinc-300 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 transition-all duration-200"
@@ -82,7 +79,7 @@ export function Navbar({ onDownloadClick }) {
             className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-semibold font-mono text-zinc-950 bg-gradient-to-r from-gold to-gold-bright hover:brightness-110 shadow-sm shadow-gold/25 hover:shadow-gold/40 transition-all duration-200"
           >
             <Download className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Get {siteConfig.name} (.exe)</span>
+            <span>Get {siteConfig.shortName} ({siteConfig.release.version})</span>
           </a>
         </div>
 
@@ -116,7 +113,7 @@ export function Navbar({ onDownloadClick }) {
 
           <div className="flex flex-col gap-2 pt-2">
             <a
-              href={siteConfig.socials.github}
+              href={siteConfig.socials.githubRepo}
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-mono text-zinc-300 bg-white/[0.04] border border-white/10"
@@ -133,7 +130,7 @@ export function Navbar({ onDownloadClick }) {
               className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold font-mono text-zinc-950 bg-gradient-to-r from-gold to-gold-bright shadow-lg shadow-gold/20"
             >
               <Download className="w-4 h-4 stroke-[2.5]" />
-              <span>Download for Windows (.exe)</span>
+              <span>Download {siteConfig.release.version} (.exe)</span>
             </a>
           </div>
         </div>

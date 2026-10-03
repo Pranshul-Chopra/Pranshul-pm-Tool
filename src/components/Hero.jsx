@@ -10,21 +10,27 @@ import {
   Bot,
   Search,
   ChevronRight,
-  Info
+  Info,
+  RefreshCw,
+  Kanban,
+  CheckCircle2,
+  AlertCircle,
+  TrendingUp,
+  FolderGit2
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
+import { PmtLogo } from './PmtLogo';
 import { siteConfig } from '../config/siteConfig';
 
 export function Hero({ onDownloadClick, onCopyToast }) {
-  const [activeTab, setActiveTab] = useState('copilot');
+  const [activeTab, setActiveTab] = useState('board');
 
   const getBadgeIcon = (type) => {
     switch (type) {
-      case 'db': return Database;
+      case 'board': return Kanban;
       case 'cpu': return Cpu;
       case 'search': return Search;
-      case 'doc': return FileText;
-      case 'shield': return ShieldCheck;
+      case 'refresh': return RefreshCw;
       default: return Sparkles;
     }
   };
@@ -60,7 +66,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           {siteConfig.hero.subtitle}
         </p>
 
-        {/* Realistic Architecture Notice */}
+        {/* Architecture Notice */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface/90 border border-white/10 text-xs font-mono text-zinc-400 mb-10 max-w-2xl mx-auto">
           <Info className="w-4 h-4 text-gold shrink-0" />
           <span>{siteConfig.hero.notice}</span>
@@ -74,7 +80,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-mono text-sm font-semibold text-zinc-950 bg-gradient-to-r from-gold via-gold-bright to-yellow-400 hover:brightness-110 shadow-lg shadow-gold/25 hover:shadow-gold/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
           >
             <Download className="w-4 h-4 stroke-[2.5]" />
-            <span>Download {siteConfig.name} {siteConfig.release.version} (.exe)</span>
+            <span>Download {siteConfig.shortName} {siteConfig.release.version} (.exe)</span>
           </a>
 
           <a
@@ -88,10 +94,10 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           </a>
 
           <a
-            href="#architecture"
+            href="#sprint-board"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-xl font-mono text-xs text-zinc-400 hover:text-gold transition-colors"
           >
-            <span>Inspect Architecture</span>
+            <span>Explore Sprint Board</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </a>
         </div>
@@ -110,19 +116,22 @@ export function Hero({ onDownloadClick, onCopyToast }) {
         </div>
       </div>
 
-      {/* Realistic Interactive Desktop App Simulator Window */}
-      <div className="relative mx-auto max-w-5xl rounded-2xl border border-white/[0.12] bg-[#0c0c10] shadow-2xl shadow-black/80 overflow-hidden">
+      {/* Realistic Interactive Desktop App Simulator Window (Mirroring v1.3.0) */}
+      <div id="sprint-board" className="relative mx-auto max-w-5xl rounded-2xl border border-white/[0.12] bg-[#0c0c10] shadow-2xl shadow-black/80 overflow-hidden">
         {/* Window Chrome Title Bar */}
         <div className="bg-[#14141a] px-4 py-3 border-b border-white/[0.08] flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500/80 border border-red-600/50" />
             <div className="w-3 h-3 rounded-full bg-yellow-500/80 border border-yellow-600/50" />
             <div className="w-3 h-3 rounded-full bg-green-500/80 border border-green-600/50" />
-            <span className="ml-3 text-xs font-mono text-zinc-400 flex items-center gap-2">
-              <span className="text-gold font-semibold">{siteConfig.hero.simulator.windowTitle}</span>
-              <span className="text-zinc-600">|</span>
-              <span className="text-zinc-500 truncate hidden sm:inline">{siteConfig.hero.simulator.workspaceTitle}</span>
-            </span>
+            <div className="flex items-center gap-2 ml-3">
+              <PmtLogo size="sm" />
+              <span className="text-xs font-mono text-zinc-400 flex items-center gap-2">
+                <span className="text-gold font-semibold">{siteConfig.hero.simulator.windowTitle}</span>
+                <span className="text-zinc-600">|</span>
+                <span className="text-zinc-500 truncate hidden sm:inline">{siteConfig.hero.simulator.workspaceTitle}</span>
+              </span>
+            </div>
           </div>
 
           <div className="flex items-center gap-2">
@@ -137,13 +146,25 @@ export function Hero({ onDownloadClick, onCopyToast }) {
         </div>
 
         {/* App Frame Content */}
-        <div className="grid grid-cols-1 md:grid-cols-12 min-h-[460px]">
-          {/* Mini Sidebar */}
+        <div className="grid grid-cols-1 md:grid-cols-12 min-h-[490px]">
+          {/* Authentic Sidebar matching shell.html */}
           <div className="md:col-span-3 bg-[#111116] border-r border-white/[0.08] p-3 flex flex-col justify-between">
             <div className="space-y-1">
               <div className="px-3 py-2 text-[10px] font-mono uppercase text-zinc-400 font-bold tracking-wider">
-                Workstation Modules
+                Workstation Tabs
               </div>
+              <button 
+                onClick={() => setActiveTab('board')}
+                className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-left transition-colors ${
+                  activeTab === 'board' 
+                    ? 'bg-gold/15 text-gold-bright border border-gold/30' 
+                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+              >
+                <Kanban className="w-3.5 h-3.5 text-gold" />
+                <span className="font-semibold">Sprint Board (v1.3.0)</span>
+              </button>
+
               <button 
                 onClick={() => setActiveTab('copilot')}
                 className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-left transition-colors ${
@@ -153,7 +174,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 }`}
               >
                 <Bot className="w-3.5 h-3.5 text-gold" />
-                <span>AI Copilot & PRD</span>
+                <span>AI Copilot & Slash Tools</span>
               </button>
 
               <button 
@@ -165,31 +186,19 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 }`}
               >
                 <FileText className="w-3.5 h-3.5 text-gold" />
-                <span>Knowledge Ingestion</span>
+                <span>Knowledge Base</span>
               </button>
 
               <button 
-                onClick={() => setActiveTab('kanban')}
+                onClick={() => setActiveTab('projects')}
                 className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-left transition-colors ${
-                  activeTab === 'kanban' 
+                  activeTab === 'projects' 
                     ? 'bg-gold/15 text-gold-bright border border-gold/30' 
                     : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
                 }`}
               >
-                <Layers className="w-3.5 h-3.5 text-gold" />
-                <span>Initiatives & Backlog</span>
-              </button>
-
-              <button 
-                onClick={() => setActiveTab('decisions')}
-                className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-left transition-colors ${
-                  activeTab === 'decisions' 
-                    ? 'bg-gold/15 text-gold-bright border border-gold/30' 
-                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
-                }`}
-              >
-                <Database className="w-3.5 h-3.5 text-gold" />
-                <span>Decision Ledger (ADR)</span>
+                <FolderGit2 className="w-3.5 h-3.5 text-gold" />
+                <span>Projects & Presets</span>
               </button>
             </div>
 
@@ -207,72 +216,175 @@ export function Hero({ onDownloadClick, onCopyToast }) {
 
           {/* Central Main Viewport */}
           <div className="md:col-span-9 p-4 sm:p-6 bg-[#0a0a0e] flex flex-col justify-between">
-            {activeTab === 'copilot' && (
+            
+            {/* VIEW 1: Sprint Kanban Board (NEW IN v1.3.0) */}
+            {activeTab === 'board' && (
               <div className="space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-gold animate-ping" />
-                    <span className="text-xs font-mono text-zinc-300 font-semibold">
-                      Reasoning Engine &bull; Synthesizing PRD
-                    </span>
+                {/* Sprint Metrics KPI Banner */}
+                <div className="grid grid-cols-4 gap-2 bg-[#14141c] p-3 rounded-xl border border-white/[0.08] text-xs font-mono">
+                  <div>
+                    <div className="text-[10px] text-zinc-400 uppercase">Total Tasks</div>
+                    <div className="text-base font-bold text-white">18</div>
                   </div>
-                  <span className="text-[11px] font-mono text-zinc-400">
-                    Source Context: 3 retrieved passages
-                  </span>
+                  <div>
+                    <div className="text-[10px] text-amber-400 uppercase">In Flight</div>
+                    <div className="text-base font-bold text-amber-400">4</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-red-400 uppercase">Blockers</div>
+                    <div className="text-base font-bold text-red-400 flex items-center gap-1">
+                      <span>1</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-green-400 uppercase">Velocity</div>
+                    <div className="text-base font-bold text-green-400">72% (34 Pts)</div>
+                  </div>
                 </div>
 
-                <div className="bg-[#14141c] border border-white/10 rounded-xl p-3.5">
-                  <div className="text-[10px] font-mono text-gold uppercase mb-1">Product Prompt</div>
-                  <p className="text-xs font-mono text-zinc-200">
-                    "Draft an initial Product Requirement Document for offline sync, referencing latency constraints from Architecture_Spec.pdf and storage design from ADR-014."
-                  </p>
-                </div>
-
-                <div className="bg-[#111116] border border-gold/30 rounded-xl p-4 space-y-3 relative overflow-hidden">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
-                      PRD Draft: Offline Synchronization Engine
-                    </span>
-                    <button 
-                      onClick={() => onCopyToast && onCopyToast('PRD exported as .docx successfully!')}
-                      className="px-2.5 py-1 rounded bg-gold/20 hover:bg-gold/30 text-gold-bright border border-gold/40 text-[10px] font-mono flex items-center gap-1 transition-colors"
-                    >
-                      <Download className="w-3 h-3" />
-                      Export Styled .docx
-                    </button>
+                {/* 4 Kanban Lanes */}
+                <div className="grid grid-cols-4 gap-2 text-xs font-mono">
+                  {/* Lane 1: Backlog */}
+                  <div className="bg-[#111116] p-2.5 rounded-xl border border-white/[0.08] space-y-2">
+                    <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                      <span className="text-[10px] uppercase font-bold text-zinc-400">Backlog (2)</span>
+                    </div>
+                    <div className="bg-surface p-2 rounded-lg border border-white/[0.06] space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] px-1 rounded bg-blue-500/20 text-blue-300">P2 Medium</span>
+                        <span className="text-[9px] px-1 rounded bg-white/[0.06] text-gold font-bold">3 pts</span>
+                      </div>
+                      <div className="text-white text-[11px] font-semibold">CSV / JSON export CLI</div>
+                      <div className="text-[10px] text-zinc-400">As a PM, export backlogs directly...</div>
+                    </div>
                   </div>
 
-                  <p className="text-xs text-zinc-300 leading-relaxed">
-                    <strong>1. Objective:</strong> Provide local area Wi-Fi synchronization for engineering workstations without requiring central proxy servers.
-                  </p>
+                  {/* Lane 2: In Progress */}
+                  <div className="bg-[#111116] p-2.5 rounded-xl border border-gold/30 space-y-2">
+                    <div className="flex items-center justify-between pb-1 border-b border-gold/20">
+                      <span className="text-[10px] uppercase font-bold text-gold">In Progress (2)</span>
+                    </div>
+                    <div className="bg-surface p-2 rounded-lg border border-gold/40 space-y-1.5 shadow-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] px-1 rounded bg-red-500/20 text-red-300">P0 Critical</span>
+                        <span className="text-[9px] px-1 rounded bg-gold/20 text-gold-bright font-bold">5 pts</span>
+                      </div>
+                      <div className="text-white text-[11px] font-semibold">PRD-to-Story Decomposer</div>
+                      <div className="text-[10px] text-zinc-300">Given a PRD, generate 4-8 Agile user stories...</div>
+                    </div>
+                  </div>
 
-                  <div className="bg-[#09090c] rounded-lg p-3 border border-white/[0.06] text-xs space-y-2">
-                    <div className="text-[10px] font-mono text-zinc-400 uppercase">Document References & Grounding</div>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-0.5 rounded bg-surface border border-white/15 text-[11px] font-mono text-gold-bright hover:border-gold cursor-pointer transition-colors">
-                        📄 Architecture_Spec.pdf [§3.2 Network Bounds]
-                      </span>
-                      <span className="px-2 py-0.5 rounded bg-surface border border-white/15 text-[11px] font-mono text-gold-bright hover:border-gold cursor-pointer transition-colors">
-                        ⚖️ ADR-014: SQLite WAL Storage
-                      </span>
-                      <span className="px-2 py-0.5 rounded bg-surface border border-white/15 text-[11px] font-mono text-zinc-300 hover:border-gold cursor-pointer transition-colors">
-                        🔒 Local Key Storage
-                      </span>
+                  {/* Lane 3: Blocked */}
+                  <div className="bg-[#111116] p-2.5 rounded-xl border border-red-500/30 space-y-2">
+                    <div className="flex items-center justify-between pb-1 border-b border-red-500/20">
+                      <span className="text-[10px] uppercase font-bold text-red-400">Blocked (1)</span>
+                    </div>
+                    <div className="bg-surface p-2 rounded-lg border border-red-500/30 space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] px-1 rounded bg-red-500/20 text-red-300">P0 Blocker</span>
+                        <span className="text-[9px] px-1 rounded bg-white/[0.06] text-zinc-400 font-bold">8 pts</span>
+                      </div>
+                      <div className="text-white text-[11px] font-semibold">PyInstaller Flask Spec</div>
+                      <div className="text-[10px] text-red-300">Missing dynamic module hooks</div>
+                    </div>
+                  </div>
+
+                  {/* Lane 4: Completed */}
+                  <div className="bg-[#111116] p-2.5 rounded-xl border border-green-500/20 space-y-2">
+                    <div className="flex items-center justify-between pb-1 border-b border-green-500/20">
+                      <span className="text-[10px] uppercase font-bold text-green-400">Done (13)</span>
+                    </div>
+                    <div className="bg-surface p-2 rounded-lg border border-green-500/20 space-y-1.5 opacity-80">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] px-1 rounded bg-green-500/20 text-green-300">Shipped</span>
+                        <span className="text-[9px] px-1 rounded bg-white/[0.06] text-zinc-500">5 pts</span>
+                      </div>
+                      <div className="text-white text-[11px] line-through font-semibold">HTML5 Drag & Drop Board</div>
+                      <div className="text-[10px] text-zinc-500">Optimistic UI + PATCH /api/tasks</div>
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
+            {/* VIEW 2: AI Copilot with Slash Command Pill Container */}
+            {activeTab === 'copilot' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-gold animate-ping" />
+                    <span className="text-xs font-mono text-zinc-300 font-semibold">
+                      AI Copilot &bull; 8,192 Max Output Token Budget
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-mono text-zinc-400">
+                    Source Grounding: 3 retrieved passages
+                  </span>
+                </div>
+
+                {/* Input with Interactive Buttonish Slash Command Pill Container */}
+                <div className="bg-[#14141c] border border-white/10 rounded-xl p-3 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-mono font-bold shadow-sm">
+                      <span>/breakdown</span>
+                      <span className="text-zinc-500 text-[10px]">✕</span>
+                    </div>
+                    <span className="text-xs font-mono text-zinc-200">
+                      Deconstruct Offline Sync PRD into Agile stories with Given/When/Then criteria
+                    </span>
+                  </div>
+                </div>
+
+                {/* AI Output preview with Generated Stories */}
+                <div className="bg-[#111116] border border-gold/30 rounded-xl p-4 space-y-3 relative overflow-hidden">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
+                      Generated 5 User Stories &bull; Saved to pmtool.db
+                    </span>
+                    <button 
+                      onClick={() => onCopyToast && onCopyToast('PRD exported as .docx successfully!')}
+                      className="px-2.5 py-1 rounded bg-gold/20 hover:bg-gold/30 text-gold-bright border border-gold/40 text-[10px] font-mono flex items-center gap-1 transition-colors"
+                    >
+                      <Download className="w-3 h-3" />
+                      Export Word (.docx)
+                    </button>
+                  </div>
+
+                  <div className="bg-[#09090c] p-3 rounded-lg border border-white/[0.06] text-xs font-mono space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white font-semibold">Story 1: Local Subnet Peer Discovery Handshake</span>
+                      <span className="px-1.5 py-0.5 rounded bg-gold/20 text-gold-bright font-bold">5 Story Points</span>
+                    </div>
+                    <p className="text-[11px] text-zinc-300 leading-relaxed">
+                      <strong>Given:</strong> Two PmT desktop clients on 192.168.1.0/24 subnet.<br />
+                      <strong>When:</strong> User clicks "Discover Peers" in local settings.<br />
+                      <strong>Then:</strong> Authenticate via UDP handshake and exchange differential state.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 text-[10px] font-mono">
+                    <span className="px-2 py-0.5 rounded bg-surface border border-white/10 text-gold-bright">
+                      📄 Architecture_Spec.pdf [§3.2 Network Bounds]
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-surface border border-white/10 text-zinc-300">
+                      ⚖️ ADR-014: SQLite WAL Pooling
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* VIEW 3: Knowledge Base with Dual Scrollbars & FTS5 BM25 */}
             {activeTab === 'documents' && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                   <span className="text-xs font-mono text-zinc-300 font-semibold">
-                    Knowledge Pipeline &bull; Directory Scanning & Chunking
+                    Knowledge Base &bull; FTS5 BM25 Search & Chunk Inspector
                   </span>
                   <span className="text-[11px] font-mono text-gold">
-                    Parsers: .pdf .docx .md .txt .csv
+                    Parsers: .pdf .docx .md .txt .csv .json
                   </span>
                 </div>
 
@@ -286,97 +398,47 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                   </div>
                   <div className="p-3 rounded-xl bg-surface border border-white/10">
                     <div className="flex items-center justify-between text-xs font-mono text-white mb-1">
-                      <span className="font-semibold truncate">Product_Roadmap.docx</span>
+                      <span className="font-semibold truncate">Q3_Product_Roadmap.docx</span>
                       <span className="text-[10px] text-zinc-400">18.4 KB</span>
                     </div>
-                    <p className="text-[11px] text-zinc-400">Headings and paragraphs extracted into searchable passages.</p>
+                    <p className="text-[11px] text-zinc-400">Headings and tables extracted with sticky table headers.</p>
                   </div>
                 </div>
 
                 <div className="p-3 rounded-xl bg-[#14141c] border border-white/10 font-mono text-xs text-zinc-300">
-                  <span className="text-gold">BM25 Retrieval Query:</span> "offline sync network bounds" <br />
+                  <span className="text-gold">BM25 Retrieval Query:</span> "offline peer discovery handshake" <br />
                   <span className="text-green-400">FTS5 Match:</span> Passage #4 in `Architecture_Spec.pdf` section "3.2 Network Bounds".
                 </div>
               </div>
             )}
 
-            {activeTab === 'kanban' && (
+            {/* VIEW 4: Projects & 5 Enterprise Presets */}
+            {activeTab === 'projects' && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                   <span className="text-xs font-mono text-zinc-300 font-semibold">
-                    Initiative Execution &bull; Relational Backlog
-                  </span>
-                  <span className="text-[11px] font-mono text-zinc-400">
-                    Active Tasks in pmtool.db
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-3 gap-2 text-xs">
-                  <div className="bg-surface/90 border border-white/10 rounded-lg p-2.5 space-y-2">
-                    <div className="text-[10px] font-mono uppercase text-zinc-400 font-semibold">Backlog (1)</div>
-                    <div className="bg-[#191922] p-2 rounded border border-white/[0.06] space-y-1">
-                      <span className="text-[9px] font-mono px-1 rounded bg-amber-500/20 text-amber-300">P1 Planned</span>
-                      <div className="text-white text-[11px]">sqlite-vec retrieval benchmark</div>
-                    </div>
-                  </div>
-
-                  <div className="bg-surface/90 border border-gold/30 rounded-lg p-2.5 space-y-2">
-                    <div className="text-[10px] font-mono uppercase text-gold font-semibold">In Progress (2)</div>
-                    <div className="bg-[#191922] p-2 rounded border border-gold/40 space-y-1">
-                      <span className="text-[9px] font-mono px-1 rounded bg-red-500/20 text-red-300">P0 Current</span>
-                      <div className="text-white text-[11px]">Refine section chunking sentence boundaries</div>
-                    </div>
-                  </div>
-
-                  <div className="bg-surface/90 border border-white/10 rounded-lg p-2.5 space-y-2">
-                    <div className="text-[10px] font-mono uppercase text-green-400 font-semibold">Completed (8)</div>
-                    <div className="bg-[#191922] p-2 rounded border border-green-500/20 space-y-1 opacity-80">
-                      <span className="text-[9px] font-mono px-1 rounded bg-green-500/20 text-green-300">Done</span>
-                      <div className="text-white text-[11px] line-through">Electron Flask process supervisor</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'decisions' && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                  <span className="text-xs font-mono text-zinc-300 font-semibold">
-                    Decision Register &bull; Documented Architecture & Strategy
+                    Projects Overview &bull; 5 Enterprise Domain Presets
                   </span>
                   <span className="text-[11px] font-mono text-green-400">
-                    Persistent History
+                    Auto-Seeds Milestone Tasks
                   </span>
                 </div>
 
-                <div className="space-y-2">
-                  <div className="p-3 rounded-xl bg-surface border border-gold/40 flex items-start justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-mono text-xs text-gold font-bold">ADR-014</span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-green-500/10 text-green-400">Recorded</span>
-                        <span className="text-xs font-semibold text-white">Dual-Database Segmentation Pattern</span>
-                      </div>
-                      <p className="text-[11px] text-zinc-400">
-                        Isolate operational relational data (pmtool.db) from volatile AI reasoning traces (ai_context.db).
-                      </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+                  <div className="p-3 rounded-xl bg-surface border border-gold/40 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-white">AI Copilot & RAG Studio</span>
+                      <span className="px-1.5 py-0.5 rounded bg-gold/10 text-gold text-[10px]">Preset: AI Platform</span>
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-400 shrink-0">Oct 2026</span>
+                    <p className="text-[11px] text-zinc-400">Auto-seeds: PRD Drafting, FTS5 Indexing, Telemetry, and Evaluation.</p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-surface border border-white/10 flex items-start justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-mono text-xs text-zinc-400 font-bold">ADR-013</span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-green-500/10 text-green-400">Recorded</span>
-                        <span className="text-xs font-semibold text-white">Encrypted Local Key Storage Scheme</span>
-                      </div>
-                      <p className="text-[11px] text-zinc-400">
-                        PBKDF2 key derivation from user environment with authenticated HMAC encryption for optional cloud keys.
-                      </p>
+                  <div className="p-3 rounded-xl bg-surface border border-white/10 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-white">Enterprise SaaS Hub</span>
+                      <span className="px-1.5 py-0.5 rounded bg-white/[0.06] text-zinc-300 text-[10px]">Preset: Enterprise</span>
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-400 shrink-0">Sep 2026</span>
+                    <p className="text-[11px] text-zinc-400">Auto-seeds: RBAC Specs, Audit Logging, and Tenant Billing.</p>
                   </div>
                 </div>
               </div>
@@ -387,10 +449,10 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1.5 text-zinc-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                  SQLite WAL: Active
+                  SQLite WAL: Enabled
                 </span>
                 <span className="text-zinc-500">|</span>
-                <span>FTS5 Search: Ready</span>
+                <span>electron-updater: Delta Sync Active</span>
               </div>
               <div className="text-gold-bright flex items-center gap-1">
                 <span>{siteConfig.hero.simulator.shortcut}</span>

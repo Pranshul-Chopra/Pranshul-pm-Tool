@@ -1,12 +1,15 @@
 /**
  * PM Tool — Central Site & Release Configuration
  * 
- * Tightened & defensible product claims aligned with the source code:
- * - Local-first architecture (SQLite, Electron, local Flask)
- * - Offline-capable workflows with local Ollama models; optional cloud models (Gemini)
- * - Document-grounded PRD drafting with source references
- * - Ranked full-text search (BM25 via FTS5); dense vector retrieval planned on roadmap
- * - Honest local key derivation and security boundaries
+ * Accurately reflects the actual state of the application (v1.3.0):
+ * - Interactive Sprint Kanban Board with HTML5 drag-and-drop & Fibonacci story points
+ * - Automated PRD-to-Story Decomposer Tool (/breakdown & /api/tools/breakdown)
+ * - RAG-Grounded AI Copilot with interactive slash command pill container & 8,192 token output
+ * - Local-First Knowledge Base with SQLite FTS5 BM25 search & multi-format parsers
+ * - In-App Auto-Updating via electron-updater & GitHub Releases pipeline
+ * - Bespoke PmT brand identity & multi-resolution desktop icons
+ * - Two-database segregation (pmtool.db Schema v5 + ai_context.db)
+ * - Dynamic cascading port collision resilience (5050 through 5065)
  */
 
 export const siteConfig = {
@@ -14,23 +17,23 @@ export const siteConfig = {
   // 1. BRAND & IDENTITY
   // ==========================================
   name: 'PM Tool',
-  shortName: 'PM',
+  shortName: 'PmT',
   tagline: 'Local-First Product Management Workspace',
   description:
-    'From organizational knowledge to actionable product decisions. Ingest your product documents, retrieve relevant evidence, draft structured PRDs with source references, and turn requirements into a local backlog — from one Windows desktop workspace.',
+    'From organizational knowledge to actionable product execution. Ingest local specs, draft structured PRDs with document grounding, decompose requirements into testable Agile stories with Fibonacci points, and manage sprint backlogs — from one native Windows desktop workstation.',
 
   // ==========================================
   // 2. ACTIVE VERSION & RELEASE METADATA
   // ==========================================
   release: {
-    version: 'v1.0.0',
-    versionFull: 'v1.0.0-mvp',
-    badge: 'INITIAL RELEASE',
+    version: 'v1.3.0',
+    versionFull: 'v1.3.0',
+    badge: 'v1.3.0 STABLE RELEASE',
     releaseDate: 'October 2026',
-    channel: 'MVP Channel',
+    channel: 'Stable Channel',
     platform: 'Windows 10/11 (64-bit)',
-    statusText: 'Local-First Runtime &bull; SQLite Storage Initialized',
-    isAirGappedReady: false, // Accurate: offline with Ollama, cloud optional
+    statusText: 'Local Runtime Initialized &bull; SQLite Schema v5',
+    isAirGappedReady: false,
   },
 
   // ==========================================
@@ -38,25 +41,25 @@ export const siteConfig = {
   // ==========================================
   downloads: {
     installer: {
-      fileName: 'PM-Tool-Setup-1.0.0.exe',
+      fileName: 'PM-Tool-Setup-1.3.0.exe',
       label: 'Download NSIS Setup (.exe)',
-      size: '136 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.0.0/PM.Tool-Setup-1.0.0.exe',
+      size: '78.4 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.3.0/PM-Tool-Setup-1.3.0.exe',
       directDownload: true,
     },
     portable: {
-      fileName: 'PM-Tool-1.0.0.exe',
+      fileName: 'PM-Tool-1.3.0.exe',
       label: 'Portable Standalone (.exe)',
-      size: '136 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.0.0/PM.Tool-1.0.0.exe',
+      size: '71.2 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.3.0/PM-Tool-1.3.0.exe',
     },
-    sha256: 'e8b39c0f81d4a1329c2980fa2a5c9284d720bcf148942b03cf36f24419ad20e5',
+    sha256: 'a4f91c80e1b238dc8195a63901bce559a3977efc8939c043e0618037b5d19a4e',
     gitCloneCommand: 'git clone https://github.com/Pranshul-Chopra/pm_tool.git',
     systemPrerequisites: [
       'Windows 10 / Windows 11 (64-bit)',
-      '4 GB RAM minimum (8 GB+ recommended for local Ollama)',
-      '250 MB Free Storage for application and local SQLite databases',
-      'No mandatory cloud accounts for core local workflows',
+      '4 GB RAM minimum (8 GB+ recommended for local Ollama models)',
+      '300 MB Free Storage for application and local SQLite databases',
+      'Zero mandatory cloud accounts for core local workflows',
     ],
   },
 
@@ -80,105 +83,105 @@ export const siteConfig = {
   // ==========================================
   navLinks: [
     { name: 'Product', href: '#demo' },
+    { name: 'Sprint Board', href: '#sprint-board' },
     { name: 'Features', href: '#features' },
     { name: 'Pipelines', href: '#pipelines' },
     { name: 'Architecture', href: '#architecture' },
-    { name: 'Comparison', href: '#compare' },
-    { name: 'Roadmap', href: '#evolution' },
+    { name: 'Changelog', href: '#evolution' },
   ],
 
   // ==========================================
   // 6. HERO SECTION CONFIG
   // ==========================================
   hero: {
-    pillBadge: 'LOCAL-FIRST PRODUCT MANAGEMENT WORKSPACE',
-    pillVersionTag: 'Windows 10/11',
+    pillBadge: 'LOCAL-FIRST PRODUCT MANAGEMENT WORKSPACE &bull; V1.3.0',
+    pillVersionTag: 'Windows 10/11 Native',
     headlineMain: 'From Organizational Knowledge',
     headlineAccent: 'to Actionable Product Decisions.',
     headlineEnd: '',
     subtitle:
-      'Ingest your product documents, retrieve relevant evidence, draft structured PRDs with source references, and turn requirements into a local backlog — from one Windows desktop workspace.',
+      'Ingest product specs, retrieve relevant context, draft structured PRDs with document grounding, decompose requirements into testable Agile user stories with Fibonacci points, and manage sprint backlogs — from one native Windows desktop workspace.',
     notice:
-      'Core workflows operate offline with local models. Optional cloud-model support (Gemini) is available when configured.',
+      'Core workflows operate offline with local models (Ollama). Optional cloud-model support (Gemini) is available when configured.',
     specsBadges: [
-      { text: 'Local SQLite Storage', type: 'db' },
-      { text: 'Ollama Offline Mode', type: 'cpu' },
-      { text: 'Document-Grounded Drafting', type: 'search' },
-      { text: 'DOCX Export', type: 'doc' },
+      { text: 'Sprint Kanban & Fibonacci Points', type: 'board' },
+      { text: 'PRD-to-Story Decomposer Tool', type: 'cpu' },
+      { text: 'Local FTS5 BM25 Search', type: 'search' },
+      { text: 'Auto-Updates via GitHub Releases', type: 'refresh' },
     ],
     // Desktop App Simulator Mockup
     simulator: {
-      windowTitle: 'PM Tool Desktop Shell',
-      workspaceTitle: 'Workspace: Core Platform v1.0.0',
-      backendHost: '127.0.0.1:5050 [Localhost]',
+      windowTitle: 'PmT Desktop Shell',
+      workspaceTitle: 'Workspace: Core Platform v1.3.0',
+      backendHost: '127.0.0.1:5050 [Handshake OK]',
       activeModel: 'Ollama: llama3.2 (Local Mode)',
-      localDbPath: '%LOCALAPPDATA%\\PMTool\\pmtool.db',
-      dbStats: 'Indexed Chunks: 128 • SQLite FTS5 Index',
-      shortcut: 'Designed for fast on-device retrieval',
+      localDbPath: '%LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v5)',
+      dbStats: 'Sprint Velocity: 72% • 34 Story Points Active',
+      shortcut: 'Slash Commands: /prd, /breakdown, /summarize, /search',
     },
   },
 
   // ==========================================
-  // 7. TECH MARQUEE
+  // 7. TECH MARQUEE (Reflecting Real v1.3.0 Capabilities)
   // ==========================================
   techMarquee: [
-    'LOCAL-ONLY FLASK BACKEND (127.0.0.1)',
-    'ELECTRON WINDOW SUPERVISOR',
-    'SQLITE WAL CONNECTION POOLING',
-    'FTS5 BM25 FULL-TEXT SEARCH',
-    'LOCAL OLLAMA OFFLINE INFERENCE',
-    'OPTIONAL GOOGLE GEMINI DISPATCH',
-    'SECTION-AWARE CHUNKING WITH OVERLAP',
-    'STRUCTURED DOCX DOCUMENT EXPORT',
-    'LOCAL ENCRYPTED SECRET STORAGE',
-    'TWO-DATABASE SEGREGATION',
-    'NO MANDATORY CLOUD ACCOUNT',
-    'DESIGNED FOR FAST LOCAL RETRIEVAL',
+    'INTERACTIVE SPRINT KANBAN (HTML5 DRAG & DROP)',
+    'PRD-TO-STORY DECOMPOSER TOOL (/BREAKDOWN)',
+    'FIBONACCI STORY ESTIMATION (1, 2, 3, 5, 8)',
+    'SQLITE FTS5 BM25 FULL-TEXT SEARCH',
+    '8,192 MAX OUTPUT TOKEN LLM BUDGET',
+    'ELECTRON-UPDATER BACKGROUND DELTA SYNC',
+    'OFFLINE OLLAMA AUTO-DETECTION (127.0.0.1:11434)',
+    'DETERMINISTIC SUMMARIZER (30K WORD BUDGET)',
+    '1-CLICK STYLED WORD (.DOCX) EXPORT',
+    'TWO-DATABASE SEGREGATION (SCHEMA V5)',
+    'DYNAMIC CASCADING PORT SHIELD (5050-5065)',
+    'NO MANDATORY CLOUD ACCOUNTS',
   ],
 
   // ==========================================
-  // 8. PRODUCT SHOWCASE (INTERACTIVE MODULES)
+  // 8. PRODUCT SHOWCASE (ACTUAL MODULES IN APP)
   // ==========================================
   showcaseModules: [
     {
-      id: 'prd-studio',
-      name: 'AI Copilot & PRD Studio',
+      id: 'sprint-kanban',
+      name: 'Sprint Kanban Studio',
+      tag: 'Agile Execution (v1.3.0)',
+      headline: 'Interactive Sprint Kanban board with HTML5 drag-and-drop & Fibonacci estimation.',
+      description:
+        'Manage sprints across 4 workflow lanes: Backlog (todo), In Progress (in_progress), Blocked (blocked), and Completed (done). Features optimistic UI updates, background persistence via PATCH /api/tasks/:id, sprint velocity KPIs, and multi-field filtering by project and priority.',
+    },
+    {
+      id: 'story-decomposer',
+      name: 'PRD-to-Story Decomposer',
+      tag: 'Automated Tool (/breakdown)',
+      headline: 'Decompose raw PRDs into discrete, testable Agile user stories deterministically.',
+      description:
+        'The breakdown engine prompts the LLM Gateway with an 8,192 token budget to deconstruct PRDs into 4–8 discrete Agile user stories with Given/When/Then acceptance criteria, priority weights, and Fibonacci story points (1, 2, 3, 5, 8), saved straight to pmtool.db.',
+    },
+    {
+      id: 'ai-copilot',
+      name: 'RAG Copilot & Slash Studio',
       tag: 'Reasoning Pipeline',
-      headline: 'Transform high-level product intent into structured PRDs with source references.',
+      headline: 'Grounded drafting with interactive slash command pill containers and verified citations.',
       description:
-        'The reasoning pipeline connects active backlog initiatives directly to retrieved document passages and prior decision records. Outputs are structured, formatted with source references, and exportable to Word (.docx) documents.',
+        'Transform prompts into publication-grade PRDs with source references. Features interactive color-coded command pills (/search, /prd, /summarize, /plan, /metrics, /breakdown), 8,192 max output tokens, and 1-click Word (.docx) export with styled callouts.',
     },
     {
-      id: 'knowledge-ingestion',
-      name: 'Knowledge Pipeline & Chunks',
-      tag: 'FTS5 & BM25',
-      headline: 'Multi-format document ingestion with section-aware chunking and overlap.',
+      id: 'knowledge-base',
+      name: 'Local Knowledge Base',
+      tag: 'FTS5 & BM25 Search',
+      headline: 'Multi-format document parsing with section-aware chunking and live test search.',
       description:
-        'Parses local .pdf, .docx, .md, .txt, .csv, and .json files directly from your disk into local SQLite FTS5 index tables. Files remain on your machine during local-model operation.',
+        'Parses local .pdf, .docx, .md, .txt, .csv, and .json files directly from your disk into local SQLite FTS5 BM25 index tables. Includes directory scanner, chunk inspector modal, and dual-scrollbar table with sticky headers.',
     },
     {
-      id: 'backlog-kanban',
-      name: 'Initiatives & Kanban',
-      tag: 'Operational Store',
-      headline: 'A keyboard-friendly product ticket board linked to decision records.',
+      id: 'auto-updater',
+      name: 'Auto-Updater & Resilient Shell',
+      tag: 'Desktop Infrastructure',
+      headline: 'Integrated electron-updater with GitHub Releases and cascading port handshake.',
       description:
-        'Manage sprints and initiatives without sluggish web SPAs. Tasks can be associated with documented Architectural Decision Records (ADRs) and requirements.',
-    },
-    {
-      id: 'decision-ledger',
-      name: 'Organizational Decision Ledger',
-      tag: 'ADR & PDR',
-      headline: 'Persistent history for architectural and product strategy decisions.',
-      description:
-        'Avoid re-debating settled trade-offs. Capture decision context, options considered, and chosen path in a searchable local SQLite register.',
-    },
-    {
-      id: 'llm-gateway',
-      name: 'Hybrid LLM Gateway',
-      tag: 'Local & Cloud',
-      headline: 'Configurable dispatch across local offline Ollama and cloud providers.',
-      description:
-        'Run local models (e.g. Llama 3, Mistral) on-device with zero external network traffic. Alternatively, configure cloud models (Gemini) when advanced multimodal reasoning is required.',
+        'Background delta downloads via .blockmap differential updates with graceful Flask backend shutdown before installing. Features dynamic port collision resilience sweeping ports 5050 through 5065.',
     },
   ],
 
@@ -190,8 +193,8 @@ export const siteConfig = {
       title: 'Local-First Architecture',
       subtitle: 'Your computer is the primary system of record.',
       description:
-        'Core operational data — initiatives, tasks, decision records, and local document indexes — resides inside local SQLite databases on your hard drive. Local workflows do not depend on remote server uptime.',
-      badge: 'Local SQLite WAL',
+        'Core operational data — projects, backlog tasks, sprint velocity, and document chunk indexes — resides in local SQLite databases on your hard drive. Local workflows do not depend on remote SaaS uptime.',
+      badge: 'SQLite WAL Mode',
     },
     {
       title: 'No Per-Seat Subscription Tax',
@@ -204,12 +207,12 @@ export const siteConfig = {
       title: 'Offline-Capable with Local Models',
       subtitle: 'Complete workflows without internet connectivity.',
       description:
-        'When using local inference via Ollama, document ingestion, ranked search, and PRD drafting execute on-device without sending data across external networks.',
+        'When using local inference via Ollama, document ingestion, ranked search, PRD drafting, and user story breakdown execute on-device without sending data across external networks.',
       badge: 'Local Ollama Mode',
     },
     {
       title: 'Designed for Responsive Local Retrieval',
-      subtitle: 'SQLite FTS5 on NVMe SSD storage.',
+      subtitle: 'SQLite FTS5 on local SSD storage.',
       description:
         'Queries against the local SQLite FTS5 database execute directly on your hardware without network latency. Search local document passages and filter backlog items without waiting on cloud server roundtrips.',
       badge: 'On-Device FTS5',
@@ -221,38 +224,65 @@ export const siteConfig = {
   // ==========================================
   featureCategories: [
     { id: 'all', label: 'All Capabilities' },
+    { id: 'agile', label: 'Sprint & Agile Board' },
+    { id: 'tools', label: 'Automated PM Tools' },
+    { id: 'knowledge', label: 'Knowledge Base & RAG' },
     { id: 'architecture', label: 'Architecture & Storage' },
-    { id: 'knowledge', label: 'Knowledge & RAG' },
-    { id: 'reasoning', label: 'AI Reasoning & PRD' },
-    { id: 'operations', label: 'Product Operations' },
-    { id: 'security', label: 'Security & Privacy' },
+    { id: 'security', label: 'Security & Updates' },
   ],
   features: [
     {
-      id: 'pipelines',
-      category: 'architecture',
-      title: 'The Three Independent Pipelines',
-      tagline: 'Separation of Knowledge, Action, and Reasoning.',
+      id: 'sprint-kanban-board',
+      category: 'agile',
+      title: 'Sprint Kanban Studio with Drag & Drop',
+      tagline: '4 workflow lanes: Backlog, In Progress, Blocked, Completed.',
       description:
-        'Separates operations into distinct stages: Knowledge Pipeline (document ingestion & section chunking), Action Pipeline (permissioned tool calls), and Reasoning Pipeline (context assembly & LLM synthesis).',
-      highlight: 'Core Architecture',
+        'Native HTML5 drag-and-drop board with optimistic UI updates and background persistence via PATCH /api/tasks/:id. Tracks sprint velocity (% Done), active blockers, and Fibonacci story point totals.',
+      highlight: 'Interactive Board',
     },
     {
-      id: 'prd-export',
-      category: 'reasoning',
-      title: 'Document-Grounded PRD Studio & DOCX Exporter',
-      tagline: 'From feature concepts to styled Microsoft Word documents.',
+      id: 'story-breakdown-tool',
+      category: 'tools',
+      title: 'Automated PRD-to-Story Decomposer',
+      tagline: 'Turns PRDs into testable Agile user stories via /breakdown.',
       description:
-        'Structures feature requirements into comprehensive PRDs with problem statements, acceptance criteria, and source references. Exports cleanly to Microsoft Word (.docx) with styled headings and tables.',
+        'The breakdown engine prompts the LLM Gateway with an 8,192 token output budget to generate 4–8 discrete Agile user stories with Given/When/Then acceptance criteria and Fibonacci points (1, 2, 3, 5, 8).',
+      highlight: '/breakdown Tool',
+    },
+    {
+      id: 'doc-summarizer-tool',
+      category: 'tools',
+      title: 'Deterministic Document Summarizer',
+      tagline: 'Structured executive briefs with 30,000 word source budget.',
+      description:
+        'Extracts executive summaries, architectural constraints, and action items with ISO metadata frontmatter and SHA256 integrity verification. Logs execution telemetry into ai_context.db.',
+      highlight: '/summarize Tool',
+    },
+    {
+      id: 'prd-export-docx',
+      category: 'tools',
+      title: 'Styled Microsoft Word (.docx) Exporter',
+      tagline: 'From markdown specifications to styled Word documents.',
+      description:
+        'Converts markdown specifications into clean, styled Word documents (.docx) with cover metadata, heading hierarchy, callout blocks, and bullet styles ready for stakeholder review.',
       highlight: '1-Click Word Export',
     },
     {
-      id: 'dual-db',
+      id: 'command-pills',
+      category: 'tools',
+      title: 'Interactive Slash Command Pill Container',
+      tagline: 'Button-like colored badge container inside chat input.',
+      description:
+        'Selecting a command transforms it into an interactive glowing badge container before the textarea: /search (cyan), /prd (purple), /summarize (purple), /breakdown (amber), /plan (amber), /chat (blue).',
+      highlight: 'Slash Studio',
+    },
+    {
+      id: 'dual-db-v5',
       category: 'architecture',
-      title: 'Two-Database Storage Segregation',
+      title: 'Two-Database Storage Segregation (Schema v5)',
       tagline: 'Clean boundary between relational data and AI context.',
       description:
-        'Separates mission-critical relational PM entities (%LOCALAPPDATA%\\PMTool\\pmtool.db) from volatile AI reasoning traces, message histories, and FTS5 search indexes (ai_context.db).',
+        'Separates relational entities (%LOCALAPPDATA%\\PMTool\\pmtool.db) from volatile AI reasoning traces, messages, and FTS5 search indexes (ai_context.db). Schema v5 adds story points and acceptance criteria.',
       highlight: 'SQLite WAL Mode',
     },
     {
@@ -261,53 +291,35 @@ export const siteConfig = {
       title: 'Ranked Full-Text Search (FTS5 BM25)',
       tagline: 'Fast local keyword & term-frequency retrieval over documents.',
       description:
-        'Leverages SQLite FTS5 with BM25 ranking for exact terminology, ticket IDs, and technical specifications. Embedded vector search with sqlite-vec is planned on the roadmap.',
+        'Leverages SQLite FTS5 with BM25 ranking for exact terminology, ticket IDs, and technical specifications. Includes an interactive test bench and chunk inspector modal.',
       highlight: 'FTS5 BM25 Engine',
     },
     {
-      id: 'parsers',
+      id: 'parsers-dual-scroll',
       category: 'knowledge',
-      title: 'Multi-Format File Ingestors',
+      title: 'Multi-Format File Ingestors & Dual Scrollbars',
       tagline: 'Local parsing for PDF, DOCX, Markdown, Text, CSV, and JSON.',
       description:
-        'Local parsers extract text content and heading structures. Feeds a section-aware chunker with overlapping sentences designed to preserve context across chunk boundaries.',
+        'Local parsers extract text content and heading structures. Knowledge table features sticky headers and dual scrollbars (horizontal & vertical) preventing squash on compact displays.',
       highlight: 'Local Parsers',
     },
     {
-      id: 'decision-reg',
-      category: 'operations',
-      title: 'Persistent Decision Register (ADR/PDR)',
-      tagline: 'Traceable history for architecture and product trade-offs.',
-      description:
-        'Record Architectural Decision Records and Product Decisions with context, alternatives considered, chosen path, and rationale. Surfaces relevant past decisions during PRD drafting.',
-      highlight: 'Traceable History',
-    },
-    {
-      id: 'llm-gateway',
-      category: 'reasoning',
-      title: 'Dual-Provider LLM Dispatch Gateway',
-      tagline: 'Offline Ollama autonomy with optional Gemini cloud scaling.',
-      description:
-        'Supports local offline inference with Ollama (Llama 3, Mistral, Phi-3) for disconnected work. When configured by the user, dispatches to cloud models (Gemini) over HTTPS for advanced reasoning.',
-      highlight: 'Hybrid Dispatch',
-    },
-    {
-      id: 'dpapi-security',
+      id: 'electron-updater-pipe',
       category: 'security',
-      title: 'Encrypted Local Secret Storage',
-      tagline: 'Authenticated symmetric encryption for optional cloud API keys.',
+      title: 'In-App Auto-Updating via GitHub Releases',
+      tagline: 'Automated background delta downloads via electron-updater.',
       description:
-        'Cloud provider keys are encrypted before storage in SQLite using PBKDF2 key derivation and authenticated HMAC keystreams. No account credentials are required for local-only workflows.',
-      highlight: 'Encrypted at Rest',
+        'Checks for updates on launch and every 4 hours. Downloads .blockmap delta diffs, shows real-time progress toasts, and gracefully terminates Flask backend before restart.',
+      highlight: 'electron-updater',
     },
     {
-      id: 'electron-shell',
+      id: 'port-collision-shield',
       category: 'architecture',
-      title: 'Desktop Shell & Lifecycle Management',
-      tagline: 'Electron Chromium shell supervising a local Flask service.',
+      title: 'Dynamic Cascading Port Collision Resilience',
+      tagline: 'Tri-channel handshake discovery across ports 5050 to 5065.',
       description:
-        'Electron manages windowing, port discovery across 5050–5060, desktop notification IPC, and attempts process-tree termination when the desktop window is closed.',
-      highlight: 'Desktop Shell',
+        'Cascading port binding sweeps ports 5050 through 5065 to prevent port collisions with other local developer tools, discovered via runtime_port.json and HTTP /api/ping probes.',
+      highlight: 'Port Resilience',
     },
   ],
 
@@ -317,26 +329,26 @@ export const siteConfig = {
   executionSteps: [
     {
       step: '01',
-      name: 'Local Ingestion',
+      name: 'Scan & Ingest',
       headline: 'Scan & Ingest Documents from Your Hard Drive',
       description:
-        'Point to a local folder with PDF specifications, Word roadmaps, Markdown docs, or notes. Parsers extract text and headings on-device without cloud uploads.',
+        'Point to a local folder with PDF specifications, Word roadmaps, Markdown docs, or meeting notes. Parsers extract text and headings on-device without cloud uploads.',
       example: 'Supported: .pdf, .docx, .md, .txt, .csv, and .json formats.',
       connector: 'feeds into section-aware chunker with overlap',
     },
     {
       step: '02',
       name: 'FTS5 Indexing',
-      headline: 'Ranked BM25 Full-Text Indexing',
+      headline: 'Ranked BM25 Full-Text Indexing in SQLite',
       description:
-        'Chunks are indexed into SQLite FTS5 virtual tables with tokenized BM25 ranking for exact acronyms, names, and technical terms.',
+        'Chunks are indexed into SQLite FTS5 virtual tables with tokenized BM25 ranking for exact acronyms, names, and technical terms with change detection.',
       example: 'Indexed chunks stored in %LOCALAPPDATA%\\AIContextTool\\ai_context.db.',
       connector: 'powers evidence retrieval for context assembly',
     },
     {
       step: '03',
-      name: 'Context Assembly',
-      headline: 'Ground Prompts with Relevant Document Excerpts',
+      name: 'Grounded Drafting',
+      headline: 'Draft PRDs Grounded in Retrieved Excerpts',
       description:
         'Context Builder combines active project details, recent decision records, and retrieved document passages before querying the configured LLM (Ollama or Gemini).',
       example: 'Injects identifiable evidence chunks with file names and section headings.',
@@ -344,21 +356,21 @@ export const siteConfig = {
     },
     {
       step: '04',
-      name: 'PRD Export',
-      headline: 'Export Styled Microsoft Word (.docx) Files',
+      name: 'Story Breakdown',
+      headline: 'Decompose PRDs into Agile Stories (/breakdown)',
       description:
-        'The Document Generator creates valid Word documents with styled headings, tabular specifications, and referenced evidence for stakeholder review.',
-      example: 'Generates editable .docx files saved directly to your local drive.',
-      connector: 'allows committing requirements to local backlog',
+        'The automated PRD-to-Story Decomposer tool breaks requirements down into 4–8 discrete Agile user stories with Given/When/Then acceptance criteria and Fibonacci points.',
+      example: 'Automatically estimates story points (1, 2, 3, 5, 8) and priority weights.',
+      connector: 'saves directly to local SQLite database',
     },
     {
       step: '05',
-      name: 'Backlog Tracking',
-      headline: 'Organize Tasks in Local SQLite Backlog',
+      name: 'Sprint Execution',
+      headline: 'Track & Drag on Sprint Kanban Board',
       description:
-        'Requirements can be turned into relational backlog tickets in pmtool.db, tagged with P0/P1 priorities and linked to decision records.',
-      example: 'Direct relational updates in pmtool.db without remote SaaS dependency.',
-      connector: 'completes the local product cycle',
+        'Execute sprints on the interactive Kanban board. Drag tasks across Backlog, In Progress, Blocked, and Completed lanes with real-time velocity metrics.',
+      example: 'Optimistic UI updates saved immediately to pmtool.db via PATCH /api/tasks/:id.',
+      connector: 'completes the end-to-end agile execution loop',
     },
   ],
 
@@ -368,15 +380,15 @@ export const siteConfig = {
   architectureLayers: [
     {
       id: 'shell',
-      title: 'Tier 1: Desktop Shell & Supervisor',
-      tech: 'Electron &bull; Chromium &bull; Windows IPC Bridge',
+      title: 'Tier 1: Desktop Shell & Auto-Updater',
+      tech: 'Electron 44 &bull; Chromium &bull; electron-updater',
       latency: 'Native Desktop Shell',
-      summary: 'Manages windowing, port discovery, desktop notifications, and backend process lifecycle.',
+      summary: 'Manages windowing, cascading port discovery (5050-5065), background delta updates, and backend process lifecycle.',
       specs: [
-        'Port discovery: sweeps ports 5050 to 5060 dynamically on startup',
+        'Port discovery: sweeps ports 5050 to 5065 dynamically on startup',
+        'electron-updater: background delta updates from GitHub Releases',
         'Native Windows notifications via electron-notify IPC',
-        'Strict contextIsolation with preloaded safe bridge',
-        'Supervises local Flask process shutdown on application window close',
+        'Graceful Flask backend termination on window close to release SQLite locks',
       ],
     },
     {
@@ -384,36 +396,36 @@ export const siteConfig = {
       title: 'Tier 2: Localhost Micro-Backend',
       tech: 'Python Flask 3.x &bull; Localhost Binding (127.0.0.1)',
       latency: 'Localhost REST Protocol',
-      summary: 'Local service bound to 127.0.0.1 handling entity operations, ingestion, and gateway dispatch.',
+      summary: 'Local service bound to 127.0.0.1 handling entity operations, ingestion, automated tools, and gateway dispatch.',
       specs: [
         'Bound strictly to 127.0.0.1 (rejects external network connections)',
         'Origin & Sec-Fetch-Site security validation checks on REST endpoints',
-        'Can be packaged as a standalone executable via PyInstaller',
-        'Modular controllers for projects, tasks, decision records, and AI context',
+        'Automated tools: /breakdown (Story Decomposer) and /summarize (Executive Briefs)',
+        'Modular controllers for projects, tasks, sprint metrics, and document RAG',
       ],
     },
     {
       id: 'db',
-      title: 'Tier 3: Two-Database SQLite Storage',
+      title: 'Tier 3: Two-Database SQLite Storage (Schema v5)',
       tech: 'SQLite 3 &bull; WAL Journal &bull; Connection Pooling',
       latency: 'Local SSD Operations',
       summary: 'Separates operational relational records from volatile AI context and FTS5 search indexes.',
       specs: [
-        'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (projects, tasks, decisions)',
-        'AI Context DB: %LOCALAPPDATA%\\AIContextTool\\ai_context.db (FTS5 BM25 index & traces)',
+        'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v5 with story_points & acceptance_criteria)',
+        'AI Context DB: %LOCALAPPDATA%\\AIContextTool\\ai_context.db (FTS5 BM25 index & tool_runs)',
         'PRAGMA journal_mode = WAL for concurrent read operations',
         'Connection pooling with versioned SQLite schema migrations',
       ],
     },
     {
       id: 'ai',
-      title: 'Tier 4: Hybrid LLM & RAG Gateway',
-      tech: 'Local Ollama &bull; Optional Gemini API &bull; FTS5 BM25',
+      title: 'Tier 4: Hybrid LLM & RAG Gateway (8,192 Tokens)',
+      tech: 'Local Ollama &bull; Optional Gemini API &bull; 8,192 Budget',
       latency: 'Local or Cloud Dispatch',
-      summary: 'Routes prompts to local offline models or optional cloud APIs based on user configuration.',
+      summary: 'Routes prompts to local offline models or optional cloud APIs with expanded 8,192 output token budget.',
       specs: [
-        'Detects running Ollama models on localhost:11434 (e.g. Llama 3, Mistral)',
-        'Optional Google Gemini cloud fallback for advanced multimodal reasoning',
+        'Detects running Ollama models on localhost:11434 (e.g. Llama 3.2, Mistral, Gemma 2)',
+        'Expanded 8,192 max output token budget across all providers',
         'Local key encryption at rest using PBKDF2 and authenticated keystream',
         'Section-aware chunking with overlapping sentences and BM25 term retrieval',
       ],
@@ -421,7 +433,7 @@ export const siteConfig = {
   ],
 
   // ==========================================
-  // 13. PRIVACY & SAAS COMPARISON MATRIX (Defensible & Accurate)
+  // 13. PRIVACY & SAAS COMPARISON MATRIX
   // ==========================================
   comparisonRows: [
     {
@@ -438,6 +450,11 @@ export const siteConfig = {
       feature: 'Subscription Model',
       pmtool: 'No per-seat subscription for PM Tool ($0 open-source)',
       cloud: 'Recurring subscription pricing with per-user tiers; compare terms individually',
+    },
+    {
+      feature: 'Agile & Story Estimation',
+      pmtool: 'Built-in Sprint Kanban board, drag-and-drop, and automated /breakdown tool',
+      cloud: 'Often requires Jira Software or paid third-party agile extensions',
     },
     {
       feature: 'AI Model Execution & Data Egress',
@@ -460,9 +477,9 @@ export const siteConfig = {
       cloud: 'Document uploads to cloud servers, subject to upload quotas and cloud storage terms',
     },
     {
-      feature: 'Data Portability',
-      pmtool: 'Standard SQLite database files; easy to back up, inspect, or copy locally',
-      cloud: 'Vendor-dependent export formats and rate-limited API access',
+      feature: 'Application Updates',
+      pmtool: 'Transparent GitHub Releases auto-updating with delta blockmaps via electron-updater',
+      cloud: 'Silent continuous cloud deployments without user version control',
     },
   ],
 
@@ -472,73 +489,95 @@ export const siteConfig = {
   designTenets: [
     {
       title: 'Eliminate Context Switching',
-      desc: 'Fragmenting product context across dozens of browser tabs and separate cloud tools increases cognitive friction. PM Tool unifies documents, PRDs, and backlog items in a single desktop frame.',
+      desc: 'Fragmenting product context across dozens of browser tabs and separate cloud tools increases cognitive friction. PM Tool unifies documents, PRDs, story breakdown, and sprint boards in a single desktop frame.',
     },
     {
       title: 'Useful Complexity Over Shallow Simplicity',
-      desc: 'Simplified to-do apps often hide necessary planning controls. We believe professional product software should be information-dense, keyboard-friendly, and oriented toward real execution.',
+      desc: 'Simplified to-do apps often hide necessary planning controls. We believe professional product software should be information-dense, keyboard-friendly, and oriented toward real agile execution.',
     },
     {
       title: 'Local Control as a Foundational Default',
-      desc: 'Your strategic roadmaps and draft requirements should remain under your control by default. Core indexing and backlog management run locally without mandatory remote accounts.',
+      desc: 'Your strategic roadmaps, draft requirements, and sprint tickets should remain under your control by default. Core indexing and backlog management run locally without mandatory remote accounts.',
     },
     {
       title: 'Sovereign Aesthetic Craft',
-      desc: 'Software used daily should respect your focus. Obsidian palettes, high-density layouts, and responsive micro-interactions preserve flow and reduce visual strain.',
+      desc: 'Software used daily should respect your focus. Obsidian and charcoal palettes, high-density layouts, and responsive micro-interactions preserve flow and reduce visual strain.',
     },
   ],
 
   // ==========================================
-  // 15. RELEASES & ROADMAP TIMELINE
+  // 15. RELEASES & ROADMAP TIMELINE (Reflecting Real History)
   // ==========================================
   releases: [
     {
-      version: 'v1.0.0-mvp',
-      badge: 'INITIAL RELEASE',
-      title: 'The Local-First Core, Knowledge Pipeline & PRD Studio',
-      tagline: 'Desktop shell, two-database architecture, and local/cloud LLM dispatch.',
+      version: 'v1.3.0',
+      badge: 'CURRENT STABLE RELEASE',
+      title: 'Interactive Sprint Kanban Board & PRD-to-Story Decomposer',
+      tagline: 'Agile execution engine, Fibonacci story points, and automated breakdown.',
       date: 'Oct 2026',
       decisionRationale:
-        'Product managers spend significant time gathering context across dispersed documents and drafting PRDs from scratch. We created a local desktop application that parses local documents, performs ranked BM25 search, drafts structured PRDs, and exports Word documents.',
+        'Moving from static task lists to a fully interactive agile sprint workflow. Built an interactive Kanban board with HTML5 drag-and-drop, sprint velocity metrics, and an automated PRD-to-Story Decomposer tool (/breakdown) that creates testable user stories with Fibonacci points in SQLite.',
       highlights: [
-        'Electron desktop supervisor managing local Flask service on 127.0.0.1 (ports 5050–5060)',
-        'Two-database architecture segregating operational records from AI reasoning traces',
-        'Local document parsing (.pdf, .docx, .md, .txt, .csv, .json) with section-aware chunking',
-        'Document-grounded PRD generation with source references and Word (.docx) export',
-        'LLM Gateway supporting local offline Ollama models and optional cloud Gemini dispatch',
-        'Encrypted local key storage at rest using PBKDF2 derivation for optional cloud API keys',
-        'Relational Kanban backlog and persistent decision register (ADR/PDR)',
+        'Sprint Kanban Studio (board.html) with 4 workflow lanes: Backlog, In Progress, Blocked, Completed',
+        'Native HTML5 drag-and-drop mechanics with optimistic UI updates and PATCH /api/tasks/:id persistence',
+        'Sprint KPI metrics header: Total Tasks, In-Flight items, Blockers alert, and Velocity (% Done)',
+        'Automated PRD-to-Story Decomposer tool (tools/story_decomposer.py & /breakdown slash command)',
+        'Generates 4–8 discrete Agile user stories with Given/When/Then acceptance criteria and Fibonacci points',
+        'Database Schema Migration v5 (db.py) adding story_points, acceptance_criteria, and assignee columns',
       ],
       isCurrent: true,
     },
     {
-      version: 'v1.1.0',
-      badge: 'PLANNED ROADMAP',
-      title: 'sqlite-vec Embeddings & Decision Dependency Graphs',
-      tagline: 'On-device vector search and visual architectural decision mapping.',
-      date: 'Q1 2027',
+      version: 'v1.2.0',
+      badge: 'SHIPPED',
+      title: 'In-App Auto-Updating, PmT Brand Identity & Slash Command Studio',
+      tagline: 'electron-updater delta sync, 8,192 token budget, and 30k word summarizer.',
+      date: 'Oct 2026',
       decisionRationale:
-        'BM25 is effective for exact technical terms and identifiers. We plan to incorporate sqlite-vec directly into the SQLite database to support dense semantic vector search alongside BM25 keyword matching.',
+        'Delivered seamless background updating from GitHub Releases, expanded the LLM generation budget to 8,192 tokens for exhaustive PRDs, and introduced interactive button-like slash command pill containers.',
       highlights: [
-        'Embedded on-device vector embeddings via sqlite-vec extension',
-        'Decision Dependency Graph linking ADRs to requirements and backlog tickets',
-        'Multi-project workspace management with isolated SQLite databases',
-        'Benchmarked retrieval latency over standard test corpus sizes',
+        'Integrated electron-updater with GitHub Releases for background delta updates using .blockmap diffs',
+        'Bespoke PmT brand identity with off-white P and warm amber-orange mT on dark squircle container',
+        'Interactive button-like slash command pill container (#active-command-pill) inside chat input',
+        'Deterministic Document Summarizer tool (tools/summarizer.py) with 30,000 word source document budget',
+        'Maximum output token budget raised to 8,192 tokens across Ollama, Gemini, and OpenAI gateways',
+        'Documents table dual scrollbars (horizontal & vertical) with sticky headers for compact screens',
+        'Cascading port collision resilience dynamically sweeping ports 5050 through 5065',
       ],
       isCurrent: false,
     },
     {
-      version: 'v1.2.0',
-      badge: 'FUTURE HORIZON',
-      title: 'P2P Encrypted Local Sync & Git-Backed PRD Versioning',
-      tagline: 'Local subnet collaboration and version control integrations.',
-      date: 'Q2 2027',
+      version: 'v1.1.0-mvp',
+      badge: 'SHIPPED',
+      title: 'Local-First RAG Subsystem & Document Knowledge Base',
+      tagline: 'SQLite FTS5 BM25 search engine and Word (.docx) document exporter.',
+      date: 'Oct 2026',
       decisionRationale:
-        'For teams working in physical proximity or on a local network, direct peer-to-peer sync allows sharing project updates without requiring cloud intermediaries.',
+        'Added on-device document ingestion and search without cloud vector service dependencies. Allowed product managers to ground AI prompts in local company documentation.',
       highlights: [
-        'Local subnet peer-to-peer differential synchronization',
-        'Git-backed version control integration for PRD diffs and audit logs',
-        'Cross-platform desktop binaries for macOS and Linux',
+        'Deep multi-format file parsers for .pdf (pypdf), .docx (python-docx), .md, .txt, .csv, and .json',
+        'Section-aware sliding-window chunker preserving markdown heading hierarchies and sentence boundaries',
+        'SQLite FTS5 full-text search with Porter stemming and BM25 relevance ranking scoring',
+        'Knowledge Base interface (documents.html) with test search bench and chunk inspector modal',
+        'PRD Document Generator (tools/document_generator.py) converting markdown specs to styled Word (.docx)',
+        '5 Enterprise Project presets (SaaS Hub, AI Copilot, Mobile App, Security IAM, High-Scale Infra)',
+      ],
+      isCurrent: false,
+    },
+    {
+      version: 'v1.0.0-mvp',
+      badge: 'SHIPPED',
+      title: 'Initial Foundation & Local-First Desktop Architecture',
+      tagline: 'Electron 44 shell, local Flask backend, and SQLite WAL storage.',
+      date: 'Oct 2026',
+      decisionRationale:
+        'Established the core desktop architecture: a sandboxed Electron Chromium window managing a headless local Python Flask backend on 127.0.0.1 with SQLite write-ahead logging.',
+      highlights: [
+        'Sandboxed Electron window with custom titlebar and child process lifecycle management',
+        'Headless Flask 3.x backend bound strictly to 127.0.0.1 with Origin and Sec-Fetch-Site validation',
+        'SQLite WAL connection pool at %LOCALAPPDATA%\\PMTool\\pmtool.db with schema migration tracking',
+        'Unified LLM Gateway (llm/gateway.py) auto-routing between local Ollama and Google Gemini',
+        'Local authenticated secret encryption using PBKDF2-HMAC-SHA256 and keystream',
       ],
       isCurrent: false,
     },
@@ -550,15 +589,15 @@ export const siteConfig = {
   nextHorizon: [
     {
       title: 'sqlite-vec Embedded Vector Index',
-      desc: 'Planned embedded vector search within SQLite for hybrid BM25 and dense neural retrieval without external services.',
+      desc: 'Planned embedded vector search extension within SQLite for hybrid BM25 and dense neural retrieval without external services.',
     },
     {
-      title: 'Scope Alignment Checks',
-      desc: 'Exploration to assist in checking incoming backlog tickets against approved PRD specifications to highlight divergence.',
+      title: 'Automated Sprint Retrospective Synthesizer',
+      desc: 'Synthesize sprint retrospectives automatically based on completed story points, blocked tickets, and velocity trends.',
     },
     {
-      title: 'Local Subnet P2P Exchange',
-      desc: 'Researching device-to-device local Wi-Fi synchronization for teams without central cloud relays.',
+      title: 'Local Subnet P2P Collaboration',
+      desc: 'Device-to-device local Wi-Fi synchronization for engineering teams without central cloud relays.',
     },
   ],
 };
