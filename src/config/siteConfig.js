@@ -1,14 +1,21 @@
 /**
  * PM Tool — Central Site & Release Configuration
  * 
- * Accurately reflects the actual state of the application (v1.3.0):
- * - Interactive Sprint Kanban Board with HTML5 drag-and-drop & Fibonacci story points
+ * Accurately reflects the actual state of the application (v1.4.0):
+ * - Data Studio & Business Dashboard Engine (data_engine.py & /dashboard)
+ * - Multi-Format Tabular Ingestion (.xlsx, .xls via openpyxl, .csv, .tsv, .json, .db)
+ * - Isolated Local Materialization in %LOCALAPPDATA%\PMTool\datasets\analytics_store.db
+ * - Custom User-Defined KPI Metrics & Pure SVG Responsive Charts (Bar, Donut, Tables)
+ * - Safe Read-Only SQL Sandbox with 5-Layer Defense-in-Depth
+ * - Guarded AI Contextual Grounding & /data Slash Command
+ * - Database Schema Migration v6 (db.py: data_sources, dashboards, dashboard_widgets)
+ * - Interactive Sprint Kanban Board with HTML5 drag-and-drop & Fibonacci points (v1.3.0)
  * - Automated PRD-to-Story Decomposer Tool (/breakdown & /api/tools/breakdown)
  * - RAG-Grounded AI Copilot with interactive slash command pill container & 8,192 token output
  * - Local-First Knowledge Base with SQLite FTS5 BM25 search & multi-format parsers
  * - In-App Auto-Updating via electron-updater & GitHub Releases pipeline
  * - Bespoke PmT brand identity & multi-resolution desktop icons
- * - Two-database segregation (pmtool.db Schema v5 + ai_context.db)
+ * - Three-database local storage segregation (pmtool.db, ai_context.db, analytics_store.db)
  * - Dynamic cascading port collision resilience (5050 through 5065)
  */
 
@@ -18,21 +25,22 @@ export const siteConfig = {
   // ==========================================
   name: 'PM Tool',
   shortName: 'PmT',
-  tagline: 'Local-First Product Management Workspace',
+  tagline: 'Local-First Product Management Workspace & Data Studio',
   description:
-    'From organizational knowledge to actionable product execution. Ingest local specs, draft structured PRDs with document grounding, decompose requirements into testable Agile stories with Fibonacci points, and manage sprint backlogs — from one native Windows desktop workstation.',
+    'From organizational knowledge and tabular data to actionable product decisions. Ingest business spreadsheets, query local datasets in a safe SQL sandbox, draft structured PRDs with document grounding, decompose requirements into testable Agile stories with Fibonacci points, and manage sprint backlogs — from one native Windows desktop workstation.',
 
   // ==========================================
   // 2. ACTIVE VERSION & RELEASE METADATA
   // ==========================================
   release: {
-    version: 'v1.3.0',
-    versionFull: 'v1.3.0',
-    badge: 'v1.3.0 STABLE RELEASE',
+    version: 'v1.4.0',
+    versionFull: 'v1.4.0',
+    badge: 'v1.4.0 STABLE RELEASE',
     releaseDate: 'October 2026',
+    buildDate: '2026-10-04',
     channel: 'Stable Channel',
     platform: 'Windows 10/11 (64-bit)',
-    statusText: 'Local Runtime Initialized &bull; SQLite Schema v5',
+    statusText: 'Local Runtime Initialized &bull; SQLite Schema v6',
     isAirGappedReady: false,
   },
 
@@ -41,24 +49,24 @@ export const siteConfig = {
   // ==========================================
   downloads: {
     installer: {
-      fileName: 'PM-Tool-Setup-1.3.0.exe',
+      fileName: 'PM-Tool-Setup-1.4.0.exe',
       label: 'Download NSIS Setup (.exe)',
-      size: '78.4 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.3.0/PM-Tool-Setup-1.3.0.exe',
+      size: '81.2 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.4.0/PM-Tool-Setup-1.4.0.exe',
       directDownload: true,
     },
     portable: {
-      fileName: 'PM-Tool-1.3.0.exe',
+      fileName: 'PM-Tool-1.4.0.exe',
       label: 'Portable Standalone (.exe)',
-      size: '71.2 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.3.0/PM-Tool-1.3.0.exe',
+      size: '74.6 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.4.0/PM-Tool-1.4.0.exe',
     },
-    sha256: 'a4f91c80e1b238dc8195a63901bce559a3977efc8939c043e0618037b5d19a4e',
+    sha256: 'e7c10b548d9834e912c9bf13a8637df49e1e938f28876807d91e604f7626927d',
     gitCloneCommand: 'git clone https://github.com/Pranshul-Chopra/pm_tool.git',
     systemPrerequisites: [
       'Windows 10 / Windows 11 (64-bit)',
-      '4 GB RAM minimum (8 GB+ recommended for local Ollama models)',
-      '300 MB Free Storage for application and local SQLite databases',
+      '4 GB RAM minimum (8 GB+ recommended for local Ollama models & large spreadsheets)',
+      '350 MB Free Storage for application, local databases, and dataset store',
       'Zero mandatory cloud accounts for core local workflows',
     ],
   },
@@ -82,7 +90,7 @@ export const siteConfig = {
   // 5. NAVIGATION LINKS
   // ==========================================
   navLinks: [
-    { name: 'Product', href: '#demo' },
+    { name: 'Data Studio', href: '#demo' },
     { name: 'Sprint Board', href: '#sprint-board' },
     { name: 'Features', href: '#features' },
     { name: 'Pipelines', href: '#pipelines' },
@@ -94,47 +102,49 @@ export const siteConfig = {
   // 6. HERO SECTION CONFIG
   // ==========================================
   hero: {
-    pillBadge: 'LOCAL-FIRST PRODUCT MANAGEMENT WORKSPACE &bull; V1.3.0',
+    pillBadge: 'LOCAL-FIRST PRODUCT MANAGEMENT & DATA STUDIO &bull; V1.4.0',
     pillVersionTag: 'Windows 10/11 Native',
-    headlineMain: 'From Organizational Knowledge',
+    headlineMain: 'From Organizational Knowledge & Data',
     headlineAccent: 'to Actionable Product Decisions.',
     headlineEnd: '',
     subtitle:
-      'Ingest product specs, retrieve relevant context, draft structured PRDs with document grounding, decompose requirements into testable Agile user stories with Fibonacci points, and manage sprint backlogs — from one native Windows desktop workspace.',
+      'Ingest product specs and business spreadsheets, visualize custom KPI dashboards, query local data in a safe SQL sandbox, draft grounded PRDs, decompose requirements into testable Agile user stories, and track sprints — all within one native Windows desktop workstation.',
     notice:
-      'Core workflows operate offline with local models (Ollama). Optional cloud-model support (Gemini) is available when configured.',
+      'Core workflows operate offline with local models (Ollama) and local SQLite analytics. Optional cloud-model support (Gemini) is available when configured.',
     specsBadges: [
-      { text: 'Sprint Kanban & Fibonacci Points', type: 'board' },
-      { text: 'PRD-to-Story Decomposer Tool', type: 'cpu' },
-      { text: 'Local FTS5 BM25 Search', type: 'search' },
+      { text: 'Data Studio & Business Dashboards', type: 'chart' },
+      { text: 'Safe Read-Only SQL Sandbox', type: 'terminal' },
+      { text: 'Sprint Kanban & Story Breakdown', type: 'board' },
       { text: 'Auto-Updates via GitHub Releases', type: 'refresh' },
     ],
     // Desktop App Simulator Mockup
     simulator: {
       windowTitle: 'PmT Desktop Shell',
-      workspaceTitle: 'Workspace: Core Platform v1.3.0',
+      workspaceTitle: 'Workspace: Core Platform v1.4.0',
       backendHost: '127.0.0.1:5050 [Handshake OK]',
       activeModel: 'Ollama: llama3.2 (Local Mode)',
-      localDbPath: '%LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v5)',
-      dbStats: 'Sprint Velocity: 72% • 34 Story Points Active',
-      shortcut: 'Slash Commands: /prd, /breakdown, /summarize, /search',
+      localDbPath: '%LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6)',
+      dbStats: 'Connected Datasets: 3 • Sprint Velocity: 74% • 34 Pts Active',
+      shortcut: 'Slash Commands: /data, /breakdown, /prd, /summarize, /search',
     },
   },
 
   // ==========================================
-  // 7. TECH MARQUEE (Reflecting Real v1.3.0 Capabilities)
+  // 7. TECH MARQUEE (Reflecting Real v1.4.0 Capabilities)
   // ==========================================
   techMarquee: [
+    'DATA STUDIO & BUSINESS DASHBOARDS (/DASHBOARD)',
+    'EXCEL (.XLSX) & CSV TABULAR INGESTION',
+    'SAFE READ-ONLY SQL SANDBOX (5-LAYER DEFENSE)',
+    'PURE SVG RESPONSIVE CHARTS & KPI CARDS',
+    'GUARDED AI CONTEXT GROUNDING (/DATA)',
     'INTERACTIVE SPRINT KANBAN (HTML5 DRAG & DROP)',
     'PRD-TO-STORY DECOMPOSER TOOL (/BREAKDOWN)',
     'FIBONACCI STORY ESTIMATION (1, 2, 3, 5, 8)',
     'SQLITE FTS5 BM25 FULL-TEXT SEARCH',
     '8,192 MAX OUTPUT TOKEN LLM BUDGET',
     'ELECTRON-UPDATER BACKGROUND DELTA SYNC',
-    'OFFLINE OLLAMA AUTO-DETECTION (127.0.0.1:11434)',
-    'DETERMINISTIC SUMMARIZER (30K WORD BUDGET)',
-    '1-CLICK STYLED WORD (.DOCX) EXPORT',
-    'TWO-DATABASE SEGREGATION (SCHEMA V5)',
+    'THREE-DATABASE SEGREGATION (SCHEMA V6)',
     'DYNAMIC CASCADING PORT SHIELD (5050-5065)',
     'NO MANDATORY CLOUD ACCOUNTS',
   ],
@@ -143,6 +153,14 @@ export const siteConfig = {
   // 8. PRODUCT SHOWCASE (ACTUAL MODULES IN APP)
   // ==========================================
   showcaseModules: [
+    {
+      id: 'data-studio',
+      name: 'Data Studio & Dashboards',
+      tag: 'New in v1.4.0',
+      headline: 'Multi-format tabular ingestion, responsive SVG charts, and safe SQL exploration.',
+      description:
+        'Ingest Excel (.xlsx, .xls via openpyxl), CSV, TSV, JSON, and SQLite files into local analytics_store.db. Configure custom KPI metrics (SUM, AVG, COUNT, MIN, MAX) with target comparisons, generate pure SVG Bar & Donut charts, and run analytical queries inside a sandboxed read-only SQL engine.',
+    },
     {
       id: 'sprint-kanban',
       name: 'Sprint Kanban Studio',
@@ -165,7 +183,7 @@ export const siteConfig = {
       tag: 'Reasoning Pipeline',
       headline: 'Grounded drafting with interactive slash command pill containers and verified citations.',
       description:
-        'Transform prompts into publication-grade PRDs with source references. Features interactive color-coded command pills (/search, /prd, /summarize, /plan, /metrics, /breakdown), 8,192 max output tokens, and 1-click Word (.docx) export with styled callouts.',
+        'Transform prompts into publication-grade PRDs with source references. Features interactive color-coded command pills (/data, /breakdown, /prd, /summarize, /plan, /metrics, /search), 8,192 max output tokens, and 1-click Word (.docx) export with styled callouts.',
     },
     {
       id: 'knowledge-base',
@@ -193,29 +211,29 @@ export const siteConfig = {
       title: 'Local-First Architecture',
       subtitle: 'Your computer is the primary system of record.',
       description:
-        'Core operational data — projects, backlog tasks, sprint velocity, and document chunk indexes — resides in local SQLite databases on your hard drive. Local workflows do not depend on remote SaaS uptime.',
+        'Core operational data — projects, backlog tasks, sprint velocity, document chunk indexes, and tabular business datasets — resides in local SQLite databases on your hard drive. Local workflows do not depend on remote SaaS uptime.',
       badge: 'SQLite WAL Mode',
     },
     {
       title: 'No Per-Seat Subscription Tax',
       subtitle: 'Open, self-contained desktop tooling.',
       description:
-        'Traditional product SaaS requires recurring monthly seat licenses to view or edit project requirements. PM Tool is an open-source desktop tool with no mandatory per-seat subscription fees.',
+        'Traditional product SaaS requires recurring monthly seat licenses to view or edit project requirements and dashboards. PM Tool is an open-source desktop tool with no mandatory per-seat subscription fees.',
       badge: '$0 Tooling License',
     },
     {
       title: 'Offline-Capable with Local Models',
       subtitle: 'Complete workflows without internet connectivity.',
       description:
-        'When using local inference via Ollama, document ingestion, ranked search, PRD drafting, and user story breakdown execute on-device without sending data across external networks.',
+        'When using local inference via Ollama, document ingestion, ranked search, PRD drafting, story breakdown, and analytical summaries execute on-device without sending data across external networks.',
       badge: 'Local Ollama Mode',
     },
     {
       title: 'Designed for Responsive Local Retrieval',
-      subtitle: 'SQLite FTS5 on local SSD storage.',
+      subtitle: 'SQLite FTS5 & SQLite Analytics on local SSD storage.',
       description:
-        'Queries against the local SQLite FTS5 database execute directly on your hardware without network latency. Search local document passages and filter backlog items without waiting on cloud server roundtrips.',
-      badge: 'On-Device FTS5',
+        'Queries against the local SQLite FTS5 index and analytics_store.db execute directly on your hardware without network latency. Query thousands of dataset rows or search document passages without waiting on cloud server roundtrips.',
+      badge: 'On-Device SQLite',
     },
   ],
 
@@ -224,6 +242,7 @@ export const siteConfig = {
   // ==========================================
   featureCategories: [
     { id: 'all', label: 'All Capabilities' },
+    { id: 'data', label: 'Data Studio & BI (v1.4)' },
     { id: 'agile', label: 'Sprint & Agile Board' },
     { id: 'tools', label: 'Automated PM Tools' },
     { id: 'knowledge', label: 'Knowledge Base & RAG' },
@@ -231,6 +250,33 @@ export const siteConfig = {
     { id: 'security', label: 'Security & Updates' },
   ],
   features: [
+    {
+      id: 'data-studio-engine',
+      category: 'data',
+      title: 'Data Studio & Business Dashboards',
+      tagline: 'Multi-format tabular ingestion and pure SVG responsive charts.',
+      description:
+        'Direct ingestion of Excel (.xlsx, .xls via openpyxl), CSV, TSV, and JSON. Configurable KPI summary cards with aggregation functions (COUNT, SUM, AVG, MIN, MAX), target comparisons, trend badges, and currency/percentage formatting.',
+      highlight: 'Data Studio (v1.4)',
+    },
+    {
+      id: 'sql-sandbox-safety',
+      category: 'data',
+      title: 'Safe Read-Only SQL Sandbox',
+      tagline: '5-layer defense-in-depth analytical SQL console.',
+      description:
+        'Interactive SQL console with execution timer (ms) and table grid view. Protected by multi-statement block, statement whitelist (SELECT, WITH), mutation keyword blacklist, mandatory LIMIT 100 ceiling, and native URI file:... ?mode=ro driver enforcement.',
+      highlight: 'Read-Only Sandbox',
+    },
+    {
+      id: 'guarded-ai-data',
+      category: 'data',
+      title: 'Guarded AI Grounding & /data Command',
+      tagline: 'Copilot data intelligence with zero raw data or PII leakage.',
+      description:
+        'LLM system prompt dynamically receives structured schemas (table names, row counts, column types, sample distributions) and live dashboard KPI values. The /data slash command produces instant executive analytical briefs.',
+      highlight: '/data Command',
+    },
     {
       id: 'sprint-kanban-board',
       category: 'agile',
@@ -273,17 +319,17 @@ export const siteConfig = {
       title: 'Interactive Slash Command Pill Container',
       tagline: 'Button-like colored badge container inside chat input.',
       description:
-        'Selecting a command transforms it into an interactive glowing badge container before the textarea: /search (cyan), /prd (purple), /summarize (purple), /breakdown (amber), /plan (amber), /chat (blue).',
+        'Selecting a command transforms it into an interactive glowing badge container before the textarea: /data (amber), /breakdown (amber), /prd (purple), /summarize (purple), /search (cyan), /plan (amber), /chat (blue).',
       highlight: 'Slash Studio',
     },
     {
-      id: 'dual-db-v5',
+      id: 'dual-db-v6',
       category: 'architecture',
-      title: 'Two-Database Storage Segregation (Schema v5)',
-      tagline: 'Clean boundary between relational data and AI context.',
+      title: 'Three-Database Storage Segregation (Schema v6)',
+      tagline: 'Clean separation across operational, AI context, and analytics stores.',
       description:
-        'Separates relational entities (%LOCALAPPDATA%\\PMTool\\pmtool.db) from volatile AI reasoning traces, messages, and FTS5 search indexes (ai_context.db). Schema v5 adds story points and acceptance criteria.',
-      highlight: 'SQLite WAL Mode',
+        'Operational entities (%LOCALAPPDATA%\\PMTool\\pmtool.db, Schema v6), volatile AI context (ai_context.db), and isolated materialized tabular datasets (datasets\\analytics_store.db) in SQLite WAL mode.',
+      highlight: 'Schema v6 Engine',
     },
     {
       id: 'bm25-search',
@@ -329,30 +375,30 @@ export const siteConfig = {
   executionSteps: [
     {
       step: '01',
-      name: 'Scan & Ingest',
-      headline: 'Scan & Ingest Documents from Your Hard Drive',
+      name: 'Connect Data & Docs',
+      headline: 'Scan & Ingest Documents & Tabular Spreadsheets',
       description:
-        'Point to a local folder with PDF specifications, Word roadmaps, Markdown docs, or meeting notes. Parsers extract text and headings on-device without cloud uploads.',
-      example: 'Supported: .pdf, .docx, .md, .txt, .csv, and .json formats.',
-      connector: 'feeds into section-aware chunker with overlap',
+        'Connect local PDF specifications, Word roadmaps, Markdown notes, Excel spreadsheets (.xlsx), and CSV datasets on-device without cloud uploads.',
+      example: 'Supported: .xlsx, .csv, .json, .pdf, .docx, .md, .txt formats.',
+      connector: 'feeds into local FTS5 index & analytics_store.db',
     },
     {
       step: '02',
-      name: 'FTS5 Indexing',
-      headline: 'Ranked BM25 Full-Text Indexing in SQLite',
+      name: 'On-Device Analytics',
+      headline: 'Ranked BM25 Search & Safe SQL Sandbox',
       description:
-        'Chunks are indexed into SQLite FTS5 virtual tables with tokenized BM25 ranking for exact acronyms, names, and technical terms with change detection.',
-      example: 'Indexed chunks stored in %LOCALAPPDATA%\\AIContextTool\\ai_context.db.',
-      connector: 'powers evidence retrieval for context assembly',
+        'Retrieve document passages with SQLite FTS5 BM25 and query business datasets using the sandboxed read-only SQL console with 5-layer safety.',
+      example: 'Indexed in %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db.',
+      connector: 'powers evidence & metric grounding for AI synthesis',
     },
     {
       step: '03',
       name: 'Grounded Drafting',
-      headline: 'Draft PRDs Grounded in Retrieved Excerpts',
+      headline: 'Draft PRDs Grounded in Evidence & Live KPIs',
       description:
-        'Context Builder combines active project details, recent decision records, and retrieved document passages before querying the configured LLM (Ollama or Gemini).',
-      example: 'Injects identifiable evidence chunks with file names and section headings.',
-      connector: 'formats output into structured requirements',
+        'Context Builder combines active project details, live dataset KPI values, and retrieved document passages before querying the configured LLM (Ollama or Gemini).',
+      example: 'Slash commands /data and /prd produce grounded requirements.',
+      connector: 'formats output into structured specifications',
     },
     {
       step: '04',
@@ -360,7 +406,7 @@ export const siteConfig = {
       headline: 'Decompose PRDs into Agile Stories (/breakdown)',
       description:
         'The automated PRD-to-Story Decomposer tool breaks requirements down into 4–8 discrete Agile user stories with Given/When/Then acceptance criteria and Fibonacci points.',
-      example: 'Automatically estimates story points (1, 2, 3, 5, 8) and priority weights.',
+      example: 'Estimates story points (1, 2, 3, 5, 8) and saves to pmtool.db.',
       connector: 'saves directly to local SQLite database',
     },
     {
@@ -370,7 +416,7 @@ export const siteConfig = {
       description:
         'Execute sprints on the interactive Kanban board. Drag tasks across Backlog, In Progress, Blocked, and Completed lanes with real-time velocity metrics.',
       example: 'Optimistic UI updates saved immediately to pmtool.db via PATCH /api/tasks/:id.',
-      connector: 'completes the end-to-end agile execution loop',
+      connector: 'completes the end-to-end data-driven execution loop',
     },
   ],
 
@@ -393,41 +439,41 @@ export const siteConfig = {
     },
     {
       id: 'backend',
-      title: 'Tier 2: Localhost Micro-Backend',
-      tech: 'Python Flask 3.x &bull; Localhost Binding (127.0.0.1)',
+      title: 'Tier 2: Localhost Micro-Backend & Data Engine',
+      tech: 'Python Flask 3.x &bull; data_engine.py &bull; 127.0.0.1',
       latency: 'Localhost REST Protocol',
-      summary: 'Local service bound to 127.0.0.1 handling entity operations, ingestion, automated tools, and gateway dispatch.',
+      summary: 'Local service bound to 127.0.0.1 handling entity operations, tabular data ingestion, automated tools, and gateway dispatch.',
       specs: [
         'Bound strictly to 127.0.0.1 (rejects external network connections)',
+        'Data Studio Engine (data_engine.py) with openpyxl, CSV, and JSON parsing',
+        'Automated tools: /breakdown, /summarize, and guarded /data analytical synthesis',
         'Origin & Sec-Fetch-Site security validation checks on REST endpoints',
-        'Automated tools: /breakdown (Story Decomposer) and /summarize (Executive Briefs)',
-        'Modular controllers for projects, tasks, sprint metrics, and document RAG',
       ],
     },
     {
       id: 'db',
-      title: 'Tier 3: Two-Database SQLite Storage (Schema v5)',
-      tech: 'SQLite 3 &bull; WAL Journal &bull; Connection Pooling',
+      title: 'Tier 3: Three-Database SQLite Storage (Schema v6)',
+      tech: 'SQLite 3 &bull; WAL Journal &bull; analytics_store.db',
       latency: 'Local SSD Operations',
-      summary: 'Separates operational relational records from volatile AI context and FTS5 search indexes.',
+      summary: 'Separates operational relational records, volatile AI context, and materialized business datasets.',
       specs: [
-        'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v5 with story_points & acceptance_criteria)',
+        'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6: data_sources, dashboards, widgets)',
+        'Analytics DB: %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db (Materialized tabular data)',
         'AI Context DB: %LOCALAPPDATA%\\AIContextTool\\ai_context.db (FTS5 BM25 index & tool_runs)',
-        'PRAGMA journal_mode = WAL for concurrent read operations',
-        'Connection pooling with versioned SQLite schema migrations',
+        'Safe read-only URI mode file:... ?mode=ro with 5-layer SQL sandbox defense',
       ],
     },
     {
       id: 'ai',
-      title: 'Tier 4: Hybrid LLM & RAG Gateway (8,192 Tokens)',
+      title: 'Tier 4: Hybrid LLM & Guarded Context Gateway',
       tech: 'Local Ollama &bull; Optional Gemini API &bull; 8,192 Budget',
       latency: 'Local or Cloud Dispatch',
-      summary: 'Routes prompts to local offline models or optional cloud APIs with expanded 8,192 output token budget.',
+      summary: 'Routes prompts to local offline models or optional cloud APIs with dataset schema grounding without raw data leaks.',
       specs: [
         'Detects running Ollama models on localhost:11434 (e.g. Llama 3.2, Mistral, Gemma 2)',
+        'Guarded AI context: injects dataset schemas and KPI values without leaking PII or raw rows',
         'Expanded 8,192 max output token budget across all providers',
         'Local key encryption at rest using PBKDF2 and authenticated keystream',
-        'Section-aware chunking with overlapping sentences and BM25 term retrieval',
       ],
     },
   ],
@@ -437,9 +483,19 @@ export const siteConfig = {
   // ==========================================
   comparisonRows: [
     {
-      feature: 'Data Storage Location',
-      pmtool: 'Local storage inside Windows AppData (%LOCALAPPDATA%\\PMTool)',
+      feature: 'Data & Dashboard Storage Location',
+      pmtool: 'Local storage inside Windows AppData (%LOCALAPPDATA%\\PMTool & datasets\\analytics_store.db)',
       cloud: 'Cloud-hosted multi-tenant infrastructure managed by vendor',
+    },
+    {
+      feature: 'Business Spreadsheet Ingestion',
+      pmtool: 'Direct local ingestion of Excel (.xlsx) and CSV into isolated local SQLite store',
+      cloud: 'Spreadsheets uploaded to cloud BI servers (e.g. Tableau/PowerBI cloud, Jira SaaS)',
+    },
+    {
+      feature: 'SQL Data Exploration',
+      pmtool: 'Built-in Safe Read-Only SQL Sandbox with 5-layer defense against disk mutation',
+      cloud: 'Requires connecting remote databases or purchasing add-on cloud analytics seats',
     },
     {
       feature: 'Account & Identity Requirements',
@@ -467,16 +523,6 @@ export const siteConfig = {
       cloud: 'Cloud-hosted workflows generally depend on active network connectivity',
     },
     {
-      feature: 'Retrieval & Query Model',
-      pmtool: 'Direct SQLite FTS5/BM25 queries on your local storage drive',
-      cloud: 'API and database queries over the internet with variable network roundtrip latency',
-    },
-    {
-      feature: 'Document Ingestion',
-      pmtool: 'Local parsing of .pdf, .docx, .md, .txt, .csv directly from local directories',
-      cloud: 'Document uploads to cloud servers, subject to upload quotas and cloud storage terms',
-    },
-    {
       feature: 'Application Updates',
       pmtool: 'Transparent GitHub Releases auto-updating with delta blockmaps via electron-updater',
       cloud: 'Silent continuous cloud deployments without user version control',
@@ -489,19 +535,19 @@ export const siteConfig = {
   designTenets: [
     {
       title: 'Eliminate Context Switching',
-      desc: 'Fragmenting product context across dozens of browser tabs and separate cloud tools increases cognitive friction. PM Tool unifies documents, PRDs, story breakdown, and sprint boards in a single desktop frame.',
+      desc: 'Fragmenting product context across spreadsheets, analytics tools, browser tabs, and separate task managers increases cognitive friction. PM Tool unifies datasets, documents, PRDs, story breakdown, and sprint boards in a single desktop frame.',
     },
     {
       title: 'Useful Complexity Over Shallow Simplicity',
-      desc: 'Simplified to-do apps often hide necessary planning controls. We believe professional product software should be information-dense, keyboard-friendly, and oriented toward real agile execution.',
+      desc: 'Simplified to-do apps often hide necessary planning and analytical controls. We believe professional product software should be information-dense, keyboard-friendly, and oriented toward real data-informed agile execution.',
     },
     {
       title: 'Local Control as a Foundational Default',
-      desc: 'Your strategic roadmaps, draft requirements, and sprint tickets should remain under your control by default. Core indexing and backlog management run locally without mandatory remote accounts.',
+      desc: 'Your strategic roadmaps, draft requirements, business metrics, and sprint tickets should remain under your control by default. Core indexing, analytics storage, and backlog management run locally without mandatory remote accounts.',
     },
     {
       title: 'Sovereign Aesthetic Craft',
-      desc: 'Software used daily should respect your focus. Obsidian and charcoal palettes, high-density layouts, and responsive micro-interactions preserve flow and reduce visual strain.',
+      desc: 'Software used daily should respect your focus. Obsidian and charcoal palettes, high-density layouts, pure SVG charts, and responsive micro-interactions preserve flow and reduce visual strain.',
     },
   ],
 
@@ -510,8 +556,29 @@ export const siteConfig = {
   // ==========================================
   releases: [
     {
-      version: 'v1.3.0',
+      version: 'v1.4.0',
       badge: 'CURRENT STABLE RELEASE',
+      title: 'Data Studio, Business Dashboards & Safe Read-Only SQL Sandbox',
+      tagline: 'Excel/CSV tabular ingestion, pure SVG KPI charts, and guarded AI grounding.',
+      date: 'Oct 2026',
+      decisionRationale:
+        'Empowering product managers to ground roadmaps and PRDs in real tabular business data without cloud uploads. Built an on-device Data Studio engine for Excel and CSV ingestion into an isolated analytics store, pure SVG KPI charts with target comparisons, a 5-layer defended read-only SQL sandbox, and the /data slash command.',
+      highlights: [
+        'Data Studio & Business Dashboard Engine (data_engine.py & /dashboard route) with custom KPI metrics',
+        'Multi-format tabular ingestion: Excel (.xlsx, .xls via openpyxl), CSV, TSV, JSON, and SQLite',
+        'Automatic column schema discovery, affinity type inference, and batch materialization in analytics_store.db',
+        'Configurable KPI aggregation cards (COUNT, SUM, AVG, MIN, MAX) with target comparisons and delta trend badges',
+        'Pure responsive SVG chart components: Vertical Bar charts with hover tooltips and Donut charts with breakdown shares',
+        'Safe Read-Only SQL Sandbox with 5-layer defense: blocks semicolons, statement whitelist, mutation blacklist, LIMIT 100 ceiling, and mode=ro URI driver enforcement',
+        'Guarded AI context grounding: dynamically provides dataset schemas and live KPIs to Copilot without PII or raw row leaks',
+        'Dedicated /data slash command in chat input for executive analytical briefs and KPI health checks',
+        'Database Schema Migration v6 (db.py) adding data_sources, dashboards, and dashboard_widgets tables',
+      ],
+      isCurrent: true,
+    },
+    {
+      version: 'v1.3.0',
+      badge: 'SHIPPED',
       title: 'Interactive Sprint Kanban Board & PRD-to-Story Decomposer',
       tagline: 'Agile execution engine, Fibonacci story points, and automated breakdown.',
       date: 'Oct 2026',
@@ -525,7 +592,7 @@ export const siteConfig = {
         'Generates 4–8 discrete Agile user stories with Given/When/Then acceptance criteria and Fibonacci points',
         'Database Schema Migration v5 (db.py) adding story_points, acceptance_criteria, and assignee columns',
       ],
-      isCurrent: true,
+      isCurrent: false,
     },
     {
       version: 'v1.2.0',

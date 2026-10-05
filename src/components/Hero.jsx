@@ -16,17 +16,24 @@ import {
   CheckCircle2,
   AlertCircle,
   TrendingUp,
-  FolderGit2
+  FolderGit2,
+  BarChart3,
+  Terminal,
+  Table,
+  Zap
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 import { PmtLogo } from './PmtLogo';
 import { siteConfig } from '../config/siteConfig';
 
 export function Hero({ onDownloadClick, onCopyToast }) {
-  const [activeTab, setActiveTab] = useState('board');
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [dashboardSubView, setDashboardSubView] = useState('canvas');
 
   const getBadgeIcon = (type) => {
     switch (type) {
+      case 'chart': return BarChart3;
+      case 'terminal': return Terminal;
       case 'board': return Kanban;
       case 'cpu': return Cpu;
       case 'search': return Search;
@@ -154,6 +161,21 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 Workstation Tabs
               </div>
               <button 
+                onClick={() => setActiveTab('dashboard')}
+                className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-left transition-colors ${
+                  activeTab === 'dashboard' 
+                    ? 'bg-gold/15 text-gold-bright border border-gold/30' 
+                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+              >
+                <BarChart3 className="w-3.5 h-3.5 text-gold" />
+                <span className="font-semibold flex items-center justify-between w-full">
+                  <span>Data & Insights</span>
+                  <span className="text-[9px] px-1 py-0.2 rounded bg-gold/20 text-gold-bright font-mono">v1.4</span>
+                </span>
+              </button>
+
+              <button 
                 onClick={() => setActiveTab('board')}
                 className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-left transition-colors ${
                   activeTab === 'board' 
@@ -162,7 +184,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 }`}
               >
                 <Kanban className="w-3.5 h-3.5 text-gold" />
-                <span className="font-semibold">Sprint Board (v1.3.0)</span>
+                <span>Sprint Board</span>
               </button>
 
               <button 
@@ -204,9 +226,12 @@ export function Hero({ onDownloadClick, onCopyToast }) {
 
             {/* Local DB Status Card */}
             <div className="pt-3 border-t border-white/[0.06] mt-4 px-2">
-              <div className="text-[10px] font-mono text-zinc-400 mb-1">LOCAL DISK REPOSITORY</div>
+              <div className="text-[10px] font-mono text-zinc-400 mb-1">LOCAL DISK REPOSITORIES</div>
               <div className="text-[11px] font-mono text-zinc-300 truncate">
                 {siteConfig.hero.simulator.localDbPath}
+              </div>
+              <div className="text-[10px] font-mono text-zinc-400 mt-1 truncate">
+                datasets\analytics_store.db (v1.4)
               </div>
               <div className="flex items-center justify-between text-[10px] text-zinc-400 mt-2 font-mono">
                 <span>{siteConfig.hero.simulator.dbStats}</span>
@@ -217,7 +242,178 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           {/* Central Main Viewport */}
           <div className="md:col-span-9 p-4 sm:p-6 bg-[#0a0a0e] flex flex-col justify-between">
             
-            {/* VIEW 1: Sprint Kanban Board (NEW IN v1.3.0) */}
+            {/* VIEW 0: Data Studio & Business Dashboards (NEW IN v1.4.0) */}
+            {activeTab === 'dashboard' && (
+              <div className="space-y-4">
+                {/* Header Controls Bar */}
+                <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                    <span className="text-xs font-mono text-white font-semibold">Data Studio & Business Dashboards</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gold/10 text-gold-bright border border-gold/30">
+                      v1.4.0
+                    </span>
+                  </div>
+
+                  {/* Sub-view switcher */}
+                  <div className="flex items-center gap-1 bg-[#14141c] p-0.5 rounded-lg border border-white/10 text-[11px] font-mono">
+                    <button
+                      onClick={() => setDashboardSubView('canvas')}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${
+                        dashboardSubView === 'canvas'
+                          ? 'bg-gold text-zinc-950 font-bold'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      📊 KPI Canvas
+                    </button>
+                    <button
+                      onClick={() => setDashboardSubView('sandbox')}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${
+                        dashboardSubView === 'sandbox'
+                          ? 'bg-gold text-zinc-950 font-bold'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      ‹/› Safe SQL Sandbox
+                    </button>
+                  </div>
+                </div>
+
+                {dashboardSubView === 'canvas' ? (
+                  <div className="space-y-3.5">
+                    {/* 4 KPI Metric Summary Cards */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                      <div className="p-2.5 rounded-xl bg-surface border border-gold/40 space-y-1">
+                        <div className="text-[10px] text-zinc-400 uppercase">ARR Velocity</div>
+                        <div className="text-base font-bold text-white">$142,800</div>
+                        <div className="text-[10px] text-green-400 font-semibold flex items-center gap-1">
+                          <TrendingUp className="w-3 h-3" />
+                          <span>+14.2% vs target</span>
+                        </div>
+                      </div>
+
+                      <div className="p-2.5 rounded-xl bg-surface border border-white/10 space-y-1">
+                        <div className="text-[10px] text-zinc-400 uppercase">Active Teams</div>
+                        <div className="text-base font-bold text-white">28 Teams</div>
+                        <div className="text-[10px] text-blue-300 font-semibold">+3 this sprint</div>
+                      </div>
+
+                      <div className="p-2.5 rounded-xl bg-surface border border-white/10 space-y-1">
+                        <div className="text-[10px] text-zinc-400 uppercase">Sprint Delivery</div>
+                        <div className="text-base font-bold text-white">74% Done</div>
+                        <div className="text-[10px] text-gold font-semibold">34 pts shipped</div>
+                      </div>
+
+                      <div className="p-2.5 rounded-xl bg-surface border border-white/10 space-y-1">
+                        <div className="text-[10px] text-zinc-400 uppercase">Monthly Churn</div>
+                        <div className="text-base font-bold text-white">1.4%</div>
+                        <div className="text-[10px] text-green-400 font-semibold">-0.3% MoM (Good)</div>
+                      </div>
+                    </div>
+
+                    {/* Pure Responsive SVG Chart Component */}
+                    <div className="bg-[#111116] p-3.5 rounded-xl border border-white/[0.08] space-y-2">
+                      <div className="flex items-center justify-between text-xs font-mono">
+                        <span className="text-zinc-300 font-semibold">Q3 Module Adoption (% Active User Base)</span>
+                        <span className="text-[10px] text-zinc-500">Source: q3_telemetry.xlsx (14.2k rows)</span>
+                      </div>
+                      
+                      {/* SVG Bar Chart */}
+                      <div className="h-28 w-full flex items-end justify-between gap-3 pt-3 px-2">
+                        {[
+                          { label: 'Kanban', pct: 88, color: '#e8a84c' },
+                          { label: 'Copilot', pct: 94, color: '#f29e24' },
+                          { label: 'Data Studio', pct: 81, color: '#5aab7f' },
+                          { label: 'Doc Ingest', pct: 66, color: '#4c97e8' },
+                          { label: 'Word Export', pct: 59, color: '#a5b4fc' },
+                        ].map((bar) => (
+                          <div key={bar.label} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+                            <span className="text-[10px] font-mono text-zinc-400 group-hover:text-white transition-colors">
+                              {bar.pct}%
+                            </span>
+                            <div 
+                              className="w-full rounded-t transition-all duration-300 group-hover:brightness-125"
+                              style={{ 
+                                height: `${bar.pct * 0.75}%`, 
+                                backgroundColor: bar.color,
+                                opacity: 0.85
+                              }}
+                            />
+                            <span className="text-[9px] font-mono text-zinc-400 truncate w-full text-center">
+                              {bar.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-2 rounded-lg bg-[#09090d] border border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                      <span>Analytics Store: <code>%LOCALAPPDATA%\PMTool\datasets\analytics_store.db</code></span>
+                      <span className="text-gold">Native openpyxl & SQLite Batch Materialization</span>
+                    </div>
+                  </div>
+                ) : (
+                  /* Safe SQL Sandbox sub-view */
+                  <div className="space-y-3 font-mono text-xs">
+                    <div className="bg-[#09090d] p-3 rounded-xl border border-gold/30 space-y-2">
+                      <div className="flex items-center justify-between text-[11px] pb-1 border-b border-white/[0.06]">
+                        <span className="text-gold font-bold flex items-center gap-1.5">
+                          <Terminal className="w-3.5 h-3.5" />
+                          <span>Interactive SQL Console (Read-Only)</span>
+                        </span>
+                        <span className="text-green-400 flex items-center gap-1">
+                          <Zap className="w-3 h-3" />
+                          <span>Execution Timer: 0.84 ms</span>
+                        </span>
+                      </div>
+                      <code className="text-zinc-200 block text-[11px] leading-relaxed">
+                        <span className="text-blue-400">SELECT</span> module, <span className="text-blue-400">COUNT</span>(*) <span className="text-blue-400">AS</span> events, <span className="text-blue-400">AVG</span>(latency_ms) <span className="text-blue-400">AS</span> latency <br />
+                        <span className="text-blue-400">FROM</span> telemetry <br />
+                        <span className="text-blue-400">GROUP BY</span> module <span className="text-blue-400">ORDER BY</span> events <span className="text-blue-400">DESC LIMIT</span> 5;
+                      </code>
+                    </div>
+
+                    {/* Results Table */}
+                    <div className="bg-[#111116] rounded-xl border border-white/10 overflow-hidden">
+                      <table className="w-full text-left text-[11px]">
+                        <thead className="bg-[#181822] text-gold border-b border-white/10">
+                          <tr>
+                            <th className="p-2">module</th>
+                            <th className="p-2">events</th>
+                            <th className="p-2">latency (ms)</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/[0.04] text-zinc-300">
+                          <tr>
+                            <td className="p-2 text-white font-semibold">Sprint Kanban</td>
+                            <td className="p-2">14,820</td>
+                            <td className="p-2 text-green-400">0.62</td>
+                          </tr>
+                          <tr>
+                            <td className="p-2 text-white font-semibold">AI Copilot</td>
+                            <td className="p-2">12,450</td>
+                            <td className="p-2 text-green-400">1.45</td>
+                          </tr>
+                          <tr>
+                            <td className="p-2 text-white font-semibold">Data Studio</td>
+                            <td className="p-2">9,830</td>
+                            <td className="p-2 text-green-400">0.78</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="p-2 rounded-lg bg-surface border border-green-500/20 text-[10px] text-green-300 flex items-center justify-between">
+                      <span>✓ 5-Layer Defense: file:... ?mode=ro • Semicolons Blocked • LIMIT 100 Enforced</span>
+                      <span className="text-zinc-400">3 of 3 rows</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* VIEW 1: Sprint Kanban Board */}
             {activeTab === 'board' && (
               <div className="space-y-4">
                 {/* Sprint Metrics KPI Banner */}
@@ -319,7 +515,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                     </span>
                   </div>
                   <span className="text-[11px] font-mono text-zinc-400">
-                    Source Grounding: 3 retrieved passages
+                    Context: Connected Datasets + Documents
                   </span>
                 </div>
 
@@ -327,11 +523,11 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 <div className="bg-[#14141c] border border-white/10 rounded-xl p-3 space-y-2">
                   <div className="flex items-center gap-2">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-mono font-bold shadow-sm">
-                      <span>/breakdown</span>
+                      <span>/data</span>
                       <span className="text-zinc-500 text-[10px]">✕</span>
                     </div>
                     <span className="text-xs font-mono text-zinc-200">
-                      Deconstruct Offline Sync PRD into Agile stories with Given/When/Then criteria
+                      Synthesize Q3 telemetry trends against roadmap deliverables and flag latency anomalies
                     </span>
                   </div>
                 </div>

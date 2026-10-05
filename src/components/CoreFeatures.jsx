@@ -9,7 +9,9 @@ import {
   Cpu, 
   Lock, 
   Terminal, 
-  Sparkles
+  Sparkles,
+  BarChart3,
+  ShieldCheck
 } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
@@ -18,14 +20,17 @@ export function CoreFeatures() {
 
   const getFeatureIcon = (id) => {
     switch (id) {
+      case 'data-studio-engine': return BarChart3;
+      case 'sql-sandbox-safety': return Terminal;
+      case 'guarded-ai-data': return ShieldCheck;
       case 'sprint-kanban-board': return Layers;
       case 'story-breakdown-tool': return Sparkles;
       case 'doc-summarizer-tool': return FileText;
-      case 'dual-db-sqlite': return Database;
-      case 'llm-gateway-hybrid': return Cpu;
-      case 'fts5-bm25-retrieval': return Search;
-      case 'pbkdf2-encryption': return Lock;
-      case 'multi-format-parsers': return FileCode;
+      case 'prd-export-docx': return FileText;
+      case 'command-pills': return Terminal;
+      case 'dual-db-v6': return Database;
+      case 'bm25-search': return Search;
+      case 'parsers-dual-scroll': return FileCode;
       case 'electron-updater-pipe': return GitBranch;
       case 'port-collision-shield': return Terminal;
       default: return Sparkles;

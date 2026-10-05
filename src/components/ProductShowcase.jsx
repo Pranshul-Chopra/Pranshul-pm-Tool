@@ -14,20 +14,28 @@ import {
   Sparkles,
   ArrowRight,
   Sliders,
-  CheckCircle2
+  CheckCircle2,
+  BarChart3,
+  Database,
+  TrendingUp,
+  Zap,
+  Play
 } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
 export function ProductShowcase({ onCopyToast }) {
-  const [activeModule, setActiveModule] = useState('sprint-kanban');
+  const [activeModule, setActiveModule] = useState('data-studio');
+  const [dataStudioTab, setDataStudioTab] = useState('canvas');
+  const [selectedSqlPreset, setSelectedSqlPreset] = useState(0);
   const [selectedCitation, setSelectedCitation] = useState('spec');
-  const [activeSlashCommand, setActiveSlashCommand] = useState('/prd');
+  const [activeSlashCommand, setActiveSlashCommand] = useState('/data');
   const [kanbanFilter, setKanbanFilter] = useState('all');
   const [activeStoryTab, setActiveStoryTab] = useState(0);
   const [ftsSearchQuery, setFtsSearchQuery] = useState('offline key exchange');
 
   const getModuleIcon = (id) => {
     switch (id) {
+      case 'data-studio': return BarChart3;
       case 'sprint-kanban': return Layers;
       case 'story-decomposer': return Sparkles;
       case 'ai-copilot': return Bot;
@@ -36,6 +44,44 @@ export function ProductShowcase({ onCopyToast }) {
       default: return Layers;
     }
   };
+
+  const sqlPresets = [
+    {
+      label: 'Feature Usage Rankings',
+      sql: 'SELECT feature, COUNT(*) as events, AVG(duration_sec) as avg_duration FROM telemetry GROUP BY feature ORDER BY events DESC LIMIT 5;',
+      time: '0.74 ms',
+      rows: [
+        { c1: 'Sprint Kanban', c2: '14,820', c3: '42.8s' },
+        { c1: 'AI Copilot', c2: '12,450', c3: '88.4s' },
+        { c1: 'Data Studio', c2: '9,830', c3: '114.2s' },
+        { c1: 'Knowledge Ingest', c2: '7,210', c3: '18.1s' },
+        { c1: 'Word Exporter', c2: '4,190', c3: '12.5s' },
+      ],
+      cols: ['feature', 'events', 'avg_duration'],
+    },
+    {
+      label: 'ARR Contribution by Plan',
+      sql: 'SELECT plan_tier, COUNT(*) as accounts, SUM(arr_usd) as total_arr FROM subscriptions GROUP BY plan_tier ORDER BY total_arr DESC LIMIT 3;',
+      time: '0.68 ms',
+      rows: [
+        { c1: 'Enterprise Tier', c2: '64', c3: '$98,400' },
+        { c1: 'Team Tier', c2: '142', c3: '$38,200' },
+        { c1: 'Starter Tier', c2: '142', c3: '$6,200' },
+      ],
+      cols: ['plan_tier', 'accounts', 'total_arr'],
+    },
+    {
+      label: 'Top Churn Root Causes',
+      sql: 'SELECT primary_reason, COUNT(*) as count FROM churn_reasons GROUP BY primary_reason ORDER BY count DESC LIMIT 3;',
+      time: '0.51 ms',
+      rows: [
+        { c1: 'Cloud Cost Inefficiencies', c2: '48', c3: 'High' },
+        { c1: 'Strict Data Sovereignty Mandate', c2: '39', c3: 'Critical' },
+        { c1: 'Browser Tab Switching Friction', c2: '24', c3: 'Medium' },
+      ],
+      cols: ['primary_reason', 'count', 'severity'],
+    },
+  ];
 
   const modules = siteConfig.showcaseModules;
   const currentModule = modules.find((m) => m.id === activeModule) || modules[0];
@@ -51,7 +97,7 @@ export function ProductShowcase({ onCopyToast }) {
           Explore Live Operating Modules
         </h2>
         <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-          Inspect how {siteConfig.name} v{siteConfig.release.version} executes Agile sprint workflows, PRD story decomposition, section-aware document search, and resilient background updating.
+          Inspect how {siteConfig.name} v{siteConfig.release.version} executes local tabular analytics, Agile sprint workflows, PRD story decomposition, document search, and resilient background updating.
         </p>
       </div>
 
@@ -124,6 +170,262 @@ export function ProductShowcase({ onCopyToast }) {
           {/* Right Interactive Simulator Column */}
           <div className="lg:col-span-7 bg-[#121218] border border-white/[0.12] rounded-xl p-4 sm:p-6 shadow-inner">
             
+            {/* 0. Data Studio & Business Dashboard Simulation (NEW IN v1.4.0) */}
+            {activeModule === 'data-studio' && (
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                    <span className="text-xs font-mono text-white font-semibold">Data Studio Engine &bull; /dashboard</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gold/10 text-gold-bright border border-gold/30">
+                      v1.4.0
+                    </span>
+                  </div>
+
+                  {/* Sub-view switcher */}
+                  <div className="flex items-center gap-1 bg-[#14141c] p-0.5 rounded-lg border border-white/10 text-[11px] font-mono">
+                    <button
+                      onClick={() => setDataStudioTab('canvas')}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${
+                        dataStudioTab === 'canvas'
+                          ? 'bg-gold text-zinc-950 font-bold'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      📊 KPI Canvas
+                    </button>
+                    <button
+                      onClick={() => setDataStudioTab('datasets')}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${
+                        dataStudioTab === 'datasets'
+                          ? 'bg-gold text-zinc-950 font-bold'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      📁 Datasets (3)
+                    </button>
+                    <button
+                      onClick={() => setDataStudioTab('sql')}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${
+                        dataStudioTab === 'sql'
+                          ? 'bg-gold text-zinc-950 font-bold'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      ‹/› Safe SQL
+                    </button>
+                  </div>
+                </div>
+
+                {/* SUB-VIEW 1: KPI Canvas */}
+                {dataStudioTab === 'canvas' && (
+                  <div className="space-y-4">
+                    {/* KPI Summary Cards */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 font-mono text-xs">
+                      <div className="p-3 rounded-xl bg-surface border border-gold/40 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] text-zinc-400 uppercase font-semibold">Total ARR</span>
+                          <span className="px-1.5 py-0.2 rounded bg-green-500/10 text-green-400 text-[10px] font-bold">Ahead</span>
+                        </div>
+                        <div className="text-xl font-bold text-white tracking-tight">$142,800</div>
+                        <div className="text-[10px] text-green-400 flex items-center gap-1 font-semibold">
+                          <TrendingUp className="w-3 h-3" />
+                          <span>+14.2% vs target ($125,000)</span>
+                        </div>
+                      </div>
+
+                      <div className="p-3 rounded-xl bg-surface border border-white/10 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] text-zinc-400 uppercase font-semibold">Active Teams</span>
+                          <span className="px-1.5 py-0.2 rounded bg-blue-500/10 text-blue-300 text-[10px] font-bold">Growing</span>
+                        </div>
+                        <div className="text-xl font-bold text-white tracking-tight">28 Workspaces</div>
+                        <div className="text-[10px] text-blue-300 font-semibold">+3 onboarded this sprint</div>
+                      </div>
+
+                      <div className="p-3 rounded-xl bg-surface border border-white/10 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] text-zinc-400 uppercase font-semibold">Sprint Delivery</span>
+                          <span className="px-1.5 py-0.2 rounded bg-gold/10 text-gold-bright text-[10px] font-bold">74% Done</span>
+                        </div>
+                        <div className="text-xl font-bold text-white tracking-tight">34 Story Pts</div>
+                        <div className="text-[10px] text-gold font-semibold">On track for release date</div>
+                      </div>
+                    </div>
+
+                    {/* Responsive Pure SVG Bar Chart */}
+                    <div className="bg-[#111116] p-4 rounded-xl border border-white/[0.08] space-y-2">
+                      <div className="flex items-center justify-between text-xs font-mono">
+                        <span className="text-white font-semibold">Q3 Module Adoption Rate (% of Active PM Workspaces)</span>
+                        <span className="text-[10px] text-gold">Source: q3_telemetry.xlsx</span>
+                      </div>
+
+                      {/* SVG Bar Chart Graphic */}
+                      <div className="h-32 w-full flex items-end justify-between gap-3 pt-4 px-2">
+                        {[
+                          { label: 'Sprint Kanban', pct: 88, color: '#e8a84c' },
+                          { label: 'AI Copilot', pct: 94, color: '#f29e24' },
+                          { label: 'Data Studio', pct: 81, color: '#5aab7f' },
+                          { label: 'Doc Ingestion', pct: 66, color: '#4c97e8' },
+                          { label: 'Word (.docx)', pct: 59, color: '#a5b4fc' },
+                        ].map((bar) => (
+                          <div key={bar.label} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+                            <span className="text-[10px] font-mono text-zinc-400 group-hover:text-white transition-colors">
+                              {bar.pct}%
+                            </span>
+                            <div 
+                              className="w-full rounded-t transition-all duration-300 group-hover:brightness-125"
+                              style={{ 
+                                height: `${bar.pct * 0.8}%`, 
+                                backgroundColor: bar.color,
+                                opacity: 0.85
+                              }}
+                            />
+                            <span className="text-[9px] font-mono text-zinc-400 truncate w-full text-center">
+                              {bar.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-lg bg-[#09090d] border border-white/[0.08] flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                      <span className="flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+                        <span>Storage: <code>%LOCALAPPDATA%\PMTool\datasets\analytics_store.db</code></span>
+                      </span>
+                      <span className="text-gold">SQLite Batch Acceleration</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* SUB-VIEW 2: Connected Datasets */}
+                {dataStudioTab === 'datasets' && (
+                  <div className="space-y-3 font-mono text-xs">
+                    <div className="text-[10px] text-zinc-400 uppercase font-bold">
+                      Materialized Tabular Datasets (Automatic Schema & Affinity Discovery)
+                    </div>
+
+                    {[
+                      {
+                        file: 'q3_user_telemetry.xlsx',
+                        fmt: 'Excel (.xlsx)',
+                        rows: '14,200 rows',
+                        cols: '8 columns',
+                        schema: 'timestamp: DATETIME, user_id: TEXT, feature: TEXT, duration_sec: REAL, errors: INTEGER',
+                        table: 'tbl_q3_user_telemetry',
+                      },
+                      {
+                        file: 'active_subscriptions.json',
+                        fmt: 'JSON Array',
+                        rows: '3,800 rows',
+                        cols: '6 columns',
+                        schema: 'sub_id: TEXT, plan_tier: TEXT, arr_usd: REAL, renewal_date: DATETIME',
+                        table: 'tbl_active_subscriptions',
+                      },
+                      {
+                        file: 'churn_reasons.csv',
+                        fmt: 'CSV Table',
+                        rows: '1,450 rows',
+                        cols: '4 columns',
+                        schema: 'account_id: TEXT, churn_date: DATETIME, primary_reason: TEXT',
+                        table: 'tbl_churn_reasons',
+                      },
+                    ].map((ds) => (
+                      <div key={ds.file} className="p-3 bg-surface rounded-xl border border-white/10 space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-white flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+                            {ds.file}
+                          </span>
+                          <span className="text-[10px] px-2 py-0.5 rounded bg-white/[0.04] text-gold border border-white/10">
+                            {ds.fmt}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3 text-[11px] text-zinc-400">
+                          <span>{ds.rows}</span>
+                          <span>&bull;</span>
+                          <span>{ds.cols}</span>
+                          <span>&bull;</span>
+                          <span className="text-zinc-500">Table: <code>{ds.table}</code></span>
+                        </div>
+                        <div className="text-[10px] text-zinc-400 bg-[#09090d] p-1.5 rounded border border-white/[0.04] truncate">
+                          Inferred Affinities: {ds.schema}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* SUB-VIEW 3: Safe SQL Sandbox */}
+                {dataStudioTab === 'sql' && (
+                  <div className="space-y-3 font-mono text-xs">
+                    {/* Presets Bar */}
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                      {sqlPresets.map((preset, idx) => (
+                        <button
+                          key={preset.label}
+                          onClick={() => setSelectedSqlPreset(idx)}
+                          className={`px-2.5 py-1 rounded text-[10px] whitespace-nowrap transition-colors border ${
+                            selectedSqlPreset === idx
+                              ? 'bg-gold text-zinc-950 font-bold border-gold'
+                              : 'bg-white/[0.04] text-zinc-400 hover:text-white border-white/10'
+                          }`}
+                        >
+                          {preset.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* SQL Editor Box */}
+                    <div className="bg-[#09090d] p-3.5 rounded-xl border border-gold/30 space-y-2">
+                      <div className="flex items-center justify-between text-[11px] pb-1 border-b border-white/[0.06]">
+                        <span className="text-gold font-bold flex items-center gap-1.5">
+                          <Terminal className="w-3.5 h-3.5" />
+                          <span>Safe SQL Console</span>
+                        </span>
+                        <span className="text-green-400 flex items-center gap-1 font-semibold">
+                          <Zap className="w-3 h-3" />
+                          <span>Execution Timer: {sqlPresets[selectedSqlPreset].time}</span>
+                        </span>
+                      </div>
+                      <code className="text-zinc-200 block text-[11px] leading-relaxed">
+                        {sqlPresets[selectedSqlPreset].sql}
+                      </code>
+                    </div>
+
+                    {/* Tabular Results Grid */}
+                    <div className="bg-[#111116] rounded-xl border border-white/10 overflow-hidden">
+                      <table className="w-full text-left text-[11px]">
+                        <thead className="bg-[#181822] text-gold border-b border-white/10">
+                          <tr>
+                            {sqlPresets[selectedSqlPreset].cols.map((col) => (
+                              <th key={col} className="p-2 capitalize">{col}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/[0.04] text-zinc-300">
+                          {sqlPresets[selectedSqlPreset].rows.map((row, rIdx) => (
+                            <tr key={rIdx} className="hover:bg-white/[0.02]">
+                              <td className="p-2 text-white font-medium">{row.c1}</td>
+                              <td className="p-2">{row.c2}</td>
+                              <td className="p-2 text-green-400">{row.c3}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* 5-Layer Defense Verification Banner */}
+                    <div className="p-2.5 rounded-lg bg-surface border border-green-500/20 text-[10px] text-green-300 flex flex-wrap items-center justify-between gap-2">
+                      <span>✓ 5-Layer Defense: Semicolons Blocked &bull; Whitelist Only &bull; LIMIT 100 Enforced &bull; file:... ?mode=ro</span>
+                      <span className="text-zinc-400 font-semibold">{sqlPresets[selectedSqlPreset].rows.length} rows returned</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* 1. Sprint Kanban Studio Simulation */}
             {activeModule === 'sprint-kanban' && (
               <div className="space-y-4">
@@ -270,7 +572,7 @@ export function ProductShowcase({ onCopyToast }) {
                     <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
                     <span>Database: <code>%LOCALAPPDATA%\PMTool\pmtool.db</code></span>
                   </span>
-                  <span className="text-gold">Schema Version: v5</span>
+                  <span className="text-gold">Schema Version: v6</span>
                 </div>
               </div>
             )}
@@ -423,6 +725,7 @@ export function ProductShowcase({ onCopyToast }) {
                   <div className="text-[10px] font-mono text-zinc-400 uppercase font-semibold">Interactive Slash Command Tools:</div>
                   <div className="flex flex-wrap gap-1.5">
                     {[
+                      { cmd: '/data', desc: 'BI & KPIs' },
                       { cmd: '/breakdown', desc: 'Decompose PRD' },
                       { cmd: '/prd', desc: 'Draft PRD' },
                       { cmd: '/summarize', desc: 'Executive Brief' },
@@ -449,17 +752,29 @@ export function ProductShowcase({ onCopyToast }) {
                 <div className="space-y-3 bg-[#161620] rounded-xl p-4 border border-gold/30">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-gold-bright font-mono">
-                      ## PRD-2026: Local Peer-to-Peer Sync Engine
+                      {activeSlashCommand === '/data' ? '## Executive Telemetry Brief (Q3 Telemetry Grounding)' : '## PRD-2026: Local Peer-to-Peer Sync Engine'}
                     </span>
                     <span className="text-[10px] font-mono text-zinc-400">Context-Grounded Draft</span>
                   </div>
 
-                  <p className="text-xs text-zinc-300 leading-relaxed">
-                    <strong>1. Scope:</strong> Enable two {siteConfig.name} instances on the same subnet to perform bilateral SQLite differential state exchange without external cloud intermediaries.
-                  </p>
+                  {activeSlashCommand === '/data' ? (
+                    <div className="space-y-2 text-xs text-zinc-300 leading-relaxed font-mono">
+                      <p>
+                        <strong>1. Executive Telemetry Summary:</strong> Analysis across 14,200 telemetry events indicates Sprint Kanban adoption surged to 88% (+14% WoW). Zero PII or raw rows leaked during inference.
+                      </p>
+                      <div className="p-2 rounded bg-[#0a0a0f] border border-white/[0.08] text-[11px] text-green-400">
+                        &bull; ARR Milestone: $142,800 (+14.2% ahead of target).<br />
+                        &bull; Churn Root Cause: Cloud BI overhead cited in 48 accounts.
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-xs text-zinc-300 leading-relaxed">
+                      <strong>1. Scope:</strong> Enable two {siteConfig.name} instances on the same subnet to perform bilateral SQLite differential state exchange without external cloud intermediaries.
+                    </p>
+                  )}
 
                   <div className="space-y-1.5">
-                    <div className="text-[10px] font-mono text-zinc-400 uppercase">Document References (Click to preview excerpt)</div>
+                    <div className="text-[10px] font-mono text-zinc-400 uppercase">Document & Data References</div>
                     <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() => setSelectedCitation('spec')}
@@ -472,14 +787,14 @@ export function ProductShowcase({ onCopyToast }) {
                         📄 Architecture_Spec.pdf [§3.4 Excerpt]
                       </button>
                       <button
-                        onClick={() => setSelectedCitation('adr')}
+                        onClick={() => setSelectedCitation('data')}
                         className={`px-2 py-1 rounded text-[11px] font-mono transition-colors border ${
-                          selectedCitation === 'adr'
+                          selectedCitation === 'data'
                             ? 'bg-gold text-zinc-950 border-gold font-bold'
                             : 'bg-surface text-gold-bright border-gold/30 hover:border-gold'
                         }`}
                       >
-                        ⚖️ ADR-013: Encrypted API Key Storage
+                        📊 q3_telemetry.xlsx (14.2k Rows)
                       </button>
                     </div>
                   </div>
@@ -495,7 +810,7 @@ export function ProductShowcase({ onCopyToast }) {
                         </p>
                       ) : (
                         <p className="text-zinc-300 text-[11px]">
-                          "Under ADR-013, API keys for optional cloud providers are encrypted at rest with keys derived from username and local application data path via PBKDF2 before storage."
+                          "Connected dataset schema injected: tbl_q3_user_telemetry with 14,200 rows across 8 columns. Live ARR metric value $142,800 (+14.2% vs target). Raw records preserved locally."
                         </p>
                       )}
                     </div>
@@ -588,14 +903,14 @@ export function ProductShowcase({ onCopyToast }) {
                   <div className="p-2.5 bg-[#12121a] rounded-lg border border-gold/30 space-y-2">
                     <div className="flex items-center justify-between text-[11px]">
                       <span className="text-gold-bright font-bold">electron-updater Background Delta Sync:</span>
-                      <span className="text-green-400 font-bold">78% Downloaded</span>
+                      <span className="text-green-400 font-bold">100% Verified</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
-                      <div className="bg-gradient-to-r from-gold to-gold-bright h-full rounded-full w-[78%] transition-all" />
+                      <div className="bg-gradient-to-r from-gold to-gold-bright h-full rounded-full w-full transition-all" />
                     </div>
                     <div className="flex items-center justify-between text-[10px] text-zinc-400">
-                      <span>Package: PM-Tool-Setup-1.3.0.exe.blockmap</span>
-                      <span>Differential: 14.2 MB / 86 MB</span>
+                      <span>Package: PM-Tool-Setup-1.4.0.exe.blockmap</span>
+                      <span>Differential: 12.8 MB / 81.2 MB</span>
                     </div>
                   </div>
 
@@ -626,7 +941,7 @@ export function ProductShowcase({ onCopyToast }) {
 
                 <div className="p-2.5 rounded-lg bg-[#09090d] border border-white/[0.08] text-[11px] font-mono text-zinc-400 flex items-center justify-between">
                   <span>Release Channel: GitHub Releases (Auto-Checked)</span>
-                  <span className="text-gold-bright">v1.3.0</span>
+                  <span className="text-gold-bright">v1.4.0</span>
                 </div>
               </div>
             )}
