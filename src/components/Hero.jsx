@@ -16,6 +16,7 @@ import {
   CheckCircle2, 
   AlertCircle, 
   TrendingUp, 
+  TrendingDown,
   FolderGit2, 
   BarChart3, 
   Terminal, 
@@ -28,7 +29,12 @@ import {
   X, 
   ArrowUpRight,
   Sliders,
-  Check
+  Check,
+  Activity,
+  CheckSquare,
+  Square,
+  Percent,
+  Calendar
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 import { PmtLogo } from './PmtLogo';
@@ -36,13 +42,22 @@ import { siteConfig } from '../config/siteConfig';
 
 export function Hero({ onDownloadClick, onCopyToast }) {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [dashboardSubView, setDashboardSubView] = useState('canvas');
+  const [dashboardSubView, setDashboardSubView] = useState('analytics');
+  const [analyticsInstrument, setAnalyticsInstrument] = useState('funnel');
   const [activeTemplate, setActiveTemplate] = useState('prd');
   const [spotlightOpen, setSpotlightOpen] = useState(false);
   const [spotlightQuery, setSpotlightQuery] = useState('');
   const [showAddWidgetModal, setShowAddWidgetModal] = useState(false);
   const [newWidgetType, setNewWidgetType] = useState('kpi_card');
   const [newWidgetMetricOp, setNewWidgetMetricOp] = useState('SUM');
+
+  // Decomposer Studio Modal Simulator (v2.1.0)
+  const [showDecomposerModal, setShowDecomposerModal] = useState(false);
+  const [decomposerStep, setDecomposerStep] = useState('preview');
+  const [decomposerPersona, setDecomposerPersona] = useState('End-User');
+
+  // What's New Modal (v2.1.0)
+  const [showWhatsNew, setShowWhatsNew] = useState(false);
 
   const getBadgeIcon = (type) => {
     switch (type) {
@@ -55,19 +70,20 @@ export function Hero({ onDownloadClick, onCopyToast }) {
       case 'search': return Search;
       case 'refresh': return RefreshCw;
       case 'database': return Database;
+      case 'trending': return TrendingUp;
       default: return Sparkles;
     }
   };
 
   const spotlightCommands = [
-    { id: 'tab-dashboard', label: 'Go to Data Studio & KPI Canvas', category: 'Navigation', shortcut: 'Ctrl+3', icon: BarChart3, action: () => { setActiveTab('dashboard'); setDashboardSubView('canvas'); setSpotlightOpen(false); } },
+    { id: 'tab-analytics', label: 'Open Advanced Analytics Workbench (Funnels & Cohorts)', category: 'Analytics (v2.1)', shortcut: 'Ctrl+3', icon: Activity, action: () => { setActiveTab('dashboard'); setDashboardSubView('analytics'); setSpotlightOpen(false); } },
+    { id: 'open-decomposer', label: 'Decompose PRD with Pre-Commit Review (INVEST)', category: 'Agile (v2.1)', shortcut: '/breakdown', icon: Sparkles, action: () => { setShowDecomposerModal(true); setSpotlightOpen(false); } },
     { id: 'tab-board', label: 'Go to Sprint Kanban Board', category: 'Navigation', shortcut: 'Ctrl+2', icon: Kanban, action: () => { setActiveTab('board'); setSpotlightOpen(false); } },
     { id: 'tab-copilot', label: 'Open AI Copilot & Document Generator', category: 'Navigation', shortcut: 'Ctrl+5', icon: Bot, action: () => { setActiveTab('copilot'); setSpotlightOpen(false); } },
     { id: 'tab-documents', label: 'Open Knowledge Base & FTS5 Search', category: 'Navigation', shortcut: 'Ctrl+4', icon: FileText, action: () => { setActiveTab('documents'); setSpotlightOpen(false); } },
     { id: 'tab-workspace', label: 'Go to Workspace Overview', category: 'Navigation', shortcut: 'Ctrl+1', icon: FolderGit2, action: () => { setActiveTab('workspace'); setSpotlightOpen(false); } },
-    { id: 'add-widget', label: '+ Add KPI Metric or Chart Widget', category: 'Data Studio (v2.0.1)', shortcut: '↵', icon: Plus, action: () => { setActiveTab('dashboard'); setDashboardSubView('canvas'); setShowAddWidgetModal(true); setSpotlightOpen(false); } },
-    { id: 'ingest-sqlite', label: 'Ingest Native SQLite Database (.db, .sqlite3)', category: 'Data Studio (v2.0.1)', shortcut: '↵', icon: Database, action: () => { setActiveTab('dashboard'); setDashboardSubView('datasets'); setSpotlightOpen(false); onCopyToast && onCopyToast('Opened SQLite Materialization Dialog'); } },
-    { id: 'gen-doc', label: '+ Generate Executive PM Document', category: 'AI Copilot', shortcut: 'Ctrl+D', icon: Sparkles, action: () => { setActiveTab('copilot'); setSpotlightOpen(false); onCopyToast && onCopyToast('Scaffolding PM Document Template...'); } },
+    { id: 'add-widget', label: '+ Add KPI Metric or Distribution Chart', category: 'Data Studio', shortcut: '↵', icon: Plus, action: () => { setActiveTab('dashboard'); setDashboardSubView('canvas'); setShowAddWidgetModal(true); setSpotlightOpen(false); } },
+    { id: 'ingest-sqlite', label: 'Ingest Native SQLite Database (.db, .sqlite3)', category: 'Data Studio', shortcut: '↵', icon: Database, action: () => { setActiveTab('dashboard'); setDashboardSubView('datasets'); setSpotlightOpen(false); onCopyToast && onCopyToast('Opened SQLite Ingestion Dialog'); } },
   ];
 
   const filteredCommands = spotlightQuery.trim() === ''
@@ -133,15 +149,11 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           </a>
 
           <button
-            onClick={() => {
-              setActiveTab('dashboard');
-              setDashboardSubView('canvas');
-              setSpotlightOpen(true);
-            }}
+            onClick={() => setShowDecomposerModal(true)}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-mono text-xs text-gold-bright bg-gold/10 hover:bg-gold/20 border border-gold/30 transition-all"
           >
-            <Command className="w-3.5 h-3.5 text-gold" />
-            <span>Test Spotlight (Ctrl+K)</span>
+            <Sparkles className="w-3.5 h-3.5 text-gold" />
+            <span>Test Story Decomposer (v2.1)</span>
           </button>
         </div>
 
@@ -159,7 +171,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
         </div>
       </div>
 
-      {/* Realistic Interactive Desktop App Simulator Window (Mirroring v2.0.1) */}
+      {/* Realistic Interactive Desktop App Simulator Window (Mirroring v2.1.0) */}
       <div id="sprint-board" className="relative mx-auto max-w-5xl rounded-2xl border border-white/[0.12] bg-[#0c0c10] shadow-2xl shadow-black/80 overflow-hidden">
         {/* Window Chrome Title Bar */}
         <div className="bg-[#14141a] px-4 py-3 border-b border-white/[0.08] flex items-center justify-between">
@@ -178,7 +190,16 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Clickable Spotlight Command Palette Trigger (matching Titlebar.tsx in pm_tool) */}
+            {/* What's New Pill */}
+            <button
+              onClick={() => setShowWhatsNew(true)}
+              className="hidden lg:flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-gold/15 text-gold-bright border border-gold/30 hover:bg-gold/25 transition-colors"
+            >
+              <Sparkles className="w-3 h-3" />
+              <span>What's New in v2.1.0</span>
+            </button>
+
+            {/* Clickable Spotlight Command Palette Trigger */}
             <button
               onClick={() => setSpotlightOpen(true)}
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono bg-white/[0.06] hover:bg-gold/15 text-zinc-300 hover:text-gold-bright border border-white/10 hover:border-gold/30 transition-all shadow-sm"
@@ -200,14 +221,14 @@ export function Hero({ onDownloadClick, onCopyToast }) {
         </div>
 
         {/* App Frame Content */}
-        <div className="grid grid-cols-1 md:grid-cols-12 min-h-[510px] relative">
+        <div className="grid grid-cols-1 md:grid-cols-12 min-h-[520px] relative">
           
           {/* Authentic Sidebar matching Desktop SPA architecture */}
           <div className="md:col-span-3 bg-[#111116] border-r border-white/[0.08] p-3 flex flex-col justify-between">
             <div className="space-y-1">
               <div className="px-3 py-1.5 text-[10px] font-mono uppercase text-zinc-400 font-bold tracking-wider flex items-center justify-between">
                 <span>SPA Modules</span>
-                <span className="text-gold text-[9px] font-mono">React 19</span>
+                <span className="text-gold text-[9px] font-mono">v2.1.0</span>
               </div>
 
               {/* Spotlight Trigger in Sidebar */}
@@ -253,7 +274,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               </button>
 
               <button 
-                onClick={() => setActiveTab('dashboard')}
+                onClick={() => { setActiveTab('dashboard'); setDashboardSubView('analytics'); }}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-left transition-colors ${
                   activeTab === 'dashboard' 
                     ? 'bg-gold/15 text-gold-bright border border-gold/30' 
@@ -261,10 +282,10 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <BarChart3 className="w-3.5 h-3.5 text-gold" />
+                  <Activity className="w-3.5 h-3.5 text-gold" />
                   <span className="font-semibold flex items-center gap-1.5">
                     <span>Data Studio</span>
-                    <span className="text-[9px] px-1 py-0.2 rounded bg-gold/20 text-gold-bright font-mono">v2.0.1</span>
+                    <span className="text-[9px] px-1 py-0.2 rounded bg-gold/20 text-gold-bright font-mono">v2.1</span>
                   </span>
                 </div>
                 <kbd className="text-[9px] font-mono text-zinc-500">Ctrl+3</kbd>
@@ -301,7 +322,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               </button>
             </div>
 
-            {/* Auto-Updater Status in Sidebar (Mirroring v2.0.0 automated silent updating) */}
+            {/* Auto-Updater Status in Sidebar */}
             <div className="pt-3 border-t border-white/[0.06] mt-4 px-2">
               <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400 mb-1">
                 <span className="flex items-center gap-1.5">
@@ -311,10 +332,10 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 <span className="text-emerald-400">60m Polling</span>
               </div>
               <div className="text-[11px] font-mono text-zinc-300 truncate">
-                v2.0.1 (Current Stable)
+                v2.1.0 (Codename Atlas)
               </div>
               <div className="text-[10px] font-mono text-zinc-500 mt-1 truncate">
-                datasets\analytics_store.db (.sqlite3)
+                datasets\analytics_store.db
               </div>
               <div className="flex items-center justify-between text-[10px] text-zinc-400 mt-2 font-mono">
                 <span>{siteConfig.hero.simulator.dbStats}</span>
@@ -325,169 +346,288 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           {/* Central Main Viewport */}
           <div className="md:col-span-9 p-4 sm:p-6 bg-[#0a0a0e] flex flex-col justify-between relative">
             
-            {/* VIEW 0: Data Studio & Business Dashboards (NEW IN v2.0.1 with AddWidgetModal) */}
+            {/* VIEW 0: Data Studio & Advanced Analytics Workbench (NEW IN v2.1.0) */}
             {activeTab === 'dashboard' && (
               <div className="space-y-4">
                 {/* Header Controls Bar */}
                 <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-                    <span className="text-xs font-mono text-white font-semibold">Data Studio & KPI Dashboard Studio</span>
+                    <span className="text-xs font-mono text-white font-semibold">Data Studio & Analytics Workbench</span>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gold/10 text-gold-bright border border-gold/30">
-                      v2.0.1
+                      v2.1.0
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    {/* Add Widget Button (v2.0.1 AddWidgetModal) */}
+                  {/* Sub-view switcher */}
+                  <div className="flex items-center gap-1 bg-[#14141c] p-0.5 rounded-lg border border-white/10 text-[11px] font-mono">
                     <button
-                      onClick={() => setShowAddWidgetModal(!showAddWidgetModal)}
-                      className="px-2.5 py-1 rounded-lg bg-gold text-zinc-950 font-mono text-[11px] font-bold flex items-center gap-1.5 hover:brightness-110 shadow-sm shadow-gold/20 transition-all"
+                      onClick={() => setDashboardSubView('analytics')}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${
+                        dashboardSubView === 'analytics'
+                          ? 'bg-gold text-zinc-950 font-bold'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
                     >
-                      <Plus className="w-3 h-3 stroke-[3]" />
-                      <span>+ Add KPI Metric</span>
+                      📈 Analytics Workbench
                     </button>
-
-                    {/* Sub-view switcher */}
-                    <div className="flex items-center gap-1 bg-[#14141c] p-0.5 rounded-lg border border-white/10 text-[11px] font-mono">
-                      <button
-                        onClick={() => { setDashboardSubView('canvas'); setShowAddWidgetModal(false); }}
-                        className={`px-2.5 py-1 rounded-md transition-colors ${
-                          dashboardSubView === 'canvas'
-                            ? 'bg-gold text-zinc-950 font-bold'
-                            : 'text-zinc-400 hover:text-white'
-                        }`}
-                      >
-                        📊 KPI Canvas
-                      </button>
-                      <button
-                        onClick={() => { setDashboardSubView('datasets'); setShowAddWidgetModal(false); }}
-                        className={`px-2.5 py-1 rounded-md transition-colors ${
-                          dashboardSubView === 'datasets'
-                            ? 'bg-gold text-zinc-950 font-bold'
-                            : 'text-zinc-400 hover:text-white'
-                        }`}
-                      >
-                        📁 Datasets (4)
-                      </button>
-                      <button
-                        onClick={() => { setDashboardSubView('sandbox'); setShowAddWidgetModal(false); }}
-                        className={`px-2.5 py-1 rounded-md transition-colors ${
-                          dashboardSubView === 'sandbox'
-                            ? 'bg-gold text-zinc-950 font-bold'
-                            : 'text-zinc-400 hover:text-white'
-                        }`}
-                      >
-                        ‹/› Safe SQL
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => setDashboardSubView('canvas')}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${
+                        dashboardSubView === 'canvas'
+                          ? 'bg-gold text-zinc-950 font-bold'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      📊 KPI Canvas
+                    </button>
+                    <button
+                      onClick={() => setDashboardSubView('datasets')}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${
+                        dashboardSubView === 'datasets'
+                          ? 'bg-gold text-zinc-950 font-bold'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      📁 Datasets (4)
+                    </button>
+                    <button
+                      onClick={() => setDashboardSubView('sandbox')}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${
+                        dashboardSubView === 'sandbox'
+                          ? 'bg-gold text-zinc-950 font-bold'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      ‹/› Safe SQL
+                    </button>
                   </div>
                 </div>
 
-                {/* Interactive AddWidgetModal Simulator (v2.0.1) */}
-                {showAddWidgetModal && (
-                  <div className="bg-[#12121a] p-4 rounded-xl border border-gold/40 shadow-xl space-y-3 font-mono text-xs animate-in fade-in zoom-in-95 duration-150">
-                    <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
-                      <div className="flex items-center gap-2">
-                        <Plus className="w-3.5 h-3.5 text-gold-bright" />
-                        <span className="text-white font-bold">AddWidgetModal: Configure New Widget</span>
-                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-gold/15 text-gold-bright">v2.0.1</span>
-                      </div>
-                      <button 
-                        onClick={() => setShowAddWidgetModal(false)}
-                        className="text-zinc-400 hover:text-white p-0.5"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                      <button
-                        onClick={() => setNewWidgetType('kpi_card')}
-                        className={`p-2 rounded-lg border text-left transition-colors ${
-                          newWidgetType === 'kpi_card'
-                            ? 'bg-gold/15 border-gold text-gold-bright font-bold'
-                            : 'bg-surface border-white/10 text-zinc-400 hover:text-white'
-                        }`}
-                      >
-                        <div className="font-semibold text-white">1. KPI Card</div>
-                        <div className="text-[10px] text-zinc-400">Sum/Avg with target variance</div>
-                      </button>
-
-                      <button
-                        onClick={() => setNewWidgetType('bar_chart')}
-                        className={`p-2 rounded-lg border text-left transition-colors ${
-                          newWidgetType === 'bar_chart'
-                            ? 'bg-gold/15 border-gold text-gold-bright font-bold'
-                            : 'bg-surface border-white/10 text-zinc-400 hover:text-white'
-                        }`}
-                      >
-                        <div className="font-semibold text-white">2. Bar Distribution</div>
-                        <div className="text-[10px] text-zinc-400">Categorical breakdown bars</div>
-                      </button>
-
-                      <button
-                        onClick={() => setNewWidgetType('donut_chart')}
-                        className={`p-2 rounded-lg border text-left transition-colors ${
-                          newWidgetType === 'donut_chart'
-                            ? 'bg-gold/15 border-gold text-gold-bright font-bold'
-                            : 'bg-surface border-white/10 text-zinc-400 hover:text-white'
-                        }`}
-                      >
-                        <div className="font-semibold text-white">3. Donut Share</div>
-                        <div className="text-[10px] text-zinc-400">Dimensional segment share</div>
-                      </button>
-                    </div>
-
-                    <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/[0.06] text-[11px]">
-                      <div className="flex items-center gap-2">
-                        <span className="text-zinc-400">Aggregation:</span>
-                        {['SUM', 'AVG', 'COUNT'].map((op) => (
+                {/* SUB-VIEW 0: Advanced Analytics Workbench (v2.1.0) */}
+                {dashboardSubView === 'analytics' && (
+                  <div className="space-y-3.5 font-mono text-xs">
+                    {/* Instrument switcher pills */}
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px]">
+                      {[
+                        { id: 'funnel', label: '1. Conversion Funnel', icon: TrendingDown },
+                        { id: 'retention', label: '2. Cohort Retention Matrix', icon: Calendar },
+                        { id: 'outliers', label: '3. Outliers & Distributions', icon: AlertCircle },
+                        { id: 'correlation', label: '4. Pearson Correlations', icon: Sparkles },
+                      ].map((inst) => {
+                        const Icon = inst.icon;
+                        return (
                           <button
-                            key={op}
-                            onClick={() => setNewWidgetMetricOp(op)}
-                            className={`px-2 py-0.5 rounded text-[10px] border ${
-                              newWidgetMetricOp === op 
-                                ? 'bg-gold text-zinc-950 font-bold border-gold' 
-                                : 'bg-surface text-zinc-400 border-white/10'
+                            key={inst.id}
+                            onClick={() => setAnalyticsInstrument(inst.id)}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border transition-all ${
+                              analyticsInstrument === inst.id
+                                ? 'bg-gold/20 border-gold text-gold-bright font-bold'
+                                : 'bg-surface border-white/10 text-zinc-400 hover:text-white'
                             }`}
                           >
-                            {op}
+                            <Icon className="w-3.5 h-3.5" />
+                            <span>{inst.label}</span>
                           </button>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => {
-                            setShowAddWidgetModal(false);
-                            onCopyToast && onCopyToast(`Added new ${newWidgetType} to analytics_store.db`);
-                          }}
-                          className="px-3 py-1 rounded bg-gold text-zinc-950 font-bold hover:brightness-110 flex items-center gap-1"
-                        >
-                          <Check className="w-3 h-3 stroke-[3]" />
-                          <span>Insert Widget</span>
-                        </button>
-                      </div>
+                        );
+                      })}
                     </div>
+
+                    {/* Instrument 1: Conversion Funnel Analyzer */}
+                    {analyticsInstrument === 'funnel' && (
+                      <div className="bg-[#111116] p-4 rounded-xl border border-gold/40 space-y-3">
+                        <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                          <span className="font-bold text-white flex items-center gap-2">
+                            <TrendingDown className="w-3.5 h-3.5 text-gold-bright" />
+                            <span>Multi-Stage Conversion Funnel & Drop-Off Analyzer</span>
+                          </span>
+                          <span className="text-[10px] text-green-400">Overall: 5.92% (840 Paid)</span>
+                        </div>
+
+                        {/* Funnel Stage Bars */}
+                        <div className="space-y-2">
+                          {[
+                            { stage: '1. Visit Landing Page', count: 14200, pct: 100, drop: null, color: '#e5b95a' },
+                            { stage: '2. Account Signup', count: 4820, pct: 33.9, drop: '-66.1% drop-off', color: '#e8a84c' },
+                            { stage: '3. Active Project Creation', count: 2140, pct: 15.1, drop: '-55.6% drop-off', color: '#5aab7f' },
+                            { stage: '4. Paid Conversion', count: 840, pct: 5.92, drop: '-60.7% drop-off', color: '#4c97e8' },
+                          ].map((stg) => (
+                            <div key={stg.stage} className="space-y-1">
+                              <div className="flex items-center justify-between text-[11px]">
+                                <span className="text-white font-medium">{stg.stage}</span>
+                                <div className="flex items-center gap-3">
+                                  {stg.drop && <span className="text-red-400 text-[10px]">{stg.drop}</span>}
+                                  <span className="text-zinc-300 font-bold">{stg.count.toLocaleString()} ({stg.pct}%)</span>
+                                </div>
+                              </div>
+                              <div className="w-full bg-white/[0.06] rounded-full h-2.5 overflow-hidden">
+                                <div 
+                                  className="h-full rounded-full transition-all duration-500" 
+                                  style={{ width: `${stg.pct}%`, backgroundColor: stg.color }}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="p-2 rounded bg-[#09090d] border border-white/[0.04] flex items-center justify-between text-[10px] text-zinc-400">
+                          <span>Highest Drop-off: <strong>Visit → Signup</strong> (Lost volume: 9,380 users)</span>
+                          <span className="text-gold">Computed via tools/analytics_engine.py</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Instrument 2: Period-over-Period Cohort Retention Matrix Heatmap */}
+                    {analyticsInstrument === 'retention' && (
+                      <div className="bg-[#111116] p-4 rounded-xl border border-gold/40 space-y-3">
+                        <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                          <span className="font-bold text-white flex items-center gap-2">
+                            <Calendar className="w-3.5 h-3.5 text-gold-bright" />
+                            <span>Month-over-Month (MoM) Cohort Retention Heatmap</span>
+                          </span>
+                          <span className="text-[10px] text-gold">4 Active Cohorts</span>
+                        </div>
+
+                        {/* Heatmap Matrix Table */}
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-center text-[10px]">
+                            <thead>
+                              <tr className="text-zinc-400 border-b border-white/[0.06]">
+                                <th className="text-left p-1.5">Cohort</th>
+                                <th className="p-1.5">Users</th>
+                                <th className="p-1.5">Month 0</th>
+                                <th className="p-1.5">Month 1</th>
+                                <th className="p-1.5">Month 2</th>
+                                <th className="p-1.5">Month 3</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/[0.04]">
+                              <tr>
+                                <td className="text-left p-1.5 text-white font-semibold">Jun 2026</td>
+                                <td className="p-1.5 text-zinc-400">1,240</td>
+                                <td className="p-1.5 bg-gold/30 text-gold-bright font-bold">100%</td>
+                                <td className="p-1.5 bg-gold/20 text-zinc-200">78.4%</td>
+                                <td className="p-1.5 bg-gold/15 text-zinc-300">64.2%</td>
+                                <td className="p-1.5 bg-gold/10 text-zinc-400">58.1%</td>
+                              </tr>
+                              <tr>
+                                <td className="text-left p-1.5 text-white font-semibold">Jul 2026</td>
+                                <td className="p-1.5 text-zinc-400">1,480</td>
+                                <td className="p-1.5 bg-gold/30 text-gold-bright font-bold">100%</td>
+                                <td className="p-1.5 bg-gold/25 text-zinc-200">81.2%</td>
+                                <td className="p-1.5 bg-gold/15 text-zinc-300">67.0%</td>
+                                <td className="p-1.5 text-zinc-600">-</td>
+                              </tr>
+                              <tr>
+                                <td className="text-left p-1.5 text-white font-semibold">Aug 2026</td>
+                                <td className="p-1.5 text-zinc-400">1,820</td>
+                                <td className="p-1.5 bg-gold/30 text-gold-bright font-bold">100%</td>
+                                <td className="p-1.5 bg-gold/25 text-zinc-200">84.5%</td>
+                                <td className="p-1.5 text-zinc-600">-</td>
+                                <td className="p-1.5 text-zinc-600">-</td>
+                              </tr>
+                              <tr>
+                                <td className="text-left p-1.5 text-white font-semibold">Sep 2026</td>
+                                <td className="p-1.5 text-zinc-400">2,140</td>
+                                <td className="p-1.5 bg-gold/30 text-gold-bright font-bold">100%</td>
+                                <td className="p-1.5 text-zinc-600">-</td>
+                                <td className="p-1.5 text-zinc-600">-</td>
+                                <td className="p-1.5 text-zinc-600">-</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <div className="p-2 rounded bg-[#09090d] border border-white/[0.04] flex items-center justify-between text-[10px] text-zinc-400">
+                          <span>Benchmark: 3-month retention persistence scores +9.4% MoM</span>
+                          <span className="text-green-400">Color Intensity Mapping</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Instrument 3: Outliers & Distribution Profiler */}
+                    {analyticsInstrument === 'outliers' && (
+                      <div className="bg-[#111116] p-4 rounded-xl border border-gold/40 space-y-3">
+                        <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                          <span className="font-bold text-white flex items-center gap-2">
+                            <AlertCircle className="w-3.5 h-3.5 text-gold-bright" />
+                            <span>Statistical Distributions & Outlier Detection (Tukey IQR + Z-Score)</span>
+                          </span>
+                          <span className="text-[10px] text-amber-400 font-semibold">14 Outliers Flagged</span>
+                        </div>
+
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px]">
+                          <div className="p-2 rounded bg-surface border border-white/10">
+                            <span className="text-zinc-400">Median (P50):</span>
+                            <div className="text-sm font-bold text-white">$124.50</div>
+                          </div>
+                          <div className="p-2 rounded bg-surface border border-white/10">
+                            <span className="text-zinc-400">Mean &plusmn; StdDev:</span>
+                            <div className="text-sm font-bold text-white">$142.80 &plusmn; 48.2</div>
+                          </div>
+                          <div className="p-2 rounded bg-surface border border-white/10">
+                            <span className="text-zinc-400">P90 / P99:</span>
+                            <div className="text-sm font-bold text-gold">$510 / $890</div>
+                          </div>
+                          <div className="p-2 rounded bg-surface border border-red-500/30">
+                            <span className="text-red-400">Tukey Upper Fence:</span>
+                            <div className="text-sm font-bold text-red-400">$787.00</div>
+                          </div>
+                        </div>
+
+                        <div className="p-2 rounded bg-[#09090d] border border-white/[0.04] text-[10px] text-zinc-400 flex items-center justify-between">
+                          <span>Flagged: 14 rows exceeding Tukey's fence (1.5 &times; IQR) and |Z| &gt; 3.0</span>
+                          <span className="text-green-400">Safe Local Calculation</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Instrument 4: Pearson Correlation Matrix */}
+                    {analyticsInstrument === 'correlation' && (
+                      <div className="bg-[#111116] p-4 rounded-xl border border-gold/40 space-y-3">
+                        <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                          <span className="font-bold text-white flex items-center gap-2">
+                            <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
+                            <span>Pairwise Feature Pearson Correlation Coefficients (r &isin; [-1.0, 1.0])</span>
+                          </span>
+                          <span className="text-[10px] text-gold">4 Dimensions</span>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[10px]">
+                          <div className="p-2 rounded bg-surface border border-green-500/30 space-y-0.5">
+                            <div className="text-zinc-400">duration &bull; conversion</div>
+                            <div className="text-base font-bold text-green-400">r = +0.76</div>
+                            <div className="text-[9px] text-green-300">Strong Positive</div>
+                          </div>
+                          <div className="p-2 rounded bg-surface border border-red-500/30 space-y-0.5">
+                            <div className="text-zinc-400">app_errors &bull; nps_score</div>
+                            <div className="text-base font-bold text-red-400">r = -0.58</div>
+                            <div className="text-[9px] text-red-300">Moderate Negative</div>
+                          </div>
+                          <div className="p-2 rounded bg-surface border border-gold/30 space-y-0.5">
+                            <div className="text-zinc-400">arr_usd &bull; team_seats</div>
+                            <div className="text-base font-bold text-gold">r = +0.89</div>
+                            <div className="text-[9px] text-gold-bright">Very Strong Positive</div>
+                          </div>
+                        </div>
+
+                        <div className="p-2 rounded bg-[#09090d] border border-white/[0.04] text-[10px] text-zinc-400 flex items-center justify-between">
+                          <span>Uncovers hidden dependencies across numerical dataset columns</span>
+                          <span className="text-gold">Pearson Matrix Grid</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
-                {dashboardSubView === 'canvas' && !showAddWidgetModal && (
+                {/* SUB-VIEW 1: KPI Canvas (v2.0.1) */}
+                {dashboardSubView === 'canvas' && (
                   <div className="space-y-3.5">
-                    {/* 3 Supported Widget Types (v2.0.1) */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-mono">
-                      {/* Widget 1: KPI Card with milestone variance badge and delete control */}
-                      <div className="p-2.5 rounded-xl bg-surface border border-gold/40 space-y-1 relative group">
+                      <div className="p-2.5 rounded-xl bg-surface border border-gold/40 space-y-1">
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-zinc-400 uppercase">ARR Velocity (kpi_card)</span>
-                          <button 
-                            onClick={() => onCopyToast && onCopyToast('Prompted DeleteDatasetModal confirmation')}
-                            className="text-zinc-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
-                            title="Delete Widget"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </button>
+                          <span className="text-[10px] text-zinc-400 uppercase">ARR Velocity</span>
+                          <span className="text-[9px] px-1 rounded bg-green-500/10 text-green-400 font-bold">Ahead</span>
                         </div>
                         <div className="text-lg font-bold text-white">$142,800</div>
                         <div className="text-[10px] text-green-400 font-semibold flex items-center gap-1">
@@ -496,8 +636,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                         </div>
                       </div>
 
-                      {/* Widget 2: Second KPI Card */}
-                      <div className="p-2.5 rounded-xl bg-surface border border-white/10 space-y-1 relative group">
+                      <div className="p-2.5 rounded-xl bg-surface border border-white/10 space-y-1">
                         <div className="flex items-center justify-between">
                           <span className="text-[10px] text-zinc-400 uppercase">Active Teams</span>
                           <span className="text-[9px] px-1 rounded bg-blue-500/10 text-blue-300">Growing</span>
@@ -506,55 +645,18 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                         <div className="text-[10px] text-blue-300 font-semibold">+3 onboarded this sprint</div>
                       </div>
 
-                      {/* Widget 3: Donut Share Breakdown Card (v2.0.1 donut_chart) */}
                       <div className="p-2.5 rounded-xl bg-surface border border-white/10 space-y-1">
                         <div className="flex items-center justify-between text-[10px] text-zinc-400 uppercase">
-                          <span>Segment Share (donut_chart)</span>
+                          <span>Segment Share</span>
                           <span className="text-gold">3 Segments</span>
                         </div>
                         <div className="flex items-center gap-3 pt-0.5">
                           <div className="w-9 h-9 rounded-full border-4 border-gold border-r-blue-500 border-b-emerald-400 shrink-0" />
                           <div className="text-[10px] space-y-0.5 text-zinc-300">
-                            <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-gold" /> Ent: 48%</div>
-                            <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Growth: 34%</div>
+                            <div><span className="w-1.5 h-1.5 rounded-full bg-gold inline-block mr-1" /> Ent: 48%</div>
+                            <div><span className="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block mr-1" /> Growth: 34%</div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-
-                    {/* Bar Distribution Chart Component (v2.0.1 bar_chart) */}
-                    <div className="bg-[#111116] p-3.5 rounded-xl border border-white/[0.08] space-y-2">
-                      <div className="flex items-center justify-between text-xs font-mono">
-                        <span className="text-zinc-300 font-semibold">Q3 Module Adoption (% Active Workspaces)</span>
-                        <span className="text-[10px] text-zinc-400">Source: telemetry_store.sqlite3 (Native SQLite)</span>
-                      </div>
-                      
-                      {/* SVG Bar Chart */}
-                      <div className="h-28 w-full flex items-end justify-between gap-3 pt-3 px-2">
-                        {[
-                          { label: 'Spotlight (Ctrl+K)', pct: 96, color: '#e5b95a' },
-                          { label: 'Kanban Board', pct: 88, color: '#e8a84c' },
-                          { label: 'Copilot', pct: 92, color: '#f29e24' },
-                          { label: 'KPI Studio', pct: 84, color: '#5aab7f' },
-                          { label: 'SQLite Ingest', pct: 78, color: '#4c97e8' },
-                        ].map((bar) => (
-                          <div key={bar.label} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
-                            <span className="text-[10px] font-mono text-zinc-400 group-hover:text-white transition-colors">
-                              {bar.pct}%
-                            </span>
-                            <div 
-                              className="w-full rounded-t transition-all duration-300 group-hover:brightness-125"
-                              style={{ 
-                                height: `${bar.pct * 0.75}%`, 
-                                backgroundColor: bar.color,
-                                opacity: 0.85
-                              }}
-                            />
-                            <span className="text-[9px] font-mono text-zinc-400 truncate w-full text-center">
-                              {bar.label}
-                            </span>
-                          </div>
-                        ))}
                       </div>
                     </div>
 
@@ -565,7 +667,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                   </div>
                 )}
 
-                {/* Sub-view: Ingested Datasets including native SQLite (.db, .sqlite3) */}
+                {/* Sub-view: Ingested Datasets */}
                 {dashboardSubView === 'datasets' && (
                   <div className="space-y-2.5 font-mono text-xs">
                     <div className="text-[10px] text-zinc-400 uppercase font-bold flex items-center justify-between">
@@ -574,7 +676,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                     </div>
 
                     {[
-                      { name: 'telemetry_store.sqlite3', fmt: 'Native SQLite (.sqlite3)', rows: '28,400 rows', tag: 'NEW in v2.0.1', isSqlite: true },
+                      { name: 'telemetry_store.sqlite3', fmt: 'Native SQLite (.sqlite3)', rows: '28,400 rows', tag: 'Native .db', isSqlite: true },
                       { name: 'q3_user_metrics.xlsx', fmt: 'Excel Workbook (.xlsx)', rows: '14,200 rows', tag: 'openpyxl', isSqlite: false },
                       { name: 'active_subscriptions.json', fmt: 'JSON Document Array', rows: '3,800 rows', tag: 'JSON Engine', isSqlite: false },
                       { name: 'churn_reasons.csv', fmt: 'Delimited CSV Table', rows: '1,450 rows', tag: 'CSV Engine', isSqlite: false },
@@ -605,48 +707,18 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                         </span>
                         <span className="text-green-400 flex items-center gap-1">
                           <Zap className="w-3 h-3" />
-                          <span>Execution Timer: 0.62 ms</span>
+                          <span>Execution Timer: 0.48 ms</span>
                         </span>
                       </div>
                       <code className="text-zinc-200 block text-[11px] leading-relaxed">
-                        <span className="text-blue-400">SELECT</span> module, <span className="text-blue-400">COUNT</span>(*) <span className="text-blue-400">AS</span> events, <span className="text-blue-400">AVG</span>(latency_ms) <span className="text-blue-400">AS</span> latency <br />
-                        <span className="text-blue-400">FROM</span> telemetry <br />
-                        <span className="text-blue-400">GROUP BY</span> module <span className="text-blue-400">ORDER BY</span> events <span className="text-blue-400">DESC LIMIT</span> 5;
+                        <span className="text-blue-400">SELECT</span> stage, <span className="text-blue-400">COUNT</span>(*) <span className="text-blue-400">AS</span> count <br />
+                        <span className="text-blue-400">FROM</span> funnel_events <span className="text-blue-400">GROUP BY</span> stage <span className="text-blue-400">ORDER BY</span> count <span className="text-blue-400">DESC</span>;
                       </code>
-                    </div>
-
-                    <div className="bg-[#111116] rounded-xl border border-white/10 overflow-hidden">
-                      <table className="w-full text-left text-[11px]">
-                        <thead className="bg-[#181822] text-gold border-b border-white/10">
-                          <tr>
-                            <th className="p-2">module</th>
-                            <th className="p-2">events</th>
-                            <th className="p-2">latency (ms)</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-white/[0.04] text-zinc-300">
-                          <tr>
-                            <td className="p-2 text-white font-semibold">Spotlight (Ctrl+K)</td>
-                            <td className="p-2">16,420</td>
-                            <td className="p-2 text-green-400">0.28</td>
-                          </tr>
-                          <tr>
-                            <td className="p-2 text-white font-semibold">Sprint Kanban</td>
-                            <td className="p-2">14,820</td>
-                            <td className="p-2 text-green-400">0.62</td>
-                          </tr>
-                          <tr>
-                            <td className="p-2 text-white font-semibold">KPI Studio</td>
-                            <td className="p-2">12,180</td>
-                            <td className="p-2 text-green-400">0.54</td>
-                          </tr>
-                        </tbody>
-                      </table>
                     </div>
 
                     <div className="p-2 rounded-lg bg-surface border border-green-500/20 text-[10px] text-green-300 flex items-center justify-between">
                       <span>✓ 5-Layer Defense: Polymorphic Rows • file:... ?mode=ro • LIMIT 100 Enforced</span>
-                      <span className="text-zinc-400">3 rows</span>
+                      <span className="text-zinc-400">Strict Read-Only</span>
                     </div>
                   </div>
                 )}
@@ -655,11 +727,11 @@ export function Hero({ onDownloadClick, onCopyToast }) {
 
             {/* VIEW 1: Sprint Kanban Board */}
             {activeTab === 'board' && (
-              <div className="space-y-4">
-                <div className="grid grid-cols-4 gap-2 bg-[#14141c] p-3 rounded-xl border border-white/[0.08] text-xs font-mono">
+              <div className="space-y-4 font-mono text-xs">
+                <div className="grid grid-cols-4 gap-2 bg-[#14141c] p-3 rounded-xl border border-white/[0.08]">
                   <div>
                     <div className="text-[10px] text-zinc-400 uppercase">Total Tasks</div>
-                    <div className="text-base font-bold text-white">18</div>
+                    <div className="text-base font-bold text-white">22</div>
                   </div>
                   <div>
                     <div className="text-[10px] text-amber-400 uppercase">In Flight</div>
@@ -668,70 +740,58 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                   <div>
                     <div className="text-[10px] text-red-400 uppercase">Blockers</div>
                     <div className="text-base font-bold text-red-400 flex items-center gap-1">
-                      <span>1</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
+                      <span>0</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
                     </div>
                   </div>
                   <div>
                     <div className="text-[10px] text-green-400 uppercase">Velocity</div>
-                    <div className="text-base font-bold text-green-400">74% (36 Pts)</div>
+                    <div className="text-base font-bold text-green-400">76% (42 Pts)</div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-4 gap-2 text-xs font-mono">
+                <div className="grid grid-cols-4 gap-2">
                   <div className="bg-[#111116] p-2.5 rounded-xl border border-white/[0.08] space-y-2">
-                    <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
-                      <span className="text-[10px] uppercase font-bold text-zinc-400">Backlog (2)</span>
-                    </div>
-                    <div className="bg-surface p-2 rounded-lg border border-white/[0.06] space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[9px] px-1 rounded bg-blue-500/20 text-blue-300">P2 Medium</span>
-                        <span className="text-[9px] px-1 rounded bg-white/[0.06] text-gold font-bold">3 pts</span>
+                    <span className="text-[10px] uppercase font-bold text-zinc-400">Backlog (3)</span>
+                    <div className="bg-surface p-2 rounded-lg border border-white/[0.06] space-y-1">
+                      <div className="flex items-center justify-between text-[9px]">
+                        <span className="px-1 rounded bg-blue-500/20 text-blue-300">P2 Medium</span>
+                        <span className="px-1 rounded bg-white/[0.06] text-gold font-bold">3 pts</span>
                       </div>
-                      <div className="text-white text-[11px] font-semibold">CSV / JSON export CLI</div>
-                      <div className="text-[10px] text-zinc-400">As a PM, export backlogs directly...</div>
+                      <div className="text-white text-[11px] font-semibold">Pearson correlation matrix</div>
                     </div>
                   </div>
 
                   <div className="bg-[#111116] p-2.5 rounded-xl border border-gold/30 space-y-2">
-                    <div className="flex items-center justify-between pb-1 border-b border-gold/20">
-                      <span className="text-[10px] uppercase font-bold text-gold">In Progress (2)</span>
-                    </div>
-                    <div className="bg-surface p-2 rounded-lg border border-gold/40 space-y-1.5 shadow-sm">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[9px] px-1 rounded bg-red-500/20 text-red-300">P0 Critical</span>
-                        <span className="text-[9px] px-1 rounded bg-gold/20 text-gold-bright font-bold">5 pts</span>
+                    <span className="text-[10px] uppercase font-bold text-gold">In Progress (2)</span>
+                    <div className="bg-surface p-2 rounded-lg border border-gold/40 space-y-1">
+                      <div className="flex items-center justify-between text-[9px]">
+                        <span className="px-1 rounded bg-red-500/20 text-red-300">P0 Critical</span>
+                        <span className="px-1 rounded bg-gold/20 text-gold-bright font-bold">5 pts</span>
                       </div>
-                      <div className="text-white text-[11px] font-semibold">PRD-to-Story Decomposer</div>
-                      <div className="text-[10px] text-zinc-300">Given a PRD, generate 4-8 Agile user stories...</div>
+                      <div className="text-white text-[11px] font-semibold">Cohort retention heatmaps</div>
                     </div>
                   </div>
 
-                  <div className="bg-[#111116] p-2.5 rounded-xl border border-red-500/30 space-y-2">
-                    <div className="flex items-center justify-between pb-1 border-b border-red-500/20">
-                      <span className="text-[10px] uppercase font-bold text-red-400">Blocked (1)</span>
-                    </div>
-                    <div className="bg-surface p-2 rounded-lg border border-red-500/30 space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[9px] px-1 rounded bg-red-500/20 text-red-300">P0 Blocker</span>
-                        <span className="text-[9px] px-1 rounded bg-white/[0.06] text-zinc-400 font-bold">8 pts</span>
+                  <div className="bg-[#111116] p-2.5 rounded-xl border border-white/[0.08] space-y-2">
+                    <span className="text-[10px] uppercase font-bold text-zinc-400">Review (1)</span>
+                    <div className="bg-surface p-2 rounded-lg border border-white/[0.06] space-y-1">
+                      <div className="flex items-center justify-between text-[9px]">
+                        <span className="px-1 rounded bg-purple-500/20 text-purple-300">P1 High</span>
+                        <span className="px-1 rounded bg-white/[0.06] text-gold font-bold">5 pts</span>
                       </div>
-                      <div className="text-white text-[11px] font-semibold">PyInstaller Flask Spec</div>
-                      <div className="text-[10px] text-red-300">Resolved in v2.0.0 SPA migration</div>
+                      <div className="text-white text-[11px] font-semibold">Pre-commit review studio</div>
                     </div>
                   </div>
 
                   <div className="bg-[#111116] p-2.5 rounded-xl border border-green-500/20 space-y-2">
-                    <div className="flex items-center justify-between pb-1 border-b border-green-500/20">
-                      <span className="text-[10px] uppercase font-bold text-green-400">Done (13)</span>
-                    </div>
-                    <div className="bg-surface p-2 rounded-lg border border-green-500/20 space-y-1.5 opacity-80">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[9px] px-1 rounded bg-green-500/20 text-green-300">Shipped</span>
-                        <span className="text-[9px] px-1 rounded bg-white/[0.06] text-zinc-500">5 pts</span>
+                    <span className="text-[10px] uppercase font-bold text-green-400">Done (16)</span>
+                    <div className="bg-surface p-2 rounded-lg border border-green-500/20 space-y-1 opacity-80">
+                      <div className="flex items-center justify-between text-[9px]">
+                        <span className="px-1 rounded bg-green-500/20 text-green-300">Shipped</span>
+                        <span className="text-zinc-500">8 pts</span>
                       </div>
-                      <div className="text-white text-[11px] line-through font-semibold">Spotlight Command Palette</div>
-                      <div className="text-[10px] text-zinc-500">Raycast/Linear style Ctrl+K</div>
+                      <div className="text-white text-[11px] line-through font-semibold">INVEST Decomposer Overhaul</div>
                     </div>
                   </div>
                 </div>
@@ -740,129 +800,63 @@ export function Hero({ onDownloadClick, onCopyToast }) {
 
             {/* VIEW 2: AI Copilot & 1-Click Document Generator */}
             {activeTab === 'copilot' && (
-              <div className="space-y-4">
+              <div className="space-y-4 font-mono text-xs">
                 <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-gold animate-ping" />
-                    <span className="text-xs font-mono text-zinc-300 font-semibold">
-                      AI Copilot &bull; Document Generator (5 Blueprints)
+                    <span className="text-xs text-zinc-300 font-semibold">
+                      AI Copilot &bull; Document Generator & Decomposer (v2.1.0)
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => onCopyToast && onCopyToast('Scaffolding PM Document Template with local RAG grounding...')}
-                      className="px-2.5 py-1 rounded-lg bg-gold text-zinc-950 font-mono text-[11px] font-bold flex items-center gap-1.5 hover:brightness-110 shadow-sm shadow-gold/20 transition-all"
+                      onClick={() => setShowDecomposerModal(true)}
+                      className="px-2.5 py-1 rounded-lg bg-gold/20 text-gold-bright border border-gold/40 text-[11px] font-bold flex items-center gap-1.5 hover:bg-gold/30 transition-all"
                     >
-                      <Sparkles className="w-3 h-3 stroke-[2.5]" />
+                      <Sparkles className="w-3 h-3 text-gold" />
+                      <span>Decompose PRD</span>
+                    </button>
+                    <button
+                      onClick={() => onCopyToast && onCopyToast('Scaffolding PM Document Template with local RAG grounding...')}
+                      className="px-2.5 py-1 rounded-lg bg-gold text-zinc-950 text-[11px] font-bold flex items-center gap-1.5 hover:brightness-110 shadow-sm shadow-gold/20 transition-all"
+                    >
+                      <FileText className="w-3 h-3 stroke-[2.5]" />
                       <span>+ Generate Document</span>
                     </button>
-                    <span className="text-[10px] font-mono text-zinc-400 hidden sm:inline">
-                      8,192 Token Budget
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <div className="text-[10px] font-mono text-zinc-400 uppercase font-semibold flex items-center justify-between">
-                    <span>Executive PM Scaffolding Templates:</span>
-                    <span className="text-gold">5 Native Blueprints</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5 text-[11px] font-mono">
-                    {[
-                      { id: 'prd', label: '📄 PRD', title: 'Product Requirement Document' },
-                      { id: 'spec', label: '🏗️ Tech Spec', title: 'Technical Architecture Spec' },
-                      { id: 'breakdown', label: '📋 Story Breakdown', title: 'Agile Sprint Stories' },
-                      { id: 'kpi', label: '📈 Strategy & KPIs', title: 'North Star & Metric Tree' },
-                      { id: 'brief', label: '📝 Executive Brief', title: 'TL;DR & Risk Synthesis' },
-                    ].map((tpl) => (
-                      <button
-                        key={tpl.id}
-                        onClick={() => setActiveTemplate(tpl.id)}
-                        className={`px-2.5 py-1 rounded-md transition-colors border ${
-                          activeTemplate === tpl.id
-                            ? 'bg-gold/20 text-gold-bright border-gold font-bold shadow-sm'
-                            : 'bg-surface text-zinc-400 border-white/10 hover:text-white hover:border-gold/30'
-                        }`}
-                      >
-                        {tpl.label}
-                      </button>
-                    ))}
                   </div>
                 </div>
 
                 <div className="bg-[#111116] border border-gold/30 rounded-xl p-4 space-y-3 relative overflow-hidden">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-white flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
-                      <span>
-                        {activeTemplate === 'prd' && 'PRD-2026: Desktop SPA Modernization & Spotlight Engine'}
-                        {activeTemplate === 'spec' && 'Architecture Spec: Subnet UDP Beacon & TLS Handshake'}
-                        {activeTemplate === 'breakdown' && 'Agile Story Breakdown: 5 Stories & Fibonacci Estimates'}
-                        {activeTemplate === 'kpi' && 'Strategy & KPI Plan: ARR Velocity & Sync Health Metrics'}
-                        {activeTemplate === 'brief' && 'Executive Synthesis: Zero-Cloud P2P Architecture'}
-                      </span>
+                      <span>PRD-2026: Conversion Funnels & Cohort Retention Analytics</span>
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20">
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20">
                       Approved Draft
                     </span>
                   </div>
 
-                  <div className="bg-[#09090c] p-2.5 rounded-lg border border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono">
-                    <div>
-                      <span className="text-zinc-500">AUTHOR:</span> <span className="text-zinc-200">Pranshul Chopra</span>
-                    </div>
-                    <div>
-                      <span className="text-zinc-500">DATE:</span> <span className="text-zinc-200">2026-10-06</span>
-                    </div>
-                    <div>
-                      <span className="text-zinc-500">STATUS:</span> <span className="text-gold">Review Ready</span>
-                    </div>
-                    <div>
-                      <span className="text-zinc-500">VERSION:</span> <span className="text-zinc-200">v2.0.1 Stable</span>
-                    </div>
-                  </div>
-
-                  <p className="text-[11px] font-mono text-zinc-300 leading-relaxed">
-                    <strong>1. Executive Scope:</strong> React 19 single-DOM desktop SPA architecture inside Electron. Zero iframe latency, global Spotlight command palette (Ctrl+K), and interactive KPI Dashboard Studio evaluated against local SQLite storage.
+                  <p className="text-[11px] text-zinc-300 leading-relaxed">
+                    <strong>Executive Scope:</strong> Enable product teams to profile multi-stage conversion funnels with step-to-step drop-offs and period-over-period cohort retention matrices directly from local SQLite datasets, without third-party cloud analytics vendors.
                   </p>
 
-                  <div className="pt-3 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+                  <div className="pt-3 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-2 text-[11px]">
                     <span className="text-[10px] text-zinc-400 uppercase font-semibold">Response Actions:</span>
                     <div className="flex flex-wrap items-center gap-1.5">
                       <button
-                        onClick={() => onCopyToast && onCopyToast('Copied formatted Markdown to clipboard!')}
-                        className="px-2.5 py-1 rounded bg-surface hover:bg-white/[0.08] text-zinc-300 border border-white/10 flex items-center gap-1 transition-colors"
-                      >
-                        <span>📋</span>
-                        <span>Copy</span>
-                      </button>
-                      <button
-                        onClick={() => onCopyToast && onCopyToast('Generating & downloading Microsoft Word (.docx)...')}
+                        onClick={() => onCopyToast && onCopyToast('Generating Microsoft Word (.docx)...')}
                         className="px-2.5 py-1 rounded bg-gold/15 hover:bg-gold/25 text-gold-bright border border-gold/40 flex items-center gap-1 font-bold transition-colors"
                       >
                         <Download className="w-3 h-3" />
                         <span>Word (.docx)</span>
                       </button>
                       <button
-                        onClick={() => onCopyToast && onCopyToast('Downloaded clean Markdown specification (.md)...')}
-                        className="px-2.5 py-1 rounded bg-surface hover:bg-white/[0.08] text-zinc-300 border border-white/10 flex items-center gap-1 transition-colors"
-                      >
-                        <span>⬇️</span>
-                        <span>Markdown</span>
-                      </button>
-                      <button
-                        onClick={() => onCopyToast && onCopyToast('Document ingested into Knowledge Base and indexed in FTS5!')}
-                        className="px-2.5 py-1 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center gap-1 transition-colors"
-                      >
-                        <span>📁</span>
-                        <span>Save to Docs</span>
-                      </button>
-                      <button
-                        onClick={() => onCopyToast && onCopyToast('Transferred PRD to Decomposer modal: 5 user stories generated!')}
+                        onClick={() => setShowDecomposerModal(true)}
                         className="px-2.5 py-1 rounded bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1 font-medium transition-colors"
                       >
                         <span>⚡</span>
-                        <span>Decompose</span>
+                        <span>Decompose to Stories</span>
                       </button>
                     </div>
                   </div>
@@ -872,67 +866,62 @@ export function Hero({ onDownloadClick, onCopyToast }) {
 
             {/* VIEW 3: Knowledge Base with FTS5 BM25 */}
             {activeTab === 'documents' && (
-              <div className="space-y-4">
+              <div className="space-y-4 font-mono text-xs">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                  <span className="text-xs font-mono text-zinc-300 font-semibold">
+                  <span className="text-xs text-zinc-300 font-semibold">
                     Knowledge Base &bull; FTS5 BM25 Search & Chunk Inspector
                   </span>
-                  <span className="text-[11px] font-mono text-gold">
+                  <span className="text-[11px] text-gold">
                     Parsers: .pdf .docx .md .txt .csv .json
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="p-3 rounded-xl bg-surface border border-gold/40">
-                    <div className="flex items-center justify-between text-xs font-mono text-white mb-1">
-                      <span className="font-semibold truncate">Architecture_Spec.pdf</span>
-                      <span className="text-[10px] text-gold">42.8 KB</span>
+                    <div className="flex items-center justify-between text-xs text-white mb-1">
+                      <span className="font-semibold truncate">Analytics_Workbench_Spec.pdf</span>
+                      <span className="text-[10px] text-gold">54.2 KB</span>
                     </div>
-                    <p className="text-[11px] text-zinc-400">Section-aware chunking: 14 passages indexed in ai_context.db.</p>
+                    <p className="text-[11px] text-zinc-400">Section-aware chunking: Funnel drop-offs and Pearson algorithms.</p>
                   </div>
                   <div className="p-3 rounded-xl bg-surface border border-white/10">
-                    <div className="flex items-center justify-between text-xs font-mono text-white mb-1">
-                      <span className="font-semibold truncate">Q3_Product_Roadmap.docx</span>
-                      <span className="text-[10px] text-zinc-400">18.4 KB</span>
+                    <div className="flex items-center justify-between text-xs text-white mb-1">
+                      <span className="font-semibold truncate">Cohort_Retention_ADR.md</span>
+                      <span className="text-[10px] text-zinc-400">14.1 KB</span>
                     </div>
-                    <p className="text-[11px] text-zinc-400">Headings and tables extracted with sticky table headers.</p>
+                    <p className="text-[11px] text-zinc-400">Indexed in ai_context.db with FTS5 BM25 relevance ranking.</p>
                   </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-[#14141c] border border-white/10 font-mono text-xs text-zinc-300">
-                  <span className="text-gold">BM25 Retrieval Query:</span> "offline peer discovery handshake" <br />
-                  <span className="text-green-400">FTS5 Match:</span> Passage #4 in `Architecture_Spec.pdf` section "3.2 Network Bounds".
                 </div>
               </div>
             )}
 
-            {/* VIEW 4: Workspace Overview (Streamlined in v2.0.0 HomeView) */}
+            {/* VIEW 4: Workspace Overview */}
             {activeTab === 'workspace' && (
-              <div className="space-y-4">
+              <div className="space-y-4 font-mono text-xs">
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                  <span className="text-xs font-mono text-zinc-300 font-semibold">
-                    Workspace Overview &bull; Streamlined HomeView (v2.0.0)
+                  <span className="text-xs text-zinc-300 font-semibold">
+                    Workspace Overview &bull; Active Initiatives (v2.1.0)
                   </span>
-                  <span className="text-[11px] font-mono text-green-400">
+                  <span className="text-[11px] text-green-400">
                     Direct Initiatives & Stories View
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="p-3 rounded-xl bg-surface border border-gold/40 space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-white">Core Platform Modernization</span>
-                      <span className="px-1.5 py-0.5 rounded bg-gold/10 text-gold text-[10px]">Active Initiative</span>
+                      <span className="font-bold text-white">Advanced Analytics Workbench</span>
+                      <span className="px-1.5 py-0.5 rounded bg-green-500/10 text-green-400 text-[10px]">Shipped v2.1.0</span>
                     </div>
-                    <p className="text-[11px] text-zinc-400">React 19 SPA transition, global Spotlight, and native SQLite ingestion.</p>
+                    <p className="text-[11px] text-zinc-400">Conversion funnels, cohort heatmaps, outlier profiler, and correlation matrix.</p>
                   </div>
 
                   <div className="p-3 rounded-xl bg-surface border border-white/10 space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-white">KPI Dashboard Studio</span>
-                      <span className="px-1.5 py-0.5 rounded bg-green-500/10 text-green-300 text-[10px]">Shipped v2.0.1</span>
+                      <span className="font-bold text-white">Calibrated Story Decomposer</span>
+                      <span className="px-1.5 py-0.5 rounded bg-gold/10 text-gold text-[10px]">Shipped v2.1.0</span>
                     </div>
-                    <p className="text-[11px] text-zinc-400">AddWidgetModal with full CRUD for KPI cards, bar charts, and donut charts.</p>
+                    <p className="text-[11px] text-zinc-400">INVEST atomic story slicing with multi-scenario Gherkin and pre-commit review.</p>
                   </div>
                 </div>
               </div>
@@ -953,11 +942,123 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               </div>
             </div>
 
+            {/* Interactive Calibrated Story Decomposer Studio Modal Simulator (v2.1.0) */}
+            {showDecomposerModal && (
+              <div className="absolute inset-0 z-40 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+                <div className="bg-[#121218] border border-gold/40 rounded-2xl w-full max-w-xl shadow-2xl shadow-gold/20 overflow-hidden font-mono text-xs animate-in fade-in zoom-in-95 duration-150">
+                  <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08] bg-[#161622]">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-gold-bright" />
+                      <span className="text-white font-bold">Story Decomposer Studio (INVEST &bull; v2.1.0)</span>
+                    </div>
+                    <button onClick={() => setShowDecomposerModal(false)} className="text-zinc-400 hover:text-white">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <div className="p-4 space-y-3 max-h-[380px] overflow-y-auto">
+                    {/* Persona Selector */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-zinc-400 uppercase font-bold">Target Stakeholder Persona:</span>
+                      <div className="flex gap-1">
+                        {['All', 'End-User', 'Administrator', 'DevOps'].map((p) => (
+                          <button
+                            key={p}
+                            onClick={() => setDecomposerPersona(p)}
+                            className={`px-2 py-0.5 rounded text-[10px] border ${
+                              decomposerPersona === p 
+                                ? 'bg-gold text-zinc-950 font-bold border-gold' 
+                                : 'bg-surface text-zinc-400 border-white/10'
+                            }`}
+                          >
+                            {p}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Synthesized INVEST Story Card */}
+                    <div className="p-3.5 rounded-xl bg-surface border border-gold/40 space-y-2.5">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <CheckSquare className="w-4 h-4 text-gold-bright" />
+                          <span className="text-white font-bold text-xs">US-201: Multi-Stage Conversion Funnel Tracking</span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded bg-gold/20 text-gold-bright font-bold text-[10px]">
+                          5 Fibonacci Pts (Calibrated)
+                        </span>
+                      </div>
+
+                      <p className="text-[11px] text-zinc-300">
+                        <strong>User Story:</strong> As an {decomposerPersona}, I want to analyze stage-to-stage transition loss across sequential user actions so that conversion bottlenecks can be identified quantitatively.
+                      </p>
+
+                      {/* 3 Distinct Gherkin Scenarios */}
+                      <div className="space-y-1.5 pt-1 border-t border-white/[0.06] text-[10px]">
+                        <div className="text-gold font-bold uppercase">Exhaustive Gherkin Acceptance Criteria (3 Scenarios):</div>
+                        <div className="p-2 rounded bg-[#09090d] border border-white/[0.04] space-y-1 text-zinc-300">
+                          <div>🟢 <strong>Scenario 1 (Happy Path):</strong> Given a valid dataset with timestamp and stage columns, When the funnel is calculated, Then display step-to-step drop-offs with lost volume.</div>
+                          <div>🟡 <strong>Scenario 2 (Negative Flow):</strong> Given an unmapped stage column, When analysis executes, Then return a validation error without terminating the background thread.</div>
+                          <div>🔴 <strong>Scenario 3 (Boundary Case):</strong> Given zero conversions in stage 4, When rendering visual bars, Then display 0.0% conversion gracefully without division-by-zero errors.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="px-4 py-3 border-t border-white/[0.08] bg-[#0e0e14] flex items-center justify-between">
+                    <span className="text-[10px] text-zinc-400">1 of 5 stories approved for sprint</span>
+                    <button
+                      onClick={() => {
+                        setShowDecomposerModal(false);
+                        onCopyToast && onCopyToast('Committed 5 INVEST user stories to sprint Kanban board!');
+                      }}
+                      className="px-4 py-1.5 rounded-lg bg-gold text-zinc-950 font-bold hover:brightness-110 flex items-center gap-1.5 text-xs shadow-md shadow-gold/20"
+                    >
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      <span>Batch Commit to Sprint Board</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* What's New in v2.1.0 Modal */}
+            {showWhatsNew && (
+              <div className="absolute inset-0 z-40 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+                <div className="bg-[#121218] border border-gold/40 rounded-2xl w-full max-w-lg shadow-2xl p-5 font-mono text-xs space-y-4">
+                  <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-gold-bright" />
+                      <span className="text-white font-bold text-sm">What's New in PM Tool v2.1.0 (Codename Atlas)</span>
+                    </div>
+                    <button onClick={() => setShowWhatsNew(false)} className="text-zinc-400 hover:text-white">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <div className="space-y-2 text-zinc-300">
+                    <div className="p-2 rounded bg-surface border border-gold/30">
+                      <div className="text-gold font-bold">📈 Advanced Analytics Workbench</div>
+                      <div className="text-[11px] text-zinc-400">Multi-stage conversion funnels, MoM cohort retention matrix heatmaps, Tukey IQR & Z-score outlier detection, and Pearson correlation grids.</div>
+                    </div>
+                    <div className="p-2 rounded bg-surface border border-white/10">
+                      <div className="text-white font-bold">🤖 Calibrated INVEST Story Decomposer</div>
+                      <div className="text-[11px] text-zinc-400">Atomic story slicing with 3 distinct Gherkin scenarios (Happy, Negative, Boundary), calibrated Fibonacci points, and live pre-commit approval.</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowWhatsNew(false)}
+                    className="w-full py-2 rounded-lg bg-gold text-zinc-950 font-bold hover:brightness-110"
+                  >
+                    Got It &bull; Explore Workstation
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Spotlight Command Palette Simulator Overlay (Ctrl+K) */}
             {spotlightOpen && (
               <div className="absolute inset-0 z-30 bg-black/80 backdrop-blur-sm flex items-start justify-center pt-8 px-4">
                 <div className="bg-[#121218] border border-gold/40 rounded-2xl w-full max-w-lg shadow-2xl shadow-gold/10 overflow-hidden font-mono animate-in fade-in zoom-in-95 duration-150">
-                  {/* Search Input Bar */}
                   <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/[0.08] bg-[#181822]">
                     <Search className="w-4 h-4 text-gold shrink-0" />
                     <input
@@ -976,7 +1077,6 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                     </button>
                   </div>
 
-                  {/* Command Results List */}
                   <div className="max-h-64 overflow-y-auto p-2 space-y-1">
                     <div className="px-3 py-1 text-[10px] uppercase font-bold text-zinc-500">
                       Spotlight Navigation & Actions ({filteredCommands.length})
@@ -1004,7 +1104,6 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                     })}
                   </div>
 
-                  {/* Spotlight Footer */}
                   <div className="px-4 py-2 border-t border-white/[0.06] bg-[#0d0d12] flex items-center justify-between text-[10px] text-zinc-500">
                     <div className="flex items-center gap-3">
                       <span>Use <kbd className="text-zinc-300">↑</kbd> <kbd className="text-zinc-300">↓</kbd> to navigate</span>

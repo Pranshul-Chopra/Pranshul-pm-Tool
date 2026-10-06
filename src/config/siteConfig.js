@@ -1,22 +1,29 @@
 /**
  * PM Tool — Central Site & Release Configuration
  * 
- * Accurately reflects the current release state of the application (v2.0.1):
- * - Desktop SPA Modernization & Zero-Iframe Architecture (React 19 + TypeScript + Tailwind inside Electron)
+ * Accurately reflects the current release state of the application (v2.1.0):
+ * - Advanced Analytics Workbench (tools/analytics_engine.py & AdvancedAnalyticsWorkbench.tsx)
+ *   * Multi-Stage Conversion Funnel & Drop-Off Analyzer (sequential drop-offs & lost volume)
+ *   * Period-over-Period Cohort Retention Matrix Heatmap (MoM, WoW, DoD cohorts)
+ *   * Statistical Distributions & Outlier Detection (Tukey's IQR fences & Z-score |Z| > 3.0)
+ *   * Pairwise Feature Pearson Correlation Matrix (r in [-1.0, 1.0])
+ *   * Linear Trendline & Trajectory Forecasting (slope rate & R^2 fit)
+ * - Calibrated Agile Story Decomposer Overhaul (tools/story_decomposer.py & DecomposerModal.tsx)
+ *   * INVEST Principles & Atomic Story Slicing
+ *   * Strict Multi-Scenario Gherkin Acceptance Criteria (Happy Path, Negative, Boundary)
+ *   * Calibrated Fibonacci Point Estimation (1, 2, 3, 5, 8, 13)
+ *   * Interactive Pre-Commit Review Studio Modal with persona filters & batch commit
+ * - Desktop SPA Modernization & Zero-Iframe Architecture (React 19 + TypeScript inside Electron)
  * - Global Spotlight Command Palette (CommandPalette.tsx: Ctrl+K / Cmd+K fuzzy overlay)
  * - Universal Keyboard Shortcuts Engine (App.tsx: Ctrl+K, Ctrl+B, Ctrl+1–6, ESC)
  * - Interactive KPI Dashboard Lifecycle (AddWidgetModal.tsx: full CRUD for kpi_card, bar_chart, donut_chart)
  * - Native SQLite File Ingestion (.db, .sqlite, .sqlite3 via streaming file-copy & PRAGMA validation)
  * - App-Themed Dataset Deletion Modal (DeleteDatasetModal.tsx with dark carbon aesthetic)
  * - Polymorphic Row Rendering in StudioView (supporting array-shaped and object-shaped SQL result sets)
- * - Story Decomposer Gateway Signature Resilience (tools/story_decomposer.py call_llm fix)
  * - Automated 60-Minute Silent Background Updates (electron-updater with live sidebar pulse indicator)
  * - AI Workspace PM Document Generator (DocumentGeneratorModal.tsx: 5 executive templates)
  * - Multi-Format Export Subsystem (POST /api/export/docx with python-docx & POST /api/export/markdown)
- * - Assistant Response Quick Action Toolbar (Copy, Word DOCX, Markdown, Save to Docs, Decompose)
  * - Safe Read-Only SQL Sandbox with 5-Layer Defense-in-Depth
- * - Interactive Sprint Kanban Board with HTML5 drag-and-drop & Fibonacci points
- * - Local-First Knowledge Base with SQLite FTS5 BM25 search & multi-format parsers
  * - Three-database local storage segregation (pmtool.db, ai_context.db, analytics_store.db)
  * - Dynamic cascading port collision resilience (5050 through 5065)
  */
@@ -27,22 +34,22 @@ export const siteConfig = {
   // ==========================================
   name: 'PM Tool',
   shortName: 'PmT',
-  tagline: 'Local-First Product Management Workspace & Desktop SPA',
+  tagline: 'Local-First Product Management Workspace & Advanced Analytics Studio',
   description:
-    'A zero-iframe React 19 desktop SPA that turns organizational knowledge and local data into publication-grade PM deliverables. Navigate instantly with a global Spotlight command palette (Ctrl+K), build interactive KPI metric dashboards with dynamic charts, ingest native SQLite databases and spreadsheets, scaffold executive PRDs in 1 click, export styled Microsoft Word (.docx) files, and decompose requirements into Agile sprint backlogs — from one native Windows desktop workstation.',
+    'A zero-iframe React 19 desktop SPA that turns organizational knowledge and local data into publication-grade PM deliverables. Profile conversion funnels and cohort retention heatmaps in the Advanced Analytics Workbench, decompose requirements into INVEST user stories with calibrated Fibonacci points and pre-commit review, navigate instantly with Spotlight (Ctrl+K), and export styled Microsoft Word (.docx) files — from one native Windows desktop workstation.',
 
   // ==========================================
   // 2. ACTIVE VERSION & RELEASE METADATA
   // ==========================================
   release: {
-    version: 'v2.0.1',
-    versionFull: 'v2.0.1',
-    badge: 'v2.0.1 STABLE RELEASE',
+    version: 'v2.1.0',
+    versionFull: 'v2.1.0 (Codename Atlas)',
+    badge: 'v2.1.0 STABLE RELEASE',
     releaseDate: 'October 2026',
     buildDate: '2026-10-06',
     channel: 'Stable Channel',
     platform: 'Windows 10/11 (64-bit)',
-    statusText: 'Desktop SPA Active &bull; Spotlight Engine (Ctrl+K) &bull; Full KPI Widget Lifecycle',
+    statusText: 'Advanced Analytics Workbench &bull; Calibrated Story Decomposer &bull; v2.1.0 Stable',
     isAirGappedReady: false,
   },
 
@@ -51,19 +58,19 @@ export const siteConfig = {
   // ==========================================
   downloads: {
     installer: {
-      fileName: 'PM-Tool-Setup-2.0.1.exe',
+      fileName: 'PM-Tool-Setup-2.1.0.exe',
       label: 'Download NSIS Setup (.exe)',
-      size: '84.1 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.0.1/PM-Tool-Setup-2.0.1.exe',
+      size: '85.2 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.1.0/PM-Tool-Setup-2.1.0.exe',
       directDownload: true,
     },
     portable: {
-      fileName: 'PM-Tool-2.0.1.exe',
+      fileName: 'PM-Tool-2.1.0.exe',
       label: 'Portable Standalone (.exe)',
-      size: '77.5 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.0.1/PM-Tool-2.0.1.exe',
+      size: '78.4 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.1.0/PM-Tool-2.1.0.exe',
     },
-    sha256: '9d4f2a71c8b35e0246a18d9f52c1e7a30b49c71a68205417df890b2345e82109',
+    sha256: '4f8b2c19e5d7a3016f4e820c71a95b34e8205417df890b2345e82109a18d9f52',
     gitCloneCommand: 'git clone https://github.com/Pranshul-Chopra/pm_tool.git',
     systemPrerequisites: [
       'Windows 10 / Windows 11 (64-bit)',
@@ -92,11 +99,11 @@ export const siteConfig = {
   // 5. NAVIGATION LINKS
   // ==========================================
   navLinks: [
-    { name: 'Spotlight (Ctrl+K)', href: '#demo' },
-    { name: 'KPI Studio', href: '#data-studio' },
+    { name: 'Analytics Workbench', href: '#demo' },
+    { name: 'Story Decomposer', href: '#decomposer' },
+    { name: 'Spotlight (Ctrl+K)', href: '#spotlight' },
     { name: 'Sprint Board', href: '#sprint-board' },
     { name: 'Features', href: '#features' },
-    { name: 'Pipelines', href: '#pipelines' },
     { name: 'Architecture', href: '#architecture' },
     { name: 'Changelog', href: '#evolution' },
   ],
@@ -105,53 +112,53 @@ export const siteConfig = {
   // 6. HERO SECTION CONFIG
   // ==========================================
   hero: {
-    pillBadge: 'DESKTOP SPA MODERNIZATION &bull; SPOTLIGHT COMMAND ENGINE &bull; V2.0.1',
+    pillBadge: 'ADVANCED ANALYTICS WORKBENCH &bull; CALIBRATED STORY DECOMPOSER &bull; V2.1.0',
     pillVersionTag: 'Windows 10/11 Native',
     headlineMain: 'From Organizational Knowledge & Data',
     headlineAccent: 'to Publication-Grade PM Deliverables.',
     headlineEnd: '',
     subtitle:
-      'Zero-iframe React 19 desktop SPA with global Spotlight command palette (Ctrl+K), interactive KPI Dashboard Studio with dynamic charts, native SQLite database ingestion, automated PRD-to-story decomposition, and Word (.docx) export — running entirely on local SQLite storage.',
+      'Zero-iframe React 19 desktop SPA with advanced dataset analytics (conversion funnels, cohort retention heatmaps, correlation matrices, outlier profiling), calibrated INVEST story decomposer with live pre-commit review, global Spotlight (Ctrl+K), and Word (.docx) export — running entirely on local SQLite storage.',
     notice:
       'Core workflows operate offline with local models (Ollama) and local SQLite analytics. Optional cloud-model support (Gemini) is available when configured.',
     specsBadges: [
+      { text: 'Advanced Analytics Workbench', type: 'chart' },
+      { text: 'Calibrated Story Decomposer', type: 'sparkles' },
+      { text: 'Cohort Retention & Funnels', type: 'trending' },
       { text: 'Zero-Iframe React 19 SPA', type: 'cpu' },
-      { text: 'Spotlight Command Palette (Ctrl+K)', type: 'terminal' },
-      { text: 'Interactive KPI & Chart Studio', type: 'chart' },
-      { text: 'Native SQLite (.db) Ingestion', type: 'database' },
     ],
     // Desktop App Simulator Mockup
     simulator: {
       windowTitle: 'PmT Desktop Shell (React 19 SPA)',
-      workspaceTitle: 'Workspace: Core Platform v2.0.1',
+      workspaceTitle: 'Workspace: Core Platform v2.1.0',
       backendHost: '127.0.0.1:5050 [Handshake OK]',
       activeModel: 'Ollama: llama3.2 (Local Mode)',
       localDbPath: '%LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6)',
-      dbStats: 'Spotlight Ctrl+K • 3 KPI Widgets • 4 Datasets • Velocity: 74%',
-      shortcut: 'Shortcuts: Ctrl+K Spotlight • Ctrl+B Sidebar • Ctrl+1–6 Switcher • + Add Widget',
+      dbStats: 'Analytics Workbench • Funnel & Cohort Heatmap • Pre-Commit Decomposer • Velocity: 76%',
+      shortcut: 'Shortcuts: Ctrl+K Spotlight • Ctrl+3 Analytics Workbench • /breakdown Decomposer',
     },
   },
 
   // ==========================================
-  // 7. TECH MARQUEE (Reflecting Real v2.0.0 & v2.0.1 Capabilities)
+  // 7. TECH MARQUEE (Reflecting Real v2.1.0 Capabilities)
   // ==========================================
   techMarquee: [
+    'ADVANCED ANALYTICS WORKBENCH (FUNNELS, COHORTS, CORRELATIONS)',
+    'MULTI-STAGE CONVERSION FUNNEL & DROP-OFF ANALYZER',
+    'PERIOD-OVER-PERIOD COHORT RETENTION HEATMAP MATRIX',
+    'STATISTICAL DISTRIBUTIONS & Z-SCORE OUTLIER PROFILING',
+    'PAIRWISE PEARSON FEATURE CORRELATION MATRIX',
+    'CALIBRATED INVEST STORY DECOMPOSER & PRE-COMMIT REVIEW',
+    'MULTI-SCENARIO GHERKIN ACCEPTANCE CRITERIA (HAPPY, NEGATIVE, EDGE)',
     'DESKTOP SPA MODERNIZATION (REACT 19 ZERO-IFRAME)',
     'GLOBAL SPOTLIGHT COMMAND PALETTE (CTRL+K / CMD+K)',
     'UNIVERSAL KEYBOARD SHORTCUTS (CTRL+1-6, CTRL+B, ESC)',
-    'INTERACTIVE KPI & CHART DASHBOARD BUILDER (ADDWIDGETMODAL)',
+    'INTERACTIVE KPI & CHART DASHBOARD (ADDWIDGETMODAL)',
     'NATIVE SQLITE (.DB, .SQLITE3) DATASET MATERIALIZATION',
-    'DARK CARBON DATASET DELETION MODAL (DELETEDATASETMODAL)',
-    'AI PM DOCUMENT GENERATOR (5 EXECUTIVE BLUEPRINTS)',
+    'SAFE READ-ONLY SQL SANDBOX (5-LAYER DEFENSE-IN-DEPTH)',
     '1-CLICK MICROSOFT WORD (.DOCX) & MARKDOWN EXPORT',
     'ASSISTANT RESPONSE ACTION TOOLBAR (SAVE TO DOCS & DECOMPOSE)',
-    'SAFE READ-ONLY SQL SANDBOX (5-LAYER DEFENSE-IN-DEPTH)',
-    'POLYMORPHIC ROW RENDERING (ARRAY & OBJECT SHAPED)',
-    'INTERACTIVE SPRINT KANBAN (HTML5 DRAG & DROP)',
-    'AUTOMATED PRD-TO-STORY DECOMPOSER (/BREAKDOWN)',
-    'SQLITE FTS5 BM25 FULL-TEXT SEARCH & CHUNK INSPECTOR',
     'AUTOMATED 60-MIN SILENT BACKGROUND UPDATES (ELECTRON-UPDATER)',
-    'DYNAMIC CASCADING PORT SHIELD (5050-5065)',
     'ZERO MANDATORY CLOUD ACCOUNTS',
   ],
 
@@ -160,9 +167,25 @@ export const siteConfig = {
   // ==========================================
   showcaseModules: [
     {
+      id: 'analytics-workbench',
+      name: 'Advanced Analytics Workbench',
+      tag: 'New in v2.1.0',
+      headline: 'Conversion funnels, cohort retention heatmaps, correlation grids, and statistical outlier detection.',
+      description:
+        'Transform raw business data into deep executive intelligence. Features 5 specialized analytical instruments: Multi-Stage Conversion Funnel with step-to-step drop-off percentages, Period-over-Period Cohort Retention matrix heatmaps, Parametric & Non-Parametric Distribution profiling with Tukey IQR & Z-score outlier flagging, Pairwise Pearson Correlation coefficient matrix, and Linear Trendline forecasting.',
+    },
+    {
+      id: 'story-decomposer',
+      name: 'Calibrated Story Decomposer',
+      tag: 'Overhauled in v2.1.0',
+      headline: 'INVEST atomic story slicing with multi-scenario Gherkin criteria and live pre-commit preview.',
+      description:
+        'Re-engineered decomposition engine enforcing INVEST principles, target persona filtering (End-User, Admin, API Consumer, DevOps), and 3 distinct Given/When/Then scenarios (Happy Path, Negative/Validation, Boundary/Resilience). Includes an interactive pre-commit approval modal allowing engineers to review, adjust calibrated Fibonacci points (1, 2, 3, 5, 8, 13), and batch-commit directly to the sprint Kanban board.',
+    },
+    {
       id: 'command-palette',
       name: 'Spotlight Command Palette',
-      tag: 'Desktop Engine (v2.0.0)',
+      tag: 'Desktop Engine (v2.0)',
       headline: 'Raycast/Linear-style Spotlight overlay with instant keyboard navigation (Ctrl+K).',
       description:
         'Global command palette overlay accessible from anywhere via Ctrl+K or Cmd+K. Features fuzzy search across workstation views, live database projects, and productivity actions. Includes full keyboard navigation with Arrow keys (↑, ↓), Enter execution, Escape dismissal, and a titlebar trigger badge.',
@@ -170,7 +193,7 @@ export const siteConfig = {
     {
       id: 'kpi-studio',
       name: 'Interactive KPI & Chart Studio',
-      tag: 'New in v2.0.1',
+      tag: 'Data Studio (v2.0.1)',
       headline: 'Full metric & chart lifecycle with AddWidgetModal and live dataset evaluation.',
       description:
         'Create, customize, and delete live analytical cards and visual distribution charts directly linked to any materialized dataset. Supports KPI Cards (SUM, AVG, COUNT with milestone target variance badges like ▲ +12.5%), Bar Distribution Charts, and Donut Share Breakdown charts with in-place card deletion.',
@@ -178,7 +201,7 @@ export const siteConfig = {
     {
       id: 'data-studio',
       name: 'Tabular & SQLite Ingestion',
-      tag: 'Hardened in v2.0.1',
+      tag: 'Local Materialization',
       headline: 'Native SQLite database (.db, .sqlite3), Excel, CSV, and JSON materialization.',
       description:
         'Directly ingest and materialize native SQLite databases alongside Excel (.xlsx, .xls via openpyxl), CSV, TSV, and JSON into %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db with polymorphic row rendering and a safe 5-layer read-only SQL sandbox.',
@@ -200,17 +223,9 @@ export const siteConfig = {
         'Manage sprints across 4 workflow lanes: Backlog (todo), In Progress (in_progress), Blocked (blocked), and Completed (done). Features optimistic UI updates, background persistence via PATCH /api/tasks/:id, sprint velocity KPIs, and multi-field filtering by project and priority.',
     },
     {
-      id: 'story-decomposer',
-      name: 'PRD-to-Story Decomposer',
-      tag: 'Automated Tool (/breakdown)',
-      headline: 'Decompose raw PRDs into discrete, testable Agile user stories deterministically.',
-      description:
-        'The breakdown engine prompts the LLM Gateway with an 8,192 token budget to deconstruct PRDs into 4–8 discrete Agile user stories with Given/When/Then acceptance criteria, priority weights, and Fibonacci story points (1, 2, 3, 5, 8), saved straight to pmtool.db.',
-    },
-    {
       id: 'auto-updater',
       name: 'Automated Silent Updates & Shell',
-      tag: 'Automated Lifecycle (v2.0.0)',
+      tag: 'Continuous Sync',
       headline: 'Background silent updates every 60 minutes with live sidebar pulse indicator.',
       description:
         'Electron-updater automatically polls GitHub Releases on launch and every 60 minutes in the background. Features a non-intrusive sidebar status indicator with pulse animation, 1-click restart toast notification, and cascading port collision protection (5050–5065).',
@@ -222,32 +237,32 @@ export const siteConfig = {
   // ==========================================
   philosophy: [
     {
-      title: 'Zero-Iframe Desktop SPA',
+      title: 'Empirical Data Science Over Guesswork',
+      subtitle: 'Conversion funnels, retention cohorts, and outlier detection.',
+      description:
+        'Product managers should ground roadmaps in rigorous statistics. PM Tool builds multi-stage funnels, cohort heatmaps, and correlation matrices directly from your SQLite datasets without sending numbers to cloud BI vendors.',
+      badge: 'Data Science Workbench',
+    },
+    {
+      title: 'INVEST-Grade Agile Specifications',
+      subtitle: 'Atomic stories with multi-scenario Gherkin acceptance.',
+      description:
+        'Vague user stories stall engineering sprints. PM Tool synthesizes atomic user stories adhering strictly to INVEST criteria, complete with Happy Path, Negative Validation, and Boundary edge-case scenarios calibrated to Fibonacci complexity.',
+      badge: 'INVEST Criteria',
+    },
+    {
+      title: 'Zero-Iframe Desktop SPA Speed',
       subtitle: 'Native hardware-accelerated desktop performance.',
       description:
         'The desktop client runs as a unified React 19 + TypeScript single-DOM SPA inside Electron. No sluggish iframes, no template rendering bottlenecks, and instant view transitions between workstation modules.',
       badge: 'React 19 SPA',
     },
     {
-      title: 'Local-First Architecture',
+      title: 'Local-First Data Sovereignty',
       subtitle: 'Your computer is the primary system of record.',
       description:
         'Core operational data — projects, backlog tasks, sprint velocity, document chunk indexes, and tabular business datasets — resides in local SQLite databases on your hard drive. Local workflows do not depend on remote SaaS uptime.',
       badge: 'SQLite WAL Mode',
-    },
-    {
-      title: 'Keyboard-Driven Speed',
-      subtitle: 'Global Spotlight & Universal Shortcuts.',
-      description:
-        'Navigate the entire workstation without leaving your keyboard: Ctrl+K / Cmd+K Spotlight overlay, Ctrl+B sidebar toggle, and Ctrl+1 through Ctrl+6 direct view switching across Workspace, Board, Data Studio, Knowledge, and Copilot.',
-      badge: 'Ctrl+K Spotlight',
-    },
-    {
-      title: 'No Per-Seat Subscription Tax',
-      subtitle: 'Open, self-contained desktop tooling.',
-      description:
-        'Traditional product SaaS requires recurring monthly seat licenses to view or edit project requirements, export Word documents, and build dashboards. PM Tool is an open desktop tool with no mandatory per-seat subscription fees.',
-      badge: '$0 Tooling License',
     },
   ],
 
@@ -256,16 +271,79 @@ export const siteConfig = {
   // ==========================================
   featureCategories: [
     { id: 'all', label: 'All Capabilities' },
-    { id: 'spa', label: 'SPA & Command Engine (v2.0)' },
-    { id: 'data', label: 'KPI Studio & SQLite (v2.0.1)' },
+    { id: 'analytics', label: 'Advanced Analytics (v2.1)' },
+    { id: 'agile', label: 'Agile & Decomposer (v2.1)' },
+    { id: 'spa', label: 'Desktop SPA & Spotlight (v2.0)' },
+    { id: 'data', label: 'Data Studio & SQLite' },
     { id: 'docs', label: 'Doc Generator & Export' },
-    { id: 'agile', label: 'Sprint & Agile Board' },
-    { id: 'tools', label: 'Automated PM Tools' },
     { id: 'knowledge', label: 'Knowledge Base & RAG' },
     { id: 'architecture', label: 'Architecture & Storage' },
     { id: 'security', label: 'Security & Auto-Updates' },
   ],
   features: [
+    {
+      id: 'funnel-analyzer',
+      category: 'analytics',
+      title: 'Multi-Stage Conversion Funnel Analyzer',
+      tagline: 'Step-to-step drop-offs, relative conversions & lost volume.',
+      description:
+        'Sequential pipeline tracking across behavioral stages. Automatically computes transition loss percentages, top-of-funnel conversion velocity, and drop-off volume with interactive visual gradient bars.',
+      highlight: 'Funnel Engine (v2.1)',
+    },
+    {
+      id: 'cohort-matrix',
+      category: 'analytics',
+      title: 'Period-over-Period Cohort Retention Matrix',
+      tagline: 'MoM, WoW, and DoD cohort retention heatmap matrix.',
+      description:
+        'Automated cohort construction tracking customer retention across customizable periods. Features dynamic color-coded retention intensity cells and behavioral persistence scoring.',
+      highlight: 'Cohort Heatmaps (v2.1)',
+    },
+    {
+      id: 'outlier-stats',
+      category: 'analytics',
+      title: 'Statistical Distributions & Outlier Detection',
+      tagline: 'Parametric percentiles (P50–P99) & Z-score anomaly detection.',
+      description:
+        'Profiles column distributions with Mean, Median, P25, P75, P90, P99, Std Dev, and IQR. Flags statistical anomalies using Tukey’s fences (1.5 × IQR) and Z-scores (|Z| > 3.0) with live table inspection.',
+      highlight: 'Outlier Profiler (v2.1)',
+    },
+    {
+      id: 'correlation-engine',
+      category: 'analytics',
+      title: 'Pairwise Pearson Correlation Matrix',
+      tagline: 'Automated numerical feature correlation grid (r in [-1, 1]).',
+      description:
+        'Detects hidden dependencies across numerical dataset dimensions. Calculates Pearson correlation coefficients with qualitative classification badges (Strong, Moderate, Weak).',
+      highlight: 'Correlation Grid (v2.1)',
+    },
+    {
+      id: 'trend-forecasting',
+      category: 'analytics',
+      title: 'Linear Trendline & Trajectory Forecasting',
+      tagline: 'Time-series linear regression with R² goodness-of-fit.',
+      description:
+        'Calculates rate-of-change slopes (Δ / period) and intercepts across time dimensions. Projects future metric milestones across configurable forecast horizons.',
+      highlight: 'Trajectory Forecast (v2.1)',
+    },
+    {
+      id: 'calibrated-decomposer',
+      category: 'agile',
+      title: 'Calibrated INVEST Story Decomposer Studio',
+      tagline: 'Atomic story slicing with live pre-commit approval modal.',
+      description:
+        'Decomposes PRDs into independent, testable stories. Features target persona filters (End-User, Admin, API Consumer, DevOps), calibrated Fibonacci sizing (1, 2, 3, 5, 8, 13), and pre-commit batch approval.',
+      highlight: 'Decomposer Studio (v2.1)',
+    },
+    {
+      id: 'multi-gherkin-criteria',
+      category: 'agile',
+      title: 'Multi-Scenario Gherkin Acceptance Criteria',
+      tagline: 'At least 3 Given/When/Then scenarios per user story.',
+      description:
+        'Enforces exhaustive coverage on every synthesized story: Happy Path (standard execution), Validation & Negative Flows (invalid inputs), and Boundary/Resilience edge cases (rate limits, timeouts).',
+      highlight: '3x Gherkin Scenarios (v2.1)',
+    },
     {
       id: 'desktop-spa-engine',
       category: 'spa',
@@ -321,24 +399,6 @@ export const siteConfig = {
       highlight: 'Modal Deletion (v2.0.1)',
     },
     {
-      id: 'polymorphic-row-render',
-      category: 'data',
-      title: 'Polymorphic Row Rendering Engine',
-      tagline: 'Handles array-shaped and object-shaped SQL result sets.',
-      description:
-        'Hardened table grid rendering in StudioView.tsx to polymorphically render both array-shaped and object-shaped SQL query result records without frontend mapping exceptions.',
-      highlight: 'Polymorphic Grid',
-    },
-    {
-      id: 'story-decomposer-fix',
-      category: 'tools',
-      title: 'Resilient PRD-to-Story Decomposer',
-      tagline: 'Aligned LLM Gateway signatures for 1-click sprint decomposition.',
-      description:
-        'Resolved gateway parameter mismatch in tools/story_decomposer.py, restoring deterministic 1-click generation of 4–8 discrete Agile user stories with Given/When/Then acceptance criteria and Fibonacci points (1, 2, 3, 5, 8).',
-      highlight: 'Decomposer (v2.0.1)',
-    },
-    {
       id: 'pm-doc-generator',
       category: 'docs',
       title: 'AI Workspace PM Document Generator',
@@ -357,31 +417,13 @@ export const siteConfig = {
       highlight: 'Word (.docx) & Markdown',
     },
     {
-      id: 'response-action-toolbar',
-      category: 'docs',
-      title: 'Assistant Quick Action Toolbar',
-      tagline: 'Save to Docs, Decompose, Word Export, and Markdown copy.',
-      description:
-        'Quick action strip under every assistant message: 1-click clipboard copy, Word DOCX download, clean Markdown file download, direct indexing into project Knowledge Base ("Save to Docs"), and instant transfer into Decomposer modal ("Decompose").',
-      highlight: 'Action Toolbar',
-    },
-    {
       id: 'silent-updater',
       category: 'security',
       title: 'Automated 60-Minute Silent Background Updates',
       tagline: 'Continuous update lifecycle via electron-updater.',
       description:
-        'Replaced manual checks with automated background polling on launch and every 60 minutes. Non-intrusive live status indicator in Sidebar displays v2.0.1 with pulse animation, presenting UpdaterToast with 1-click "Restart Now" on download.',
+        'Automated background polling on launch and every 60 minutes. Non-intrusive live status indicator in Sidebar displays v2.1.0 with pulse animation, presenting UpdaterToast with 1-click "Restart Now" on download.',
       highlight: 'Silent Updater (60m)',
-    },
-    {
-      id: 'sql-sandbox-safety',
-      category: 'data',
-      title: 'Safe Read-Only SQL Sandbox',
-      tagline: '5-layer defense-in-depth analytical SQL console.',
-      description:
-        'Interactive SQL console with execution timer (ms) and table grid view. Protected by multi-statement block, statement whitelist (SELECT, WITH), mutation keyword blacklist, mandatory LIMIT 100 ceiling, and native URI file:... ?mode=ro driver enforcement.',
-      highlight: 'Read-Only Sandbox',
     },
     {
       id: 'sprint-kanban-board',
@@ -436,11 +478,11 @@ export const siteConfig = {
     },
     {
       step: '02',
-      name: 'KPI Studio & Analytics',
-      headline: 'Build Live KPI Widgets & Explore in SQL Sandbox',
+      name: 'Advanced Analytics Workbench',
+      headline: 'Conversion Funnels, Cohort Heatmaps & Outliers',
       description:
-        'Add live KPI metric cards and categorical distribution charts via AddWidgetModal, and query datasets in the 5-layer defended read-only SQL sandbox.',
-      example: 'Evaluated live against %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db.',
+        'Analyze step-to-step funnel conversions, inspect period-over-period cohort retention heatmaps, profile Z-score statistical outliers, and query data in the safe SQL sandbox.',
+      example: 'Evaluated live via tools/analytics_engine.py against analytics_store.db.',
       connector: 'grounds roadmaps and AI synthesis in verified metrics',
     },
     {
@@ -454,19 +496,19 @@ export const siteConfig = {
     },
     {
       step: '04',
-      name: 'Scaffold & Export',
-      headline: '1-Click PM Document Generator & Word (.docx) Export',
+      name: 'Calibrated Story Decomposer',
+      headline: 'INVEST Atomic Stories with Pre-Commit Review',
       description:
-        'Scaffold PRDs or Architecture Specs grounded in retrieved evidence. Export styled Word documents or clean Markdown with 1-click.',
-      example: 'Quick Action Toolbar: Copy, Word DOCX, Save to Docs, Decompose.',
-      connector: 'transfers specs straight to sprint backlog',
+        'Decompose PRDs into atomic user stories with 3 distinct Gherkin scenarios (Happy, Negative, Boundary) and calibrated Fibonacci points, reviewing before committing.',
+      example: 'Interactive Decomposer Studio Modal with persona filters (3–10 stories).',
+      connector: 'batch-commits approved stories to sprint backlog',
     },
     {
       step: '05',
       name: 'Sprint Execution',
       headline: 'Execute Backlog on Interactive Kanban Board',
       description:
-        'Decompose PRDs into Fibonacci-weighted user stories and drag tasks across Backlog, In Progress, Blocked, and Completed lanes with real-time velocity metrics.',
+        'Drag approved user stories across Backlog, In Progress, Blocked, and Completed lanes with real-time velocity metrics and optimistic updates.',
       example: 'Optimistic UI updates saved immediately to pmtool.db via PATCH /api/tasks/:id.',
       connector: 'completes the end-to-end data-driven execution loop',
     },
@@ -492,15 +534,15 @@ export const siteConfig = {
     },
     {
       id: 'backend',
-      title: 'Tier 2: Localhost Micro-Backend & Document Exporter',
-      tech: 'Python Flask 3.x &bull; python-docx &bull; 127.0.0.1',
+      title: 'Tier 2: Localhost Micro-Backend & Analytics Engine',
+      tech: 'Python Flask 3.x &bull; analytics_engine.py &bull; python-docx &bull; 127.0.0.1',
       latency: 'Localhost REST Protocol',
-      summary: 'Local service bound to 127.0.0.1 handling entity operations, Word DOCX generation, tabular & native SQLite data ingestion, and gateway dispatch.',
+      summary: 'Local service bound to 127.0.0.1 handling entity operations, Word DOCX generation, conversion funnel calculations, cohort heatmaps, and gateway dispatch.',
       specs: [
         'Bound strictly to 127.0.0.1 (rejects external network connections)',
+        'Advanced Analytics Engine (analytics_engine.py): conversion funnels, retention matrices, Pearson correlations',
         'Document Exporter (POST /api/export/docx) generating styled Word files in-memory',
-        'Data Studio Engine (data_engine.py) with openpyxl, native SQLite streaming copy, and CSV parsing',
-        'Automated tools: /breakdown, /summarize, and guarded /data analytical synthesis',
+        'Automated tools: calibrated /breakdown, /summarize, and guarded /data analytical synthesis',
       ],
     },
     {
@@ -518,13 +560,13 @@ export const siteConfig = {
     },
     {
       id: 'ai',
-      title: 'Tier 4: Hybrid LLM & 5-Template Document Scaffolder',
+      title: 'Tier 4: Hybrid LLM & Calibrated Story Decomposer',
       tech: 'Local Ollama &bull; Optional Gemini API &bull; 8,192 Budget',
       latency: 'Local or Cloud Dispatch',
-      summary: 'Routes prompts to local offline models or optional cloud APIs with dataset schema grounding and document scaffolding.',
+      summary: 'Routes prompts to local offline models or optional cloud APIs with dataset schema grounding and calibrated INVEST story decomposition.',
       specs: [
         'Detects running Ollama models on localhost:11434 (e.g. Llama 3.2, Mistral, Gemma 2)',
-        'Document Generator: scaffolds PRDs, Architecture Specs, Story Breakdowns, and KPI Plans',
+        'Calibrated Story Decomposer: enforces INVEST criteria with 3 distinct Gherkin scenarios per story',
         'Guarded AI context: injects dataset schemas and KPI values without leaking PII or raw rows',
         'Expanded 8,192 max output token budget across all providers',
       ],
@@ -536,6 +578,16 @@ export const siteConfig = {
   // ==========================================
   comparisonRows: [
     {
+      feature: 'Dataset Analytics & Funnels',
+      pmtool: 'Built-in Advanced Analytics Workbench: Funnels, Cohort Retention Heatmaps, Outliers, Correlations',
+      cloud: 'Requires third-party SaaS BI subscriptions (Mixpanel, Amplitude, Tableau Cloud, Datadog)',
+    },
+    {
+      feature: 'Agile Story Decomposition',
+      pmtool: 'Calibrated INVEST story decomposer with 3x Gherkin scenarios & pre-commit review into SQLite',
+      cloud: 'Basic AI wrappers without calibrated Fibonacci sizing or pre-commit approval modals',
+    },
+    {
       feature: 'Desktop Architecture & Speed',
       pmtool: 'Zero-iframe React 19 SPA inside Electron with instant hardware-accelerated transitions',
       cloud: 'Heavy web browser apps or multi-iframe wrappers with network rendering lag',
@@ -544,11 +596,6 @@ export const siteConfig = {
       feature: 'Keyboard Navigation & Spotlight',
       pmtool: 'Built-in Spotlight Command Palette (Ctrl+K) & universal keybindings (Ctrl+1–6, Ctrl+B)',
       cloud: 'Inconsistent shortcuts across multiple SaaS tools, browser tab hopping',
-    },
-    {
-      feature: 'KPI Metric & Chart Studio',
-      pmtool: 'Interactive AddWidgetModal: KPI Cards (with milestone variance badges), Bar & Donut charts',
-      cloud: 'Requires separate BI subscriptions (Tableau, PowerBI Cloud, Mixpanel, Datadog)',
     },
     {
       feature: 'Database & Dataset Ingestion',
@@ -571,34 +618,14 @@ export const siteConfig = {
       cloud: 'Cloud-hosted multi-tenant infrastructure managed by vendor',
     },
     {
-      feature: 'SQL Data Exploration',
-      pmtool: 'Built-in Safe Read-Only SQL Sandbox with 5-layer defense against disk mutation',
-      cloud: 'Requires connecting remote databases or purchasing add-on cloud analytics seats',
-    },
-    {
-      feature: 'Account & Identity Requirements',
-      pmtool: 'No mandatory account or registration required for local workflows',
-      cloud: 'Generally requires account registration, email verification, or corporate SSO',
-    },
-    {
       feature: 'Subscription Model',
       pmtool: 'No per-seat subscription for PM Tool ($0 open-source)',
       cloud: 'Recurring subscription pricing with per-user tiers; compare terms individually',
     },
     {
-      feature: 'Agile & Story Estimation',
-      pmtool: 'Built-in Sprint Kanban board, drag-and-drop, and automated /breakdown tool',
-      cloud: 'Often requires Jira Software or paid third-party agile extensions',
-    },
-    {
       feature: 'AI Model Execution & Data Egress',
       pmtool: 'Local Ollama mode runs entirely on-device; cloud models (Gemini) are optional',
       cloud: 'Cloud-based AI features send prompt data to external providers based on vendor terms',
-    },
-    {
-      feature: 'Application Updates',
-      pmtool: 'Automated 60-min silent background checks with delta blockmaps via electron-updater',
-      cloud: 'Silent continuous cloud deployments without user version control',
     },
   ],
 
@@ -607,16 +634,16 @@ export const siteConfig = {
   // ==========================================
   designTenets: [
     {
+      title: 'Empirical Data Science Over Guesswork',
+      desc: 'Great product decisions require numbers, not intuition alone. With built-in conversion funnels, cohort heatmaps, and correlation matrices, PM Tool puts professional analytical instruments directly at your fingertips.',
+    },
+    {
+      title: 'INVEST-Grade Atomic Specifications',
+      desc: 'Engineering teams need crisp, unambiguous requirements. Enforcing INVEST criteria, calibrated Fibonacci points, and 3 distinct Gherkin scenarios per story guarantees smooth sprint handoffs.',
+    },
+    {
       title: 'Zero-Iframe SPA Speed',
       desc: 'Desktop applications should feel instantaneous. Migrating to a single-DOM React 19 architecture eliminated iframe barriers, rendering complex dashboards, Kanban boards, and document editors with fluid 60fps transitions.',
-    },
-    {
-      title: 'Eliminate Context Switching',
-      desc: 'Fragmenting product context across spreadsheets, analytics tools, browser tabs, separate document editors, and task managers increases cognitive friction. PM Tool unifies Spotlight search, datasets, PRDs, story breakdown, and sprint boards in a single frame.',
-    },
-    {
-      title: 'Keyboard First, Always',
-      desc: 'High-output product leaders think in keystrokes. With Ctrl+K Spotlight command palette, Ctrl+B sidebar toggle, and Ctrl+1 through Ctrl+6 direct view switching, you command the entire workspace without touching the mouse.',
     },
     {
       title: 'Local Control as a Foundational Default',
@@ -629,8 +656,31 @@ export const siteConfig = {
   // ==========================================
   releases: [
     {
-      version: 'v2.0.1',
+      version: 'v2.1.0',
       badge: 'CURRENT STABLE RELEASE',
+      title: 'Advanced Analytics Workbench & Calibrated Agile Story Decomposer',
+      tagline: 'Multi-stage conversion funnels, cohort retention heatmaps, correlation matrix, statistical outlier profiling, and INVEST atomic story decomposition with live pre-commit preview.',
+      date: 'Oct 2026',
+      decisionRationale:
+        'Elevating PM Tool from qualitative requirement drafting to deep empirical data science and rigorous agile engineering. Implemented the Advanced Analytics Workbench in Data Studio (conversion funnels with step-to-step drop-offs, cohort retention matrix heatmaps, statistical outlier detection via Tukey IQR and Z-scores, Pearson correlation grids, and linear regression forecasting) and completely overhauled the PRD-to-Story Decomposer with INVEST principles, 3 distinct Gherkin scenarios per story, calibrated Fibonacci point sizing, and an interactive pre-commit approval studio modal.',
+      highlights: [
+        'Advanced Analytics Workbench (AdvancedAnalyticsWorkbench.tsx & tools/analytics_engine.py) in Data Studio',
+        'Multi-Stage Conversion Funnel with step-to-step drop-offs, top-of-funnel relative conversion, and lost volume calculations',
+        'Period-over-Period Cohort Retention Matrix Heatmap with automated MoM, WoW, and DoD cohort construction',
+        'Parametric & Non-Parametric Statistical Profiling: Percentiles (P25, P50, P75, P90, P99), Standard Deviation, and IQR',
+        'Statistical Outlier Detection leveraging Tukey\'s IQR fences (1.5x IQR) and Z-Scores (|Z| > 3.0)',
+        'Pairwise Feature Correlation Matrix calculating Pearson coefficients (r in [-1, 1]) across numerical dimensions',
+        'Linear Trendline & Trajectory Forecasting with slope rates and R^2 goodness-of-fit projections',
+        'Overhauled Story Decomposer (DecomposerModal.tsx & tools/story_decomposer.py) enforcing INVEST atomic story slicing',
+        'Strict Multi-Scenario Gherkin Acceptance Criteria: Happy Path, Validation & Negative Flows, and Boundary/Resilience edge cases',
+        'Calibrated Fibonacci point estimation (1, 2, 3, 5, 8, 13) based on architectural complexity and schema impact',
+        'Live Pre-Commit Review Studio allowing engineers to inspect, adjust story points, and batch-commit approved stories to sprint backlog',
+      ],
+      isCurrent: true,
+    },
+    {
+      version: 'v2.0.1',
+      badge: 'SHIPPED',
       title: 'Interactive KPI Dashboard Lifecycle, Native SQLite File Ingestion & Analytical Hardening',
       tagline: 'AddWidgetModal full CRUD, 3 widget types (kpi_card, bar_chart, donut_chart), native .db ingestion, and Dark Carbon dialogs.',
       date: 'Oct 2026',
@@ -646,7 +696,7 @@ export const siteConfig = {
         'Story Decomposer Gateway Resilience: fixed call_llm() signature parameter in tools/story_decomposer.py restoring 1-click breakdown',
         'Automated 60-minute silent background updates polling and verified zero-vulnerability AST query sandbox',
       ],
-      isCurrent: true,
+      isCurrent: false,
     },
     {
       version: 'v2.0.0',

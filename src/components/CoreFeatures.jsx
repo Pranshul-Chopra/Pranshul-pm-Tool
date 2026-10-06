@@ -17,7 +17,12 @@ import {
   Sliders,
   PieChart,
   Trash2,
-  RefreshCw
+  RefreshCw,
+  TrendingDown,
+  TrendingUp,
+  Calendar,
+  AlertCircle,
+  CheckSquare
 } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
@@ -26,19 +31,22 @@ export function CoreFeatures() {
 
   const getFeatureIcon = (id) => {
     switch (id) {
+      case 'funnel-analyzer': return TrendingDown;
+      case 'cohort-matrix': return Calendar;
+      case 'outlier-stats': return AlertCircle;
+      case 'correlation-engine': return Sparkles;
+      case 'trend-forecasting': return TrendingUp;
+      case 'calibrated-decomposer': return Sparkles;
+      case 'multi-gherkin-criteria': return CheckSquare;
       case 'desktop-spa-engine': return Cpu;
       case 'spotlight-palette': return Command;
       case 'universal-shortcuts': return Sliders;
       case 'kpi-widget-crud': return PieChart;
       case 'sqlite-native-ingest': return Database;
       case 'deletedataset-modal': return ShieldCheck;
-      case 'polymorphic-row-render': return Database;
-      case 'story-decomposer-fix': return Sparkles;
       case 'pm-doc-generator': return FileText;
       case 'multi-export-docx-md': return Download;
-      case 'response-action-toolbar': return Sparkles;
       case 'silent-updater': return RefreshCw;
-      case 'sql-sandbox-safety': return Terminal;
       case 'sprint-kanban-board': return Layers;
       case 'dual-db-v6': return Database;
       case 'bm25-search': return Search;
@@ -66,7 +74,7 @@ export function CoreFeatures() {
           Engineered for Deep Product Output
         </h2>
         <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-          Every tool inside {siteConfig.name} was crafted to eliminate context switching, prevent cloud data leaks, and turn messy organizational documents into structured execution.
+          Every tool inside {siteConfig.name} was crafted to eliminate context switching, ground decisions in empirical data science, and turn organizational knowledge into structured agile execution.
         </p>
       </div>
 
