@@ -11,7 +11,8 @@ import {
   Terminal, 
   Sparkles,
   BarChart3,
-  ShieldCheck
+  ShieldCheck,
+  Download
 } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
@@ -20,13 +21,16 @@ export function CoreFeatures() {
 
   const getFeatureIcon = (id) => {
     switch (id) {
+      case 'pm-doc-generator': return FileText;
+      case 'multi-export-docx-md': return Download;
+      case 'response-action-toolbar': return Sparkles;
+      case 'zero-crash-hardening': return ShieldCheck;
       case 'data-studio-engine': return BarChart3;
       case 'sql-sandbox-safety': return Terminal;
       case 'guarded-ai-data': return ShieldCheck;
       case 'sprint-kanban-board': return Layers;
       case 'story-breakdown-tool': return Sparkles;
       case 'doc-summarizer-tool': return FileText;
-      case 'prd-export-docx': return FileText;
       case 'command-pills': return Terminal;
       case 'dual-db-v6': return Database;
       case 'bm25-search': return Search;

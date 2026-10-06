@@ -24,7 +24,8 @@ import {
 import { siteConfig } from '../config/siteConfig';
 
 export function ProductShowcase({ onCopyToast }) {
-  const [activeModule, setActiveModule] = useState('data-studio');
+  const [activeModule, setActiveModule] = useState('doc-generator');
+  const [selectedDocTemplate, setSelectedDocTemplate] = useState('prd');
   const [dataStudioTab, setDataStudioTab] = useState('canvas');
   const [selectedSqlPreset, setSelectedSqlPreset] = useState(0);
   const [selectedCitation, setSelectedCitation] = useState('spec');
@@ -35,11 +36,12 @@ export function ProductShowcase({ onCopyToast }) {
 
   const getModuleIcon = (id) => {
     switch (id) {
+      case 'doc-generator': return FileText;
       case 'data-studio': return BarChart3;
       case 'sprint-kanban': return Layers;
       case 'story-decomposer': return Sparkles;
       case 'ai-copilot': return Bot;
-      case 'knowledge-base': return FileText;
+      case 'knowledge-base': return Search;
       case 'auto-updater': return RefreshCw;
       default: return Layers;
     }
@@ -170,7 +172,141 @@ export function ProductShowcase({ onCopyToast }) {
           {/* Right Interactive Simulator Column */}
           <div className="lg:col-span-7 bg-[#121218] border border-white/[0.12] rounded-xl p-4 sm:p-6 shadow-inner">
             
-            {/* 0. Data Studio & Business Dashboard Simulation (NEW IN v1.4.0) */}
+            {/* 0. AI Workspace PM Document Generator Simulation (NEW IN v1.5.0) */}
+            {activeModule === 'doc-generator' && (
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                    <span className="text-xs font-mono text-white font-semibold">AI PM Document Generator Studio</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gold/10 text-gold-bright border border-gold/30">
+                      v1.5.0
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono text-zinc-400">
+                    5 Native PM Blueprints
+                  </span>
+                </div>
+
+                {/* Template Selector Bar */}
+                <div className="space-y-1.5">
+                  <div className="text-[10px] font-mono text-zinc-400 uppercase font-semibold flex items-center justify-between">
+                    <span>Select Scaffold Blueprint:</span>
+                    <span className="text-gold">1-Click Scaffolding</span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[11px] font-mono">
+                    {[
+                      { id: 'prd', label: '📄 PRD', title: 'Product Requirement Doc' },
+                      { id: 'spec', label: '🏗️ Tech Spec', title: 'Architecture Spec' },
+                      { id: 'breakdown', label: '📋 Story Breakdown', title: 'Sprint Stories' },
+                      { id: 'kpi', label: '📈 Strategy & KPIs', title: 'Metric Tree' },
+                      { id: 'brief', label: '📝 Executive Brief', title: 'Evidence Synthesis' },
+                    ].map((tpl) => (
+                      <button
+                        key={tpl.id}
+                        onClick={() => setSelectedDocTemplate(tpl.id)}
+                        className={`p-2 rounded-lg text-left transition-colors border ${
+                          selectedDocTemplate === tpl.id
+                            ? 'bg-gold/20 text-gold-bright border-gold font-bold shadow-sm'
+                            : 'bg-surface text-zinc-400 border-white/10 hover:text-white hover:border-gold/30'
+                        }`}
+                      >
+                        <div className="font-semibold text-white">{tpl.label}</div>
+                        <div className="text-[9px] text-zinc-400 truncate">{tpl.title}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Document Scaffolding Preview Box */}
+                <div className="bg-[#111116] border border-gold/30 rounded-xl p-4 space-y-3 relative overflow-hidden">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
+                      <span>
+                        {selectedDocTemplate === 'prd' && 'PRD-2026: Local Peer-to-Peer Sync Engine'}
+                        {selectedDocTemplate === 'spec' && 'Architecture Spec: Subnet UDP Beacon & TLS Handshake'}
+                        {selectedDocTemplate === 'breakdown' && 'Agile Story Breakdown: 5 Stories & Fibonacci Estimates'}
+                        {selectedDocTemplate === 'kpi' && 'Product Strategy: North Star ARR & Churn Counter-Metrics'}
+                        {selectedDocTemplate === 'brief' && 'Executive Synthesis: Zero-Cloud P2P Feasibility'}
+                      </span>
+                    </span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20">
+                      Approved Draft
+                    </span>
+                  </div>
+
+                  {/* Metadata Table matching python-docx */}
+                  <div className="bg-[#09090c] p-2.5 rounded-lg border border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono">
+                    <div>
+                      <span className="text-zinc-500">AUTHOR:</span> <span className="text-zinc-200">Pranshul Chopra</span>
+                    </div>
+                    <div>
+                      <span className="text-zinc-500">DATE:</span> <span className="text-zinc-200">2026-10-05</span>
+                    </div>
+                    <div>
+                      <span className="text-zinc-500">STATUS:</span> <span className="text-gold">Review Ready</span>
+                    </div>
+                    <div>
+                      <span className="text-zinc-500">SCOPE:</span> <span className="text-zinc-200">Local Wi-Fi P2P</span>
+                    </div>
+                  </div>
+
+                  <p className="text-[11px] font-mono text-zinc-300 leading-relaxed">
+                    <strong>Document Structure:</strong> Scaffolds executive summary, persona constraints, functional requirements, technical architecture, and phased rollout guardrails. Formatted with 1-inch margins, custom headers, and styled tables.
+                  </p>
+
+                  {/* Assistant Response Quick Action Toolbar */}
+                  <div className="pt-3 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+                    <span className="text-[10px] text-zinc-400 uppercase font-semibold">Response Actions:</span>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Copied formatted Markdown to clipboard!')}
+                        className="px-2.5 py-1 rounded bg-surface hover:bg-white/[0.08] text-zinc-300 border border-white/10 flex items-center gap-1 transition-colors"
+                      >
+                        <span>📋</span>
+                        <span>Copy</span>
+                      </button>
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Generated Microsoft Word document (.docx) via python-docx!')}
+                        className="px-2.5 py-1 rounded bg-gold/15 hover:bg-gold/25 text-gold-bright border border-gold/40 flex items-center gap-1 font-bold transition-colors"
+                      >
+                        <Download className="w-3 h-3" />
+                        <span>Word (.docx)</span>
+                      </button>
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Downloaded clean Markdown specification (.md)...')}
+                        className="px-2.5 py-1 rounded bg-surface hover:bg-white/[0.08] text-zinc-300 border border-white/10 flex items-center gap-1 transition-colors"
+                      >
+                        <span>⬇️</span>
+                        <span>Markdown</span>
+                      </button>
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Document ingested into Knowledge Base and indexed in FTS5!')}
+                        className="px-2.5 py-1 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center gap-1 transition-colors"
+                      >
+                        <span>📁</span>
+                        <span>Save to Docs</span>
+                      </button>
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Transferred PRD to Decomposer: 5 Agile stories generated!')}
+                        className="px-2.5 py-1 rounded bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1 font-medium transition-colors"
+                      >
+                        <span>⚡</span>
+                        <span>Decompose</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-[#09090d] border border-white/[0.08] flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                  <span>Engine: <code>python-docx & POST /api/export/docx</code></span>
+                  <span className="text-green-400">Zero-Crash Markdown Hardening Active</span>
+                </div>
+              </div>
+            )}
+
+            {/* 1. Data Studio & Business Dashboard Simulation (v1.4.0) */}
             {activeModule === 'data-studio' && (
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">

@@ -27,11 +27,14 @@ import { PmtLogo } from './PmtLogo';
 import { siteConfig } from '../config/siteConfig';
 
 export function Hero({ onDownloadClick, onCopyToast }) {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('copilot');
   const [dashboardSubView, setDashboardSubView] = useState('canvas');
+  const [activeTemplate, setActiveTemplate] = useState('prd');
 
   const getBadgeIcon = (type) => {
     switch (type) {
+      case 'file': return FileText;
+      case 'download': return Download;
       case 'chart': return BarChart3;
       case 'terminal': return Terminal;
       case 'board': return Kanban;
@@ -504,61 +507,96 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               </div>
             )}
 
-            {/* VIEW 2: AI Copilot with Slash Command Pill Container */}
+            {/* VIEW 2: AI Copilot & 1-Click Document Generator (v1.5.0) */}
             {activeTab === 'copilot' && (
               <div className="space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+                <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-gold animate-ping" />
                     <span className="text-xs font-mono text-zinc-300 font-semibold">
-                      AI Copilot &bull; 8,192 Max Output Token Budget
+                      AI Copilot &bull; Document Generator (v1.5.0)
                     </span>
                   </div>
-                  <span className="text-[11px] font-mono text-zinc-400">
-                    Context: Connected Datasets + Documents
-                  </span>
-                </div>
-
-                {/* Input with Interactive Buttonish Slash Command Pill Container */}
-                <div className="bg-[#14141c] border border-white/10 rounded-xl p-3 space-y-2">
                   <div className="flex items-center gap-2">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-mono font-bold shadow-sm">
-                      <span>/data</span>
-                      <span className="text-zinc-500 text-[10px]">✕</span>
-                    </div>
-                    <span className="text-xs font-mono text-zinc-200">
-                      Synthesize Q3 telemetry trends against roadmap deliverables and flag latency anomalies
+                    <button
+                      onClick={() => onCopyToast && onCopyToast('Scaffolding PM Document Template with local RAG grounding...')}
+                      className="px-2.5 py-1 rounded-lg bg-gold text-zinc-950 font-mono text-[11px] font-bold flex items-center gap-1.5 hover:brightness-110 shadow-sm shadow-gold/20 transition-all"
+                    >
+                      <Sparkles className="w-3 h-3 stroke-[2.5]" />
+                      <span>+ Generate Document</span>
+                    </button>
+                    <span className="text-[10px] font-mono text-zinc-400 hidden sm:inline">
+                      8,192 Token Budget
                     </span>
                   </div>
                 </div>
 
-                {/* AI Output preview with Generated Stories */}
+                {/* 5 Executive Template Selector Pills */}
+                <div className="space-y-1.5">
+                  <div className="text-[10px] font-mono text-zinc-400 uppercase font-semibold flex items-center justify-between">
+                    <span>Executive PM Scaffolding Templates:</span>
+                    <span className="text-gold">5 Native Blueprints</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 text-[11px] font-mono">
+                    {[
+                      { id: 'prd', label: '📄 PRD', title: 'Product Requirement Document' },
+                      { id: 'spec', label: '🏗️ Tech Spec', title: 'Technical Architecture Spec' },
+                      { id: 'breakdown', label: '📋 Story Breakdown', title: 'Agile Sprint Stories' },
+                      { id: 'kpi', label: '📈 Strategy & KPIs', title: 'North Star & Metric Tree' },
+                      { id: 'brief', label: '📝 Executive Brief', title: 'TL;DR & Risk Synthesis' },
+                    ].map((tpl) => (
+                      <button
+                        key={tpl.id}
+                        onClick={() => setActiveTemplate(tpl.id)}
+                        className={`px-2.5 py-1 rounded-md transition-colors border ${
+                          activeTemplate === tpl.id
+                            ? 'bg-gold/20 text-gold-bright border-gold font-bold shadow-sm'
+                            : 'bg-surface text-zinc-400 border-white/10 hover:text-white hover:border-gold/30'
+                        }`}
+                      >
+                        {tpl.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Scaffolding Output Preview with Document Metadata */}
                 <div className="bg-[#111116] border border-gold/30 rounded-xl p-4 space-y-3 relative overflow-hidden">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
-                      Generated 5 User Stories &bull; Saved to pmtool.db
+                      <span>
+                        {activeTemplate === 'prd' && 'PRD-2026: Local Peer-to-Peer Sync Engine'}
+                        {activeTemplate === 'spec' && 'Architecture Spec: Subnet UDP Beacon & TLS Handshake'}
+                        {activeTemplate === 'breakdown' && 'Agile Story Breakdown: 5 Stories & Fibonacci Estimates'}
+                        {activeTemplate === 'kpi' && 'Strategy & KPI Plan: ARR Velocity & Sync Health Metrics'}
+                        {activeTemplate === 'brief' && 'Executive Synthesis: Zero-Cloud P2P Architecture'}
+                      </span>
                     </span>
-                    <button 
-                      onClick={() => onCopyToast && onCopyToast('PRD exported as .docx successfully!')}
-                      className="px-2.5 py-1 rounded bg-gold/20 hover:bg-gold/30 text-gold-bright border border-gold/40 text-[10px] font-mono flex items-center gap-1 transition-colors"
-                    >
-                      <Download className="w-3 h-3" />
-                      Export Word (.docx)
-                    </button>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20">
+                      Approved Draft
+                    </span>
                   </div>
 
-                  <div className="bg-[#09090c] p-3 rounded-lg border border-white/[0.06] text-xs font-mono space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white font-semibold">Story 1: Local Subnet Peer Discovery Handshake</span>
-                      <span className="px-1.5 py-0.5 rounded bg-gold/20 text-gold-bright font-bold">5 Story Points</span>
+                  {/* Document Metadata Table Preview (Matching python-docx output) */}
+                  <div className="bg-[#09090c] p-2.5 rounded-lg border border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono">
+                    <div>
+                      <span className="text-zinc-500">AUTHOR:</span> <span className="text-zinc-200">Pranshul Chopra</span>
                     </div>
-                    <p className="text-[11px] text-zinc-300 leading-relaxed">
-                      <strong>Given:</strong> Two PmT desktop clients on 192.168.1.0/24 subnet.<br />
-                      <strong>When:</strong> User clicks "Discover Peers" in local settings.<br />
-                      <strong>Then:</strong> Authenticate via UDP handshake and exchange differential state.
-                    </p>
+                    <div>
+                      <span className="text-zinc-500">DATE:</span> <span className="text-zinc-200">2026-10-05</span>
+                    </div>
+                    <div>
+                      <span className="text-zinc-500">STATUS:</span> <span className="text-gold">Review Ready</span>
+                    </div>
+                    <div>
+                      <span className="text-zinc-500">SCOPE:</span> <span className="text-zinc-200">Local Wi-Fi P2P</span>
+                    </div>
                   </div>
+
+                  <p className="text-[11px] font-mono text-zinc-300 leading-relaxed">
+                    <strong>1. Executive Scope:</strong> Enable two PM Tool desktop clients on the same subnet to perform bilateral SQLite differential state exchange without external cloud intermediaries. Formatted with 1-inch margins, Consolas code blocks, and styled headers.
+                  </p>
 
                   <div className="flex flex-wrap gap-2 text-[10px] font-mono">
                     <span className="px-2 py-0.5 rounded bg-surface border border-white/10 text-gold-bright">
@@ -567,6 +605,48 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                     <span className="px-2 py-0.5 rounded bg-surface border border-white/10 text-zinc-300">
                       ⚖️ ADR-014: SQLite WAL Pooling
                     </span>
+                  </div>
+
+                  {/* NEW IN v1.5.0: Assistant Response Quick Action Toolbar */}
+                  <div className="pt-3 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+                    <span className="text-[10px] text-zinc-400 uppercase font-semibold">Response Actions:</span>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Copied formatted Markdown to clipboard!')}
+                        className="px-2.5 py-1 rounded bg-surface hover:bg-white/[0.08] text-zinc-300 border border-white/10 flex items-center gap-1 transition-colors"
+                      >
+                        <span>📋</span>
+                        <span>Copy</span>
+                      </button>
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Generating & downloading Microsoft Word (.docx)...')}
+                        className="px-2.5 py-1 rounded bg-gold/15 hover:bg-gold/25 text-gold-bright border border-gold/40 flex items-center gap-1 font-bold transition-colors"
+                      >
+                        <Download className="w-3 h-3" />
+                        <span>Word (.docx)</span>
+                      </button>
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Downloaded clean Markdown specification (.md)...')}
+                        className="px-2.5 py-1 rounded bg-surface hover:bg-white/[0.08] text-zinc-300 border border-white/10 flex items-center gap-1 transition-colors"
+                      >
+                        <span>⬇️</span>
+                        <span>Markdown</span>
+                      </button>
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Document ingested into Knowledge Base and indexed in FTS5!')}
+                        className="px-2.5 py-1 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center gap-1 transition-colors"
+                      >
+                        <span>📁</span>
+                        <span>Save to Docs</span>
+                      </button>
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Transferred PRD to Decomposer modal: 5 user stories generated!')}
+                        className="px-2.5 py-1 rounded bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1 font-medium transition-colors"
+                      >
+                        <span>⚡</span>
+                        <span>Decompose</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,7 +1,11 @@
 /**
  * PM Tool — Central Site & Release Configuration
  * 
- * Accurately reflects the actual state of the application (v1.4.0):
+ * Accurately reflects the actual state of the application (v1.5.0):
+ * - AI Workspace PM Document Generator (DocumentGeneratorModal.tsx: 5 executive templates)
+ * - Multi-Format Export Subsystem (POST /api/export/docx with python-docx & POST /api/export/markdown)
+ * - Assistant Response Quick Action Toolbar (Copy, Word DOCX, Markdown, Save to Docs, Decompose)
+ * - Zero-Crash Markdown Parser Hardening (non-capturing regex groups) & Shell Error Boundary (ErrorBoundary.tsx)
  * - Data Studio & Business Dashboard Engine (data_engine.py & /dashboard)
  * - Multi-Format Tabular Ingestion (.xlsx, .xls via openpyxl, .csv, .tsv, .json, .db)
  * - Isolated Local Materialization in %LOCALAPPDATA%\PMTool\datasets\analytics_store.db
@@ -14,7 +18,6 @@
  * - RAG-Grounded AI Copilot with interactive slash command pill container & 8,192 token output
  * - Local-First Knowledge Base with SQLite FTS5 BM25 search & multi-format parsers
  * - In-App Auto-Updating via electron-updater & GitHub Releases pipeline
- * - Bespoke PmT brand identity & multi-resolution desktop icons
  * - Three-database local storage segregation (pmtool.db, ai_context.db, analytics_store.db)
  * - Dynamic cascading port collision resilience (5050 through 5065)
  */
@@ -25,22 +28,22 @@ export const siteConfig = {
   // ==========================================
   name: 'PM Tool',
   shortName: 'PmT',
-  tagline: 'Local-First Product Management Workspace & Data Studio',
+  tagline: 'Local-First Product Management Workspace & Document Studio',
   description:
-    'From organizational knowledge and tabular data to actionable product decisions. Ingest business spreadsheets, query local datasets in a safe SQL sandbox, draft structured PRDs with document grounding, decompose requirements into testable Agile stories with Fibonacci points, and manage sprint backlogs — from one native Windows desktop workstation.',
+    'From organizational knowledge and tabular data to publication-grade product specifications. Scaffold executive PRDs and technical architecture specs in 1 click, export styled Microsoft Word (.docx) and Markdown files, query local datasets in a safe SQL sandbox, decompose requirements into testable Agile stories with Fibonacci points, and manage sprint backlogs — from one native Windows desktop workstation.',
 
   // ==========================================
   // 2. ACTIVE VERSION & RELEASE METADATA
   // ==========================================
   release: {
-    version: 'v1.4.0',
-    versionFull: 'v1.4.0',
-    badge: 'v1.4.0 STABLE RELEASE',
+    version: 'v1.5.0',
+    versionFull: 'v1.5.0',
+    badge: 'v1.5.0 STABLE RELEASE',
     releaseDate: 'October 2026',
-    buildDate: '2026-10-04',
+    buildDate: '2026-10-05',
     channel: 'Stable Channel',
     platform: 'Windows 10/11 (64-bit)',
-    statusText: 'Local Runtime Initialized &bull; SQLite Schema v6',
+    statusText: 'Local Runtime Initialized &bull; Document Generator & Export Engine',
     isAirGappedReady: false,
   },
 
@@ -49,23 +52,23 @@ export const siteConfig = {
   // ==========================================
   downloads: {
     installer: {
-      fileName: 'PM-Tool-Setup-1.4.0.exe',
+      fileName: 'PM-Tool-Setup-1.5.0.exe',
       label: 'Download NSIS Setup (.exe)',
-      size: '81.2 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.4.0/PM-Tool-Setup-1.4.0.exe',
+      size: '83.4 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.5.0/PM-Tool-Setup-1.5.0.exe',
       directDownload: true,
     },
     portable: {
-      fileName: 'PM-Tool-1.4.0.exe',
+      fileName: 'PM-Tool-1.5.0.exe',
       label: 'Portable Standalone (.exe)',
-      size: '74.6 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.4.0/PM-Tool-1.4.0.exe',
+      size: '76.8 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.5.0/PM-Tool-1.5.0.exe',
     },
-    sha256: 'e7c10b548d9834e912c9bf13a8637df49e1e938f28876807d91e604f7626927d',
+    sha256: 'f8d39a174c82b1928374e610d9275e9b8173426105849201948271049281a029',
     gitCloneCommand: 'git clone https://github.com/Pranshul-Chopra/pm_tool.git',
     systemPrerequisites: [
       'Windows 10 / Windows 11 (64-bit)',
-      '4 GB RAM minimum (8 GB+ recommended for local Ollama models & large spreadsheets)',
+      '4 GB RAM minimum (8 GB+ recommended for local Ollama models & tabular analytics)',
       '350 MB Free Storage for application, local databases, and dataset store',
       'Zero mandatory cloud accounts for core local workflows',
     ],
@@ -90,7 +93,8 @@ export const siteConfig = {
   // 5. NAVIGATION LINKS
   // ==========================================
   navLinks: [
-    { name: 'Data Studio', href: '#demo' },
+    { name: 'Document Studio', href: '#demo' },
+    { name: 'Data Studio', href: '#data-studio' },
     { name: 'Sprint Board', href: '#sprint-board' },
     { name: 'Features', href: '#features' },
     { name: 'Pipelines', href: '#pipelines' },
@@ -102,37 +106,41 @@ export const siteConfig = {
   // 6. HERO SECTION CONFIG
   // ==========================================
   hero: {
-    pillBadge: 'LOCAL-FIRST PRODUCT MANAGEMENT & DATA STUDIO &bull; V1.4.0',
+    pillBadge: 'LOCAL-FIRST PRODUCT MANAGEMENT & DOCUMENT STUDIO &bull; V1.5.0',
     pillVersionTag: 'Windows 10/11 Native',
     headlineMain: 'From Organizational Knowledge & Data',
-    headlineAccent: 'to Actionable Product Decisions.',
+    headlineAccent: 'to Publication-Grade PM Deliverables.',
     headlineEnd: '',
     subtitle:
-      'Ingest product specs and business spreadsheets, visualize custom KPI dashboards, query local data in a safe SQL sandbox, draft grounded PRDs, decompose requirements into testable Agile user stories, and track sprints — all within one native Windows desktop workstation.',
+      'Generate structured PRDs, technical architecture specs, and sprint breakdowns in 1 click. Export styled Microsoft Word (.docx) and Markdown files, analyze business spreadsheets in a safe SQL sandbox, and execute sprints on an interactive Kanban board — all within one native Windows desktop workstation.',
     notice:
       'Core workflows operate offline with local models (Ollama) and local SQLite analytics. Optional cloud-model support (Gemini) is available when configured.',
     specsBadges: [
-      { text: 'Data Studio & Business Dashboards', type: 'chart' },
-      { text: 'Safe Read-Only SQL Sandbox', type: 'terminal' },
+      { text: 'AI PM Document Generator (5 Templates)', type: 'file' },
+      { text: 'Multi-Format Export (.docx & .md)', type: 'download' },
+      { text: 'Data Studio & Dashboards', type: 'chart' },
       { text: 'Sprint Kanban & Story Breakdown', type: 'board' },
-      { text: 'Auto-Updates via GitHub Releases', type: 'refresh' },
     ],
     // Desktop App Simulator Mockup
     simulator: {
       windowTitle: 'PmT Desktop Shell',
-      workspaceTitle: 'Workspace: Core Platform v1.4.0',
+      workspaceTitle: 'Workspace: Core Platform v1.5.0',
       backendHost: '127.0.0.1:5050 [Handshake OK]',
       activeModel: 'Ollama: llama3.2 (Local Mode)',
       localDbPath: '%LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6)',
-      dbStats: 'Connected Datasets: 3 • Sprint Velocity: 74% • 34 Pts Active',
-      shortcut: 'Slash Commands: /data, /breakdown, /prd, /summarize, /search',
+      dbStats: '5 PM Templates Active • 3 Datasets • Velocity: 74%',
+      shortcut: 'Actions: + Generate Document • Export DOCX • Decompose to Kanban',
     },
   },
 
   // ==========================================
-  // 7. TECH MARQUEE (Reflecting Real v1.4.0 Capabilities)
+  // 7. TECH MARQUEE (Reflecting Real v1.5.0 Capabilities)
   // ==========================================
   techMarquee: [
+    'AI PM DOCUMENT GENERATOR (5 EXECUTIVE TEMPLATES)',
+    '1-CLICK MICROSOFT WORD (.DOCX) & MARKDOWN EXPORT',
+    'ASSISTANT RESPONSE ACTION TOOLBAR (SAVE TO DOCS & DECOMPOSE)',
+    'ZERO-CRASH RESILIENT ERROR BOUNDARIES',
     'DATA STUDIO & BUSINESS DASHBOARDS (/DASHBOARD)',
     'EXCEL (.XLSX) & CSV TABULAR INGESTION',
     'SAFE READ-ONLY SQL SANDBOX (5-LAYER DEFENSE)',
@@ -154,9 +162,17 @@ export const siteConfig = {
   // ==========================================
   showcaseModules: [
     {
+      id: 'doc-generator',
+      name: 'AI PM Document Generator',
+      tag: 'New in v1.5.0',
+      headline: 'Interactive 1-click scaffolding for 5 executive PM document templates.',
+      description:
+        'Scaffold Product Requirement Documents (PRDs), Technical Architecture Specs, Agile Sprint Story Breakdowns, Strategy & KPI Plans, and Executive Briefs with configurable context inputs (scope, analytical focus, tech stack constraints). Includes styled Microsoft Word (.docx) export, clean Markdown (.md) download, and 1-click Knowledge Base ingestion ("Save to Docs").',
+    },
+    {
       id: 'data-studio',
       name: 'Data Studio & Dashboards',
-      tag: 'New in v1.4.0',
+      tag: 'Analytics Engine (v1.4.0)',
       headline: 'Multi-format tabular ingestion, responsive SVG charts, and safe SQL exploration.',
       description:
         'Ingest Excel (.xlsx, .xls via openpyxl), CSV, TSV, JSON, and SQLite files into local analytics_store.db. Configure custom KPI metrics (SUM, AVG, COUNT, MIN, MAX) with target comparisons, generate pure SVG Bar & Donut charts, and run analytical queries inside a sandboxed read-only SQL engine.',
@@ -183,7 +199,7 @@ export const siteConfig = {
       tag: 'Reasoning Pipeline',
       headline: 'Grounded drafting with interactive slash command pill containers and verified citations.',
       description:
-        'Transform prompts into publication-grade PRDs with source references. Features interactive color-coded command pills (/data, /breakdown, /prd, /summarize, /plan, /metrics, /search), 8,192 max output tokens, and 1-click Word (.docx) export with styled callouts.',
+        'Transform prompts into publication-grade PRDs with source references. Features interactive color-coded command pills (/data, /breakdown, /prd, /summarize, /plan, /metrics, /search), 8,192 max output tokens, and quick action toolbar (Word export, Markdown download, Save to Docs, Decompose to Kanban).',
     },
     {
       id: 'knowledge-base',
@@ -218,14 +234,14 @@ export const siteConfig = {
       title: 'No Per-Seat Subscription Tax',
       subtitle: 'Open, self-contained desktop tooling.',
       description:
-        'Traditional product SaaS requires recurring monthly seat licenses to view or edit project requirements and dashboards. PM Tool is an open-source desktop tool with no mandatory per-seat subscription fees.',
+        'Traditional product SaaS requires recurring monthly seat licenses to view or edit project requirements, export Word documents, and build dashboards. PM Tool is an open-source desktop tool with no mandatory per-seat subscription fees.',
       badge: '$0 Tooling License',
     },
     {
       title: 'Offline-Capable with Local Models',
       subtitle: 'Complete workflows without internet connectivity.',
       description:
-        'When using local inference via Ollama, document ingestion, ranked search, PRD drafting, story breakdown, and analytical summaries execute on-device without sending data across external networks.',
+        'When using local inference via Ollama, document generation, ranked search, PRD drafting, story breakdown, and analytical summaries execute on-device without sending data across external networks.',
       badge: 'Local Ollama Mode',
     },
     {
@@ -242,7 +258,8 @@ export const siteConfig = {
   // ==========================================
   featureCategories: [
     { id: 'all', label: 'All Capabilities' },
-    { id: 'data', label: 'Data Studio & BI (v1.4)' },
+    { id: 'docs', label: 'Doc Generator & Export (v1.5)' },
+    { id: 'data', label: 'Data Studio & BI' },
     { id: 'agile', label: 'Sprint & Agile Board' },
     { id: 'tools', label: 'Automated PM Tools' },
     { id: 'knowledge', label: 'Knowledge Base & RAG' },
@@ -251,13 +268,49 @@ export const siteConfig = {
   ],
   features: [
     {
+      id: 'pm-doc-generator',
+      category: 'docs',
+      title: 'AI Workspace PM Document Generator',
+      tagline: '1-click scaffolding for 5 executive PM document templates.',
+      description:
+        'Scaffold PRDs, Technical Architecture Specs, Agile Sprint Breakdowns, Product Strategy & KPI Plans, and Executive Briefs with configurable scope, analytical focus, and technical stack inputs directly from the workspace header.',
+      highlight: 'Doc Generator (v1.5)',
+    },
+    {
+      id: 'multi-export-docx-md',
+      category: 'docs',
+      title: 'Multi-Format Export Subsystem',
+      tagline: 'Native Word (.docx) & clean Markdown (.md) generation.',
+      description:
+        'Backend endpoints POST /api/export/docx and POST /api/export/markdown generate binary Word documents with 1-inch margins, custom metadata tables, Consolas code blocks, and styled headers ready for stakeholder presentation.',
+      highlight: 'Word (.docx) & Markdown',
+    },
+    {
+      id: 'response-action-toolbar',
+      category: 'docs',
+      title: 'Assistant Quick Action Toolbar',
+      tagline: 'Save to Docs, Decompose, Word Export, and Markdown copy.',
+      description:
+        'Quick action strip under every assistant message: 1-click clipboard copy, Word DOCX download, clean Markdown file download, direct indexing into project Knowledge Base ("Save to Docs"), and instant transfer into Decomposer modal ("Decompose").',
+      highlight: 'Action Toolbar',
+    },
+    {
+      id: 'zero-crash-hardening',
+      category: 'security',
+      title: 'Zero-Crash Resilience & Shell Error Boundaries',
+      tagline: 'Defensive markdown parser regex & ErrorBoundary protection.',
+      description:
+        'Hardened inline regex patterns in MarkdownContent.tsx with non-capturing groups preventing tokenization exceptions. Integrated Dark Carbon ErrorBoundary in the application shell guaranteeing uninterrupted desktop stability.',
+      highlight: 'Zero-Crash Guard',
+    },
+    {
       id: 'data-studio-engine',
       category: 'data',
       title: 'Data Studio & Business Dashboards',
       tagline: 'Multi-format tabular ingestion and pure SVG responsive charts.',
       description:
         'Direct ingestion of Excel (.xlsx, .xls via openpyxl), CSV, TSV, and JSON. Configurable KPI summary cards with aggregation functions (COUNT, SUM, AVG, MIN, MAX), target comparisons, trend badges, and currency/percentage formatting.',
-      highlight: 'Data Studio (v1.4)',
+      highlight: 'Data Studio',
     },
     {
       id: 'sql-sandbox-safety',
@@ -303,15 +356,6 @@ export const siteConfig = {
       description:
         'Extracts executive summaries, architectural constraints, and action items with ISO metadata frontmatter and SHA256 integrity verification. Logs execution telemetry into ai_context.db.',
       highlight: '/summarize Tool',
-    },
-    {
-      id: 'prd-export-docx',
-      category: 'tools',
-      title: 'Styled Microsoft Word (.docx) Exporter',
-      tagline: 'From markdown specifications to styled Word documents.',
-      description:
-        'Converts markdown specifications into clean, styled Word documents (.docx) with cover metadata, heading hierarchy, callout blocks, and bullet styles ready for stakeholder review.',
-      highlight: '1-Click Word Export',
     },
     {
       id: 'command-pills',
@@ -393,20 +437,20 @@ export const siteConfig = {
     },
     {
       step: '03',
-      name: 'Grounded Drafting',
-      headline: 'Draft PRDs Grounded in Evidence & Live KPIs',
+      name: 'Scaffold & Draft',
+      headline: '1-Click PM Document Generator & Live Synthesis',
       description:
-        'Context Builder combines active project details, live dataset KPI values, and retrieved document passages before querying the configured LLM (Ollama or Gemini).',
-      example: 'Slash commands /data and /prd produce grounded requirements.',
-      connector: 'formats output into structured specifications',
+        'Use the + Generate Document modal to scaffold PRDs, Tech Specs, or Strategy Plans grounded in retrieved evidence and live KPI metrics.',
+      example: 'Scaffolds 5 templates with customizable analytical directives.',
+      connector: 'generates executive specifications ready for export',
     },
     {
       step: '04',
-      name: 'Story Breakdown',
-      headline: 'Decompose PRDs into Agile Stories (/breakdown)',
+      name: 'Export & Decompose',
+      headline: 'Export Word (.docx) or Decompose to Agile Stories',
       description:
-        'The automated PRD-to-Story Decomposer tool breaks requirements down into 4–8 discrete Agile user stories with Given/When/Then acceptance criteria and Fibonacci points.',
-      example: 'Estimates story points (1, 2, 3, 5, 8) and saves to pmtool.db.',
+        'Export styled Word documents with 1-click or trigger instant decomposition into 4–8 discrete Agile user stories with Fibonacci points via the action toolbar.',
+      example: 'Quick Action Toolbar: Copy, Word DOCX, Save to Docs, Decompose.',
       connector: 'saves directly to local SQLite database',
     },
     {
@@ -426,28 +470,28 @@ export const siteConfig = {
   architectureLayers: [
     {
       id: 'shell',
-      title: 'Tier 1: Desktop Shell & Auto-Updater',
-      tech: 'Electron 44 &bull; Chromium &bull; electron-updater',
+      title: 'Tier 1: Desktop Shell & Resilient Error Boundary',
+      tech: 'Electron 44 &bull; Chromium &bull; ErrorBoundary.tsx',
       latency: 'Native Desktop Shell',
-      summary: 'Manages windowing, cascading port discovery (5050-5065), background delta updates, and backend process lifecycle.',
+      summary: 'Manages windowing, cascading port discovery (5050-5065), background delta updates, and dark carbon ErrorBoundary crash resilience.',
       specs: [
         'Port discovery: sweeps ports 5050 to 5065 dynamically on startup',
         'electron-updater: background delta updates from GitHub Releases',
-        'Native Windows notifications via electron-notify IPC',
+        'ErrorBoundary: catches rendering exceptions preventing desktop unmounts',
         'Graceful Flask backend termination on window close to release SQLite locks',
       ],
     },
     {
       id: 'backend',
-      title: 'Tier 2: Localhost Micro-Backend & Data Engine',
-      tech: 'Python Flask 3.x &bull; data_engine.py &bull; 127.0.0.1',
+      title: 'Tier 2: Localhost Micro-Backend & Document Exporter',
+      tech: 'Python Flask 3.x &bull; python-docx &bull; 127.0.0.1',
       latency: 'Localhost REST Protocol',
-      summary: 'Local service bound to 127.0.0.1 handling entity operations, tabular data ingestion, automated tools, and gateway dispatch.',
+      summary: 'Local service bound to 127.0.0.1 handling entity operations, Word DOCX generation, tabular data ingestion, and gateway dispatch.',
       specs: [
         'Bound strictly to 127.0.0.1 (rejects external network connections)',
+        'Document Exporter (POST /api/export/docx) generating styled Word files in-memory',
         'Data Studio Engine (data_engine.py) with openpyxl, CSV, and JSON parsing',
         'Automated tools: /breakdown, /summarize, and guarded /data analytical synthesis',
-        'Origin & Sec-Fetch-Site security validation checks on REST endpoints',
       ],
     },
     {
@@ -457,7 +501,7 @@ export const siteConfig = {
       latency: 'Local SSD Operations',
       summary: 'Separates operational relational records, volatile AI context, and materialized business datasets.',
       specs: [
-        'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6: data_sources, dashboards, widgets)',
+        'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6: tasks, data_sources, dashboards, widgets)',
         'Analytics DB: %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db (Materialized tabular data)',
         'AI Context DB: %LOCALAPPDATA%\\AIContextTool\\ai_context.db (FTS5 BM25 index & tool_runs)',
         'Safe read-only URI mode file:... ?mode=ro with 5-layer SQL sandbox defense',
@@ -465,15 +509,15 @@ export const siteConfig = {
     },
     {
       id: 'ai',
-      title: 'Tier 4: Hybrid LLM & Guarded Context Gateway',
+      title: 'Tier 4: Hybrid LLM & 5-Template Document Scaffolder',
       tech: 'Local Ollama &bull; Optional Gemini API &bull; 8,192 Budget',
       latency: 'Local or Cloud Dispatch',
-      summary: 'Routes prompts to local offline models or optional cloud APIs with dataset schema grounding without raw data leaks.',
+      summary: 'Routes prompts to local offline models or optional cloud APIs with dataset schema grounding and document scaffolding.',
       specs: [
         'Detects running Ollama models on localhost:11434 (e.g. Llama 3.2, Mistral, Gemma 2)',
+        'Document Generator: scaffolds PRDs, Architecture Specs, Story Breakdowns, and KPI Plans',
         'Guarded AI context: injects dataset schemas and KPI values without leaking PII or raw rows',
         'Expanded 8,192 max output token budget across all providers',
-        'Local key encryption at rest using PBKDF2 and authenticated keystream',
       ],
     },
   ],
@@ -482,6 +526,16 @@ export const siteConfig = {
   // 13. PRIVACY & SAAS COMPARISON MATRIX
   // ==========================================
   comparisonRows: [
+    {
+      feature: 'PM Document Generation & Templates',
+      pmtool: 'Built-in 1-click Document Generator with 5 structured PM templates (PRD, Tech Spec, Breakdown, KPI Plan, Brief)',
+      cloud: 'Fragmented across Notion AI, Google Docs, Confluence AI, or separate paid add-on plugins',
+    },
+    {
+      feature: 'Document Export & Formatting',
+      pmtool: '1-click Microsoft Word (.docx) with custom headers & metadata tables, plus clean Markdown (.md)',
+      cloud: 'Export often locks into proprietary cloud canvases or strips formatting during PDF export',
+    },
     {
       feature: 'Data & Dashboard Storage Location',
       pmtool: 'Local storage inside Windows AppData (%LOCALAPPDATA%\\PMTool & datasets\\analytics_store.db)',
@@ -518,11 +572,6 @@ export const siteConfig = {
       cloud: 'Cloud-based AI features send prompt data to external providers based on vendor terms',
     },
     {
-      feature: 'Network Availability & Offline Use',
-      pmtool: 'Supported workflows operate offline when using local Ollama models',
-      cloud: 'Cloud-hosted workflows generally depend on active network connectivity',
-    },
-    {
       feature: 'Application Updates',
       pmtool: 'Transparent GitHub Releases auto-updating with delta blockmaps via electron-updater',
       cloud: 'Silent continuous cloud deployments without user version control',
@@ -535,15 +584,15 @@ export const siteConfig = {
   designTenets: [
     {
       title: 'Eliminate Context Switching',
-      desc: 'Fragmenting product context across spreadsheets, analytics tools, browser tabs, and separate task managers increases cognitive friction. PM Tool unifies datasets, documents, PRDs, story breakdown, and sprint boards in a single desktop frame.',
+      desc: 'Fragmenting product context across spreadsheets, analytics tools, browser tabs, separate document editors, and task managers increases cognitive friction. PM Tool unifies document generation, datasets, PRDs, story breakdown, and sprint boards in a single desktop frame.',
     },
     {
       title: 'Useful Complexity Over Shallow Simplicity',
-      desc: 'Simplified to-do apps often hide necessary planning and analytical controls. We believe professional product software should be information-dense, keyboard-friendly, and oriented toward real data-informed agile execution.',
+      desc: 'Simplified to-do apps often hide necessary planning, document scaffolding, and analytical controls. We believe professional product software should be information-dense, keyboard-friendly, and oriented toward real data-informed agile execution.',
     },
     {
       title: 'Local Control as a Foundational Default',
-      desc: 'Your strategic roadmaps, draft requirements, business metrics, and sprint tickets should remain under your control by default. Core indexing, analytics storage, and backlog management run locally without mandatory remote accounts.',
+      desc: 'Your strategic roadmaps, draft requirements, executive briefs, business metrics, and sprint tickets should remain under your control by default. Core indexing, analytics storage, and backlog management run locally without mandatory remote accounts.',
     },
     {
       title: 'Sovereign Aesthetic Craft',
@@ -556,8 +605,29 @@ export const siteConfig = {
   // ==========================================
   releases: [
     {
-      version: 'v1.4.0',
+      version: 'v1.5.0',
       badge: 'CURRENT STABLE RELEASE',
+      title: 'AI PM Document Generator, Multi-Format Export Subsystem & Zero-Crash Resilience',
+      tagline: '5 executive PM templates, Word (.docx) & Markdown export, action toolbar, and hardened markdown rendering.',
+      date: 'Oct 2026',
+      decisionRationale:
+        'Empowering product managers to go from conversation to publication-grade deliverables seamlessly. Introduced an interactive 1-click Document Generator modal scaffolding 5 structured templates, native Microsoft Word (.docx) export with custom metadata tables, clean Markdown (.md) download, quick action toolbars under all responses (including 1-click "Save to Docs" and "Decompose"), and zero-crash markdown regex hardening with shell ErrorBoundary.',
+      highlights: [
+        'AI Workspace PM Document Generator (DocumentGeneratorModal.tsx) accessible via "+ Generate Document"',
+        'Scaffolds 5 executive-ready templates: PRD, Technical Architecture Spec, Agile Story Breakdown, Product Strategy & KPI Plan, and Executive Brief',
+        'Configurable contextual inputs: Title, Project Scope, Analytical Focus directive, Requirements Context, and Technical Stack constraints',
+        'Multi-Format Export Subsystem (POST /api/export/docx with python-docx) with custom margins, metadata tables, code blocks, and styled headers',
+        'Clean Markdown Export (POST /api/export/markdown) for direct wiki and git documentation synchronization',
+        'Assistant Response Quick Action Toolbar under every message: Copy Markdown, Word DOCX, Markdown file, Save to Docs, and Decompose to Kanban',
+        '1-Click "Save to Docs" immediately indexes generated documents into project Knowledge Base and SQLite FTS5 for grounded RAG',
+        'Zero-Crash Resilience: non-capturing group regex conversion in MarkdownContent.tsx preventing undefined match exceptions',
+        'Dark Carbon ErrorBoundary (ErrorBoundary.tsx) in application shell guaranteeing desktop stability against transient rendering errors',
+      ],
+      isCurrent: true,
+    },
+    {
+      version: 'v1.4.0',
+      badge: 'SHIPPED',
       title: 'Data Studio, Business Dashboards & Safe Read-Only SQL Sandbox',
       tagline: 'Excel/CSV tabular ingestion, pure SVG KPI charts, and guarded AI grounding.',
       date: 'Oct 2026',
@@ -574,7 +644,7 @@ export const siteConfig = {
         'Dedicated /data slash command in chat input for executive analytical briefs and KPI health checks',
         'Database Schema Migration v6 (db.py) adding data_sources, dashboards, and dashboard_widgets tables',
       ],
-      isCurrent: true,
+      isCurrent: false,
     },
     {
       version: 'v1.3.0',
