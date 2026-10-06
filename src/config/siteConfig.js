@@ -1,23 +1,22 @@
 /**
  * PM Tool — Central Site & Release Configuration
  * 
- * Accurately reflects the actual state of the application (v1.5.0):
+ * Accurately reflects the current release state of the application (v2.0.1):
+ * - Desktop SPA Modernization & Zero-Iframe Architecture (React 19 + TypeScript + Tailwind inside Electron)
+ * - Global Spotlight Command Palette (CommandPalette.tsx: Ctrl+K / Cmd+K fuzzy overlay)
+ * - Universal Keyboard Shortcuts Engine (App.tsx: Ctrl+K, Ctrl+B, Ctrl+1–6, ESC)
+ * - Interactive KPI Dashboard Lifecycle (AddWidgetModal.tsx: full CRUD for kpi_card, bar_chart, donut_chart)
+ * - Native SQLite File Ingestion (.db, .sqlite, .sqlite3 via streaming file-copy & PRAGMA validation)
+ * - App-Themed Dataset Deletion Modal (DeleteDatasetModal.tsx with dark carbon aesthetic)
+ * - Polymorphic Row Rendering in StudioView (supporting array-shaped and object-shaped SQL result sets)
+ * - Story Decomposer Gateway Signature Resilience (tools/story_decomposer.py call_llm fix)
+ * - Automated 60-Minute Silent Background Updates (electron-updater with live sidebar pulse indicator)
  * - AI Workspace PM Document Generator (DocumentGeneratorModal.tsx: 5 executive templates)
  * - Multi-Format Export Subsystem (POST /api/export/docx with python-docx & POST /api/export/markdown)
  * - Assistant Response Quick Action Toolbar (Copy, Word DOCX, Markdown, Save to Docs, Decompose)
- * - Zero-Crash Markdown Parser Hardening (non-capturing regex groups) & Shell Error Boundary (ErrorBoundary.tsx)
- * - Data Studio & Business Dashboard Engine (data_engine.py & /dashboard)
- * - Multi-Format Tabular Ingestion (.xlsx, .xls via openpyxl, .csv, .tsv, .json, .db)
- * - Isolated Local Materialization in %LOCALAPPDATA%\PMTool\datasets\analytics_store.db
- * - Custom User-Defined KPI Metrics & Pure SVG Responsive Charts (Bar, Donut, Tables)
  * - Safe Read-Only SQL Sandbox with 5-Layer Defense-in-Depth
- * - Guarded AI Contextual Grounding & /data Slash Command
- * - Database Schema Migration v6 (db.py: data_sources, dashboards, dashboard_widgets)
- * - Interactive Sprint Kanban Board with HTML5 drag-and-drop & Fibonacci points (v1.3.0)
- * - Automated PRD-to-Story Decomposer Tool (/breakdown & /api/tools/breakdown)
- * - RAG-Grounded AI Copilot with interactive slash command pill container & 8,192 token output
+ * - Interactive Sprint Kanban Board with HTML5 drag-and-drop & Fibonacci points
  * - Local-First Knowledge Base with SQLite FTS5 BM25 search & multi-format parsers
- * - In-App Auto-Updating via electron-updater & GitHub Releases pipeline
  * - Three-database local storage segregation (pmtool.db, ai_context.db, analytics_store.db)
  * - Dynamic cascading port collision resilience (5050 through 5065)
  */
@@ -28,22 +27,22 @@ export const siteConfig = {
   // ==========================================
   name: 'PM Tool',
   shortName: 'PmT',
-  tagline: 'Local-First Product Management Workspace & Document Studio',
+  tagline: 'Local-First Product Management Workspace & Desktop SPA',
   description:
-    'From organizational knowledge and tabular data to publication-grade product specifications. Scaffold executive PRDs and technical architecture specs in 1 click, export styled Microsoft Word (.docx) and Markdown files, query local datasets in a safe SQL sandbox, decompose requirements into testable Agile stories with Fibonacci points, and manage sprint backlogs — from one native Windows desktop workstation.',
+    'A zero-iframe React 19 desktop SPA that turns organizational knowledge and local data into publication-grade PM deliverables. Navigate instantly with a global Spotlight command palette (Ctrl+K), build interactive KPI metric dashboards with dynamic charts, ingest native SQLite databases and spreadsheets, scaffold executive PRDs in 1 click, export styled Microsoft Word (.docx) files, and decompose requirements into Agile sprint backlogs — from one native Windows desktop workstation.',
 
   // ==========================================
   // 2. ACTIVE VERSION & RELEASE METADATA
   // ==========================================
   release: {
-    version: 'v1.5.0',
-    versionFull: 'v1.5.0',
-    badge: 'v1.5.0 STABLE RELEASE',
+    version: 'v2.0.1',
+    versionFull: 'v2.0.1',
+    badge: 'v2.0.1 STABLE RELEASE',
     releaseDate: 'October 2026',
-    buildDate: '2026-10-05',
+    buildDate: '2026-10-06',
     channel: 'Stable Channel',
     platform: 'Windows 10/11 (64-bit)',
-    statusText: 'Local Runtime Initialized &bull; Document Generator & Export Engine',
+    statusText: 'Desktop SPA Active &bull; Spotlight Engine (Ctrl+K) &bull; Full KPI Widget Lifecycle',
     isAirGappedReady: false,
   },
 
@@ -52,19 +51,19 @@ export const siteConfig = {
   // ==========================================
   downloads: {
     installer: {
-      fileName: 'PM-Tool-Setup-1.5.0.exe',
+      fileName: 'PM-Tool-Setup-2.0.1.exe',
       label: 'Download NSIS Setup (.exe)',
-      size: '83.4 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.5.0/PM-Tool-Setup-1.5.0.exe',
+      size: '84.1 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.0.1/PM-Tool-Setup-2.0.1.exe',
       directDownload: true,
     },
     portable: {
-      fileName: 'PM-Tool-1.5.0.exe',
+      fileName: 'PM-Tool-2.0.1.exe',
       label: 'Portable Standalone (.exe)',
-      size: '76.8 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v1.5.0/PM-Tool-1.5.0.exe',
+      size: '77.5 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.0.1/PM-Tool-2.0.1.exe',
     },
-    sha256: 'f8d39a174c82b1928374e610d9275e9b8173426105849201948271049281a029',
+    sha256: '9d4f2a71c8b35e0246a18d9f52c1e7a30b49c71a68205417df890b2345e82109',
     gitCloneCommand: 'git clone https://github.com/Pranshul-Chopra/pm_tool.git',
     systemPrerequisites: [
       'Windows 10 / Windows 11 (64-bit)',
@@ -93,8 +92,8 @@ export const siteConfig = {
   // 5. NAVIGATION LINKS
   // ==========================================
   navLinks: [
-    { name: 'Document Studio', href: '#demo' },
-    { name: 'Data Studio', href: '#data-studio' },
+    { name: 'Spotlight (Ctrl+K)', href: '#demo' },
+    { name: 'KPI Studio', href: '#data-studio' },
     { name: 'Sprint Board', href: '#sprint-board' },
     { name: 'Features', href: '#features' },
     { name: 'Pipelines', href: '#pipelines' },
@@ -106,55 +105,54 @@ export const siteConfig = {
   // 6. HERO SECTION CONFIG
   // ==========================================
   hero: {
-    pillBadge: 'LOCAL-FIRST PRODUCT MANAGEMENT & DOCUMENT STUDIO &bull; V1.5.0',
+    pillBadge: 'DESKTOP SPA MODERNIZATION &bull; SPOTLIGHT COMMAND ENGINE &bull; V2.0.1',
     pillVersionTag: 'Windows 10/11 Native',
     headlineMain: 'From Organizational Knowledge & Data',
     headlineAccent: 'to Publication-Grade PM Deliverables.',
     headlineEnd: '',
     subtitle:
-      'Generate structured PRDs, technical architecture specs, and sprint breakdowns in 1 click. Export styled Microsoft Word (.docx) and Markdown files, analyze business spreadsheets in a safe SQL sandbox, and execute sprints on an interactive Kanban board — all within one native Windows desktop workstation.',
+      'Zero-iframe React 19 desktop SPA with global Spotlight command palette (Ctrl+K), interactive KPI Dashboard Studio with dynamic charts, native SQLite database ingestion, automated PRD-to-story decomposition, and Word (.docx) export — running entirely on local SQLite storage.',
     notice:
       'Core workflows operate offline with local models (Ollama) and local SQLite analytics. Optional cloud-model support (Gemini) is available when configured.',
     specsBadges: [
-      { text: 'AI PM Document Generator (5 Templates)', type: 'file' },
-      { text: 'Multi-Format Export (.docx & .md)', type: 'download' },
-      { text: 'Data Studio & Dashboards', type: 'chart' },
-      { text: 'Sprint Kanban & Story Breakdown', type: 'board' },
+      { text: 'Zero-Iframe React 19 SPA', type: 'cpu' },
+      { text: 'Spotlight Command Palette (Ctrl+K)', type: 'terminal' },
+      { text: 'Interactive KPI & Chart Studio', type: 'chart' },
+      { text: 'Native SQLite (.db) Ingestion', type: 'database' },
     ],
     // Desktop App Simulator Mockup
     simulator: {
-      windowTitle: 'PmT Desktop Shell',
-      workspaceTitle: 'Workspace: Core Platform v1.5.0',
+      windowTitle: 'PmT Desktop Shell (React 19 SPA)',
+      workspaceTitle: 'Workspace: Core Platform v2.0.1',
       backendHost: '127.0.0.1:5050 [Handshake OK]',
       activeModel: 'Ollama: llama3.2 (Local Mode)',
       localDbPath: '%LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6)',
-      dbStats: '5 PM Templates Active • 3 Datasets • Velocity: 74%',
-      shortcut: 'Actions: + Generate Document • Export DOCX • Decompose to Kanban',
+      dbStats: 'Spotlight Ctrl+K • 3 KPI Widgets • 4 Datasets • Velocity: 74%',
+      shortcut: 'Shortcuts: Ctrl+K Spotlight • Ctrl+B Sidebar • Ctrl+1–6 Switcher • + Add Widget',
     },
   },
 
   // ==========================================
-  // 7. TECH MARQUEE (Reflecting Real v1.5.0 Capabilities)
+  // 7. TECH MARQUEE (Reflecting Real v2.0.0 & v2.0.1 Capabilities)
   // ==========================================
   techMarquee: [
-    'AI PM DOCUMENT GENERATOR (5 EXECUTIVE TEMPLATES)',
+    'DESKTOP SPA MODERNIZATION (REACT 19 ZERO-IFRAME)',
+    'GLOBAL SPOTLIGHT COMMAND PALETTE (CTRL+K / CMD+K)',
+    'UNIVERSAL KEYBOARD SHORTCUTS (CTRL+1-6, CTRL+B, ESC)',
+    'INTERACTIVE KPI & CHART DASHBOARD BUILDER (ADDWIDGETMODAL)',
+    'NATIVE SQLITE (.DB, .SQLITE3) DATASET MATERIALIZATION',
+    'DARK CARBON DATASET DELETION MODAL (DELETEDATASETMODAL)',
+    'AI PM DOCUMENT GENERATOR (5 EXECUTIVE BLUEPRINTS)',
     '1-CLICK MICROSOFT WORD (.DOCX) & MARKDOWN EXPORT',
     'ASSISTANT RESPONSE ACTION TOOLBAR (SAVE TO DOCS & DECOMPOSE)',
-    'ZERO-CRASH RESILIENT ERROR BOUNDARIES',
-    'DATA STUDIO & BUSINESS DASHBOARDS (/DASHBOARD)',
-    'EXCEL (.XLSX) & CSV TABULAR INGESTION',
-    'SAFE READ-ONLY SQL SANDBOX (5-LAYER DEFENSE)',
-    'PURE SVG RESPONSIVE CHARTS & KPI CARDS',
-    'GUARDED AI CONTEXT GROUNDING (/DATA)',
+    'SAFE READ-ONLY SQL SANDBOX (5-LAYER DEFENSE-IN-DEPTH)',
+    'POLYMORPHIC ROW RENDERING (ARRAY & OBJECT SHAPED)',
     'INTERACTIVE SPRINT KANBAN (HTML5 DRAG & DROP)',
-    'PRD-TO-STORY DECOMPOSER TOOL (/BREAKDOWN)',
-    'FIBONACCI STORY ESTIMATION (1, 2, 3, 5, 8)',
-    'SQLITE FTS5 BM25 FULL-TEXT SEARCH',
-    '8,192 MAX OUTPUT TOKEN LLM BUDGET',
-    'ELECTRON-UPDATER BACKGROUND DELTA SYNC',
-    'THREE-DATABASE SEGREGATION (SCHEMA V6)',
+    'AUTOMATED PRD-TO-STORY DECOMPOSER (/BREAKDOWN)',
+    'SQLITE FTS5 BM25 FULL-TEXT SEARCH & CHUNK INSPECTOR',
+    'AUTOMATED 60-MIN SILENT BACKGROUND UPDATES (ELECTRON-UPDATER)',
     'DYNAMIC CASCADING PORT SHIELD (5050-5065)',
-    'NO MANDATORY CLOUD ACCOUNTS',
+    'ZERO MANDATORY CLOUD ACCOUNTS',
   ],
 
   // ==========================================
@@ -162,25 +160,41 @@ export const siteConfig = {
   // ==========================================
   showcaseModules: [
     {
-      id: 'doc-generator',
-      name: 'AI PM Document Generator',
-      tag: 'New in v1.5.0',
-      headline: 'Interactive 1-click scaffolding for 5 executive PM document templates.',
+      id: 'command-palette',
+      name: 'Spotlight Command Palette',
+      tag: 'Desktop Engine (v2.0.0)',
+      headline: 'Raycast/Linear-style Spotlight overlay with instant keyboard navigation (Ctrl+K).',
       description:
-        'Scaffold Product Requirement Documents (PRDs), Technical Architecture Specs, Agile Sprint Story Breakdowns, Strategy & KPI Plans, and Executive Briefs with configurable context inputs (scope, analytical focus, tech stack constraints). Includes styled Microsoft Word (.docx) export, clean Markdown (.md) download, and 1-click Knowledge Base ingestion ("Save to Docs").',
+        'Global command palette overlay accessible from anywhere via Ctrl+K or Cmd+K. Features fuzzy search across workstation views, live database projects, and productivity actions. Includes full keyboard navigation with Arrow keys (↑, ↓), Enter execution, Escape dismissal, and a titlebar trigger badge.',
+    },
+    {
+      id: 'kpi-studio',
+      name: 'Interactive KPI & Chart Studio',
+      tag: 'New in v2.0.1',
+      headline: 'Full metric & chart lifecycle with AddWidgetModal and live dataset evaluation.',
+      description:
+        'Create, customize, and delete live analytical cards and visual distribution charts directly linked to any materialized dataset. Supports KPI Cards (SUM, AVG, COUNT with milestone target variance badges like ▲ +12.5%), Bar Distribution Charts, and Donut Share Breakdown charts with in-place card deletion.',
     },
     {
       id: 'data-studio',
-      name: 'Data Studio & Dashboards',
-      tag: 'Analytics Engine (v1.4.0)',
-      headline: 'Multi-format tabular ingestion, responsive SVG charts, and safe SQL exploration.',
+      name: 'Tabular & SQLite Ingestion',
+      tag: 'Hardened in v2.0.1',
+      headline: 'Native SQLite database (.db, .sqlite3), Excel, CSV, and JSON materialization.',
       description:
-        'Ingest Excel (.xlsx, .xls via openpyxl), CSV, TSV, JSON, and SQLite files into local analytics_store.db. Configure custom KPI metrics (SUM, AVG, COUNT, MIN, MAX) with target comparisons, generate pure SVG Bar & Donut charts, and run analytical queries inside a sandboxed read-only SQL engine.',
+        'Directly ingest and materialize native SQLite databases alongside Excel (.xlsx, .xls via openpyxl), CSV, TSV, and JSON into %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db with polymorphic row rendering and a safe 5-layer read-only SQL sandbox.',
+    },
+    {
+      id: 'doc-generator',
+      name: 'AI PM Document Generator',
+      tag: 'Executive Blueprints',
+      headline: 'Interactive 1-click scaffolding for 5 executive PM document templates.',
+      description:
+        'Scaffold Product Requirement Documents (PRDs), Technical Architecture Specs, Agile Sprint Story Breakdowns, Strategy & KPI Plans, and Executive Briefs with configurable context inputs. Includes styled Word (.docx) export, clean Markdown (.md) download, and 1-click "Save to Docs" Knowledge Base ingestion.',
     },
     {
       id: 'sprint-kanban',
       name: 'Sprint Kanban Studio',
-      tag: 'Agile Execution (v1.3.0)',
+      tag: 'Agile Execution',
       headline: 'Interactive Sprint Kanban board with HTML5 drag-and-drop & Fibonacci estimation.',
       description:
         'Manage sprints across 4 workflow lanes: Backlog (todo), In Progress (in_progress), Blocked (blocked), and Completed (done). Features optimistic UI updates, background persistence via PATCH /api/tasks/:id, sprint velocity KPIs, and multi-field filtering by project and priority.',
@@ -194,28 +208,12 @@ export const siteConfig = {
         'The breakdown engine prompts the LLM Gateway with an 8,192 token budget to deconstruct PRDs into 4–8 discrete Agile user stories with Given/When/Then acceptance criteria, priority weights, and Fibonacci story points (1, 2, 3, 5, 8), saved straight to pmtool.db.',
     },
     {
-      id: 'ai-copilot',
-      name: 'RAG Copilot & Slash Studio',
-      tag: 'Reasoning Pipeline',
-      headline: 'Grounded drafting with interactive slash command pill containers and verified citations.',
-      description:
-        'Transform prompts into publication-grade PRDs with source references. Features interactive color-coded command pills (/data, /breakdown, /prd, /summarize, /plan, /metrics, /search), 8,192 max output tokens, and quick action toolbar (Word export, Markdown download, Save to Docs, Decompose to Kanban).',
-    },
-    {
-      id: 'knowledge-base',
-      name: 'Local Knowledge Base',
-      tag: 'FTS5 & BM25 Search',
-      headline: 'Multi-format document parsing with section-aware chunking and live test search.',
-      description:
-        'Parses local .pdf, .docx, .md, .txt, .csv, and .json files directly from your disk into local SQLite FTS5 BM25 index tables. Includes directory scanner, chunk inspector modal, and dual-scrollbar table with sticky headers.',
-    },
-    {
       id: 'auto-updater',
-      name: 'Auto-Updater & Resilient Shell',
-      tag: 'Desktop Infrastructure',
-      headline: 'Integrated electron-updater with GitHub Releases and cascading port handshake.',
+      name: 'Automated Silent Updates & Shell',
+      tag: 'Automated Lifecycle (v2.0.0)',
+      headline: 'Background silent updates every 60 minutes with live sidebar pulse indicator.',
       description:
-        'Background delta downloads via .blockmap differential updates with graceful Flask backend shutdown before installing. Features dynamic port collision resilience sweeping ports 5050 through 5065.',
+        'Electron-updater automatically polls GitHub Releases on launch and every 60 minutes in the background. Features a non-intrusive sidebar status indicator with pulse animation, 1-click restart toast notification, and cascading port collision protection (5050–5065).',
     },
   ],
 
@@ -224,6 +222,13 @@ export const siteConfig = {
   // ==========================================
   philosophy: [
     {
+      title: 'Zero-Iframe Desktop SPA',
+      subtitle: 'Native hardware-accelerated desktop performance.',
+      description:
+        'The desktop client runs as a unified React 19 + TypeScript single-DOM SPA inside Electron. No sluggish iframes, no template rendering bottlenecks, and instant view transitions between workstation modules.',
+      badge: 'React 19 SPA',
+    },
+    {
       title: 'Local-First Architecture',
       subtitle: 'Your computer is the primary system of record.',
       description:
@@ -231,25 +236,18 @@ export const siteConfig = {
       badge: 'SQLite WAL Mode',
     },
     {
+      title: 'Keyboard-Driven Speed',
+      subtitle: 'Global Spotlight & Universal Shortcuts.',
+      description:
+        'Navigate the entire workstation without leaving your keyboard: Ctrl+K / Cmd+K Spotlight overlay, Ctrl+B sidebar toggle, and Ctrl+1 through Ctrl+6 direct view switching across Workspace, Board, Data Studio, Knowledge, and Copilot.',
+      badge: 'Ctrl+K Spotlight',
+    },
+    {
       title: 'No Per-Seat Subscription Tax',
       subtitle: 'Open, self-contained desktop tooling.',
       description:
-        'Traditional product SaaS requires recurring monthly seat licenses to view or edit project requirements, export Word documents, and build dashboards. PM Tool is an open-source desktop tool with no mandatory per-seat subscription fees.',
+        'Traditional product SaaS requires recurring monthly seat licenses to view or edit project requirements, export Word documents, and build dashboards. PM Tool is an open desktop tool with no mandatory per-seat subscription fees.',
       badge: '$0 Tooling License',
-    },
-    {
-      title: 'Offline-Capable with Local Models',
-      subtitle: 'Complete workflows without internet connectivity.',
-      description:
-        'When using local inference via Ollama, document generation, ranked search, PRD drafting, story breakdown, and analytical summaries execute on-device without sending data across external networks.',
-      badge: 'Local Ollama Mode',
-    },
-    {
-      title: 'Designed for Responsive Local Retrieval',
-      subtitle: 'SQLite FTS5 & SQLite Analytics on local SSD storage.',
-      description:
-        'Queries against the local SQLite FTS5 index and analytics_store.db execute directly on your hardware without network latency. Query thousands of dataset rows or search document passages without waiting on cloud server roundtrips.',
-      badge: 'On-Device SQLite',
     },
   ],
 
@@ -258,15 +256,88 @@ export const siteConfig = {
   // ==========================================
   featureCategories: [
     { id: 'all', label: 'All Capabilities' },
-    { id: 'docs', label: 'Doc Generator & Export (v1.5)' },
-    { id: 'data', label: 'Data Studio & BI' },
+    { id: 'spa', label: 'SPA & Command Engine (v2.0)' },
+    { id: 'data', label: 'KPI Studio & SQLite (v2.0.1)' },
+    { id: 'docs', label: 'Doc Generator & Export' },
     { id: 'agile', label: 'Sprint & Agile Board' },
     { id: 'tools', label: 'Automated PM Tools' },
     { id: 'knowledge', label: 'Knowledge Base & RAG' },
     { id: 'architecture', label: 'Architecture & Storage' },
-    { id: 'security', label: 'Security & Updates' },
+    { id: 'security', label: 'Security & Auto-Updates' },
   ],
   features: [
+    {
+      id: 'desktop-spa-engine',
+      category: 'spa',
+      title: 'Desktop SPA Modernization (React 19)',
+      tagline: 'Zero-iframe unified single-DOM client inside Electron.',
+      description:
+        'Migrated the entire desktop workstation to React 19 + TypeScript + Tailwind CSS. Decommissioned legacy Jinja2 template bundling from flask.spec, eliminating iframe latencies and enabling instant hardware-accelerated module transitions.',
+      highlight: 'React 19 SPA (v2.0)',
+    },
+    {
+      id: 'spotlight-palette',
+      category: 'spa',
+      title: 'Global Spotlight Command Palette',
+      tagline: 'Raycast/Linear-style overlay triggered via Ctrl+K / Cmd+K.',
+      description:
+        'Keyboard-first command engine with fuzzy search across workstation views, live projects, and productivity actions. Supports keyboard navigation (↑, ↓), Enter execution, Escape dismissal, and titlebar trigger badge.',
+      highlight: 'Spotlight Ctrl+K (v2.0)',
+    },
+    {
+      id: 'universal-shortcuts',
+      category: 'spa',
+      title: 'Universal Keyboard Shortcuts Engine',
+      tagline: 'Global application keybindings in App.tsx.',
+      description:
+        'Instant navigation bindings: Ctrl+K for Spotlight overlay, Ctrl+B to toggle sidebar, Ctrl+1 through Ctrl+6 for direct module switching (Workspace, Board, Data Studio, Knowledge Base, AI Copilot, Settings), and ESC for clean modal dismissal.',
+      highlight: 'Universal Keybindings',
+    },
+    {
+      id: 'kpi-widget-crud',
+      category: 'data',
+      title: 'Interactive KPI & Chart Studio (AddWidgetModal)',
+      tagline: 'Full CRUD lifecycle for KPI cards, bar charts, and donut charts.',
+      description:
+        'Create live analytical cards and visual distribution charts directly linked to any materialized dataset. Includes KPI Cards with aggregation operations (SUM, AVG, COUNT) and milestone target variance badges (▲ +12.5%), dynamic Bar charts, Donut breakdown charts, and in-place card deletion.',
+      highlight: 'KPI Studio (v2.0.1)',
+    },
+    {
+      id: 'sqlite-native-ingest',
+      category: 'data',
+      title: 'Native SQLite Database Ingestion',
+      tagline: 'Seamlessly materialize .db, .sqlite, and .sqlite3 files.',
+      description:
+        'Extends dataset ingestion to directly materialize native SQLite databases alongside Excel (.xlsx, .xls), CSV, TSV, and JSON formats into %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db with streaming file-copy and PRAGMA table discovery.',
+      highlight: 'SQLite Ingest (v2.0.1)',
+    },
+    {
+      id: 'deletedataset-modal',
+      category: 'data',
+      title: 'Dark Carbon Dataset Deletion Modal',
+      tagline: 'App-themed dialog replacing native window.confirm.',
+      description:
+        'Unified dataset deletion with the application’s dark carbon modal design (DeleteDatasetModal.tsx), providing table name inspection, row count verification, safety warnings for dropped tables, and smooth transitions.',
+      highlight: 'Modal Deletion (v2.0.1)',
+    },
+    {
+      id: 'polymorphic-row-render',
+      category: 'data',
+      title: 'Polymorphic Row Rendering Engine',
+      tagline: 'Handles array-shaped and object-shaped SQL result sets.',
+      description:
+        'Hardened table grid rendering in StudioView.tsx to polymorphically render both array-shaped and object-shaped SQL query result records without frontend mapping exceptions.',
+      highlight: 'Polymorphic Grid',
+    },
+    {
+      id: 'story-decomposer-fix',
+      category: 'tools',
+      title: 'Resilient PRD-to-Story Decomposer',
+      tagline: 'Aligned LLM Gateway signatures for 1-click sprint decomposition.',
+      description:
+        'Resolved gateway parameter mismatch in tools/story_decomposer.py, restoring deterministic 1-click generation of 4–8 discrete Agile user stories with Given/When/Then acceptance criteria and Fibonacci points (1, 2, 3, 5, 8).',
+      highlight: 'Decomposer (v2.0.1)',
+    },
     {
       id: 'pm-doc-generator',
       category: 'docs',
@@ -274,7 +345,7 @@ export const siteConfig = {
       tagline: '1-click scaffolding for 5 executive PM document templates.',
       description:
         'Scaffold PRDs, Technical Architecture Specs, Agile Sprint Breakdowns, Product Strategy & KPI Plans, and Executive Briefs with configurable scope, analytical focus, and technical stack inputs directly from the workspace header.',
-      highlight: 'Doc Generator (v1.5)',
+      highlight: 'Doc Generator (5 Templates)',
     },
     {
       id: 'multi-export-docx-md',
@@ -295,22 +366,13 @@ export const siteConfig = {
       highlight: 'Action Toolbar',
     },
     {
-      id: 'zero-crash-hardening',
+      id: 'silent-updater',
       category: 'security',
-      title: 'Zero-Crash Resilience & Shell Error Boundaries',
-      tagline: 'Defensive markdown parser regex & ErrorBoundary protection.',
+      title: 'Automated 60-Minute Silent Background Updates',
+      tagline: 'Continuous update lifecycle via electron-updater.',
       description:
-        'Hardened inline regex patterns in MarkdownContent.tsx with non-capturing groups preventing tokenization exceptions. Integrated Dark Carbon ErrorBoundary in the application shell guaranteeing uninterrupted desktop stability.',
-      highlight: 'Zero-Crash Guard',
-    },
-    {
-      id: 'data-studio-engine',
-      category: 'data',
-      title: 'Data Studio & Business Dashboards',
-      tagline: 'Multi-format tabular ingestion and pure SVG responsive charts.',
-      description:
-        'Direct ingestion of Excel (.xlsx, .xls via openpyxl), CSV, TSV, and JSON. Configurable KPI summary cards with aggregation functions (COUNT, SUM, AVG, MIN, MAX), target comparisons, trend badges, and currency/percentage formatting.',
-      highlight: 'Data Studio',
+        'Replaced manual checks with automated background polling on launch and every 60 minutes. Non-intrusive live status indicator in Sidebar displays v2.0.1 with pulse animation, presenting UpdaterToast with 1-click "Restart Now" on download.',
+      highlight: 'Silent Updater (60m)',
     },
     {
       id: 'sql-sandbox-safety',
@@ -322,15 +384,6 @@ export const siteConfig = {
       highlight: 'Read-Only Sandbox',
     },
     {
-      id: 'guarded-ai-data',
-      category: 'data',
-      title: 'Guarded AI Grounding & /data Command',
-      tagline: 'Copilot data intelligence with zero raw data or PII leakage.',
-      description:
-        'LLM system prompt dynamically receives structured schemas (table names, row counts, column types, sample distributions) and live dashboard KPI values. The /data slash command produces instant executive analytical briefs.',
-      highlight: '/data Command',
-    },
-    {
       id: 'sprint-kanban-board',
       category: 'agile',
       title: 'Sprint Kanban Studio with Drag & Drop',
@@ -338,33 +391,6 @@ export const siteConfig = {
       description:
         'Native HTML5 drag-and-drop board with optimistic UI updates and background persistence via PATCH /api/tasks/:id. Tracks sprint velocity (% Done), active blockers, and Fibonacci story point totals.',
       highlight: 'Interactive Board',
-    },
-    {
-      id: 'story-breakdown-tool',
-      category: 'tools',
-      title: 'Automated PRD-to-Story Decomposer',
-      tagline: 'Turns PRDs into testable Agile user stories via /breakdown.',
-      description:
-        'The breakdown engine prompts the LLM Gateway with an 8,192 token output budget to generate 4–8 discrete Agile user stories with Given/When/Then acceptance criteria and Fibonacci points (1, 2, 3, 5, 8).',
-      highlight: '/breakdown Tool',
-    },
-    {
-      id: 'doc-summarizer-tool',
-      category: 'tools',
-      title: 'Deterministic Document Summarizer',
-      tagline: 'Structured executive briefs with 30,000 word source budget.',
-      description:
-        'Extracts executive summaries, architectural constraints, and action items with ISO metadata frontmatter and SHA256 integrity verification. Logs execution telemetry into ai_context.db.',
-      highlight: '/summarize Tool',
-    },
-    {
-      id: 'command-pills',
-      category: 'tools',
-      title: 'Interactive Slash Command Pill Container',
-      tagline: 'Button-like colored badge container inside chat input.',
-      description:
-        'Selecting a command transforms it into an interactive glowing badge container before the textarea: /data (amber), /breakdown (amber), /prd (purple), /summarize (purple), /search (cyan), /plan (amber), /chat (blue).',
-      highlight: 'Slash Studio',
     },
     {
       id: 'dual-db-v6',
@@ -385,24 +411,6 @@ export const siteConfig = {
       highlight: 'FTS5 BM25 Engine',
     },
     {
-      id: 'parsers-dual-scroll',
-      category: 'knowledge',
-      title: 'Multi-Format File Ingestors & Dual Scrollbars',
-      tagline: 'Local parsing for PDF, DOCX, Markdown, Text, CSV, and JSON.',
-      description:
-        'Local parsers extract text content and heading structures. Knowledge table features sticky headers and dual scrollbars (horizontal & vertical) preventing squash on compact displays.',
-      highlight: 'Local Parsers',
-    },
-    {
-      id: 'electron-updater-pipe',
-      category: 'security',
-      title: 'In-App Auto-Updating via GitHub Releases',
-      tagline: 'Automated background delta downloads via electron-updater.',
-      description:
-        'Checks for updates on launch and every 4 hours. Downloads .blockmap delta diffs, shows real-time progress toasts, and gracefully terminates Flask backend before restart.',
-      highlight: 'electron-updater',
-    },
-    {
       id: 'port-collision-shield',
       category: 'architecture',
       title: 'Dynamic Cascading Port Collision Resilience',
@@ -420,45 +428,45 @@ export const siteConfig = {
     {
       step: '01',
       name: 'Connect Data & Docs',
-      headline: 'Scan & Ingest Documents & Tabular Spreadsheets',
+      headline: 'Ingest SQLite DBs, Spreadsheets & Specifications',
       description:
-        'Connect local PDF specifications, Word roadmaps, Markdown notes, Excel spreadsheets (.xlsx), and CSV datasets on-device without cloud uploads.',
-      example: 'Supported: .xlsx, .csv, .json, .pdf, .docx, .md, .txt formats.',
+        'Connect local SQLite files (.db, .sqlite3), Excel spreadsheets (.xlsx), CSV datasets, PDF specifications, and Word roadmaps on-device without cloud uploads.',
+      example: 'Supported: .sqlite, .db, .xlsx, .csv, .json, .pdf, .docx, .md formats.',
       connector: 'feeds into local FTS5 index & analytics_store.db',
     },
     {
       step: '02',
-      name: 'On-Device Analytics',
-      headline: 'Ranked BM25 Search & Safe SQL Sandbox',
+      name: 'KPI Studio & Analytics',
+      headline: 'Build Live KPI Widgets & Explore in SQL Sandbox',
       description:
-        'Retrieve document passages with SQLite FTS5 BM25 and query business datasets using the sandboxed read-only SQL console with 5-layer safety.',
-      example: 'Indexed in %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db.',
-      connector: 'powers evidence & metric grounding for AI synthesis',
+        'Add live KPI metric cards and categorical distribution charts via AddWidgetModal, and query datasets in the 5-layer defended read-only SQL sandbox.',
+      example: 'Evaluated live against %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db.',
+      connector: 'grounds roadmaps and AI synthesis in verified metrics',
     },
     {
       step: '03',
-      name: 'Scaffold & Draft',
-      headline: '1-Click PM Document Generator & Live Synthesis',
+      name: 'Spotlight Navigation',
+      headline: 'Jump Across Workstation Instantly via Ctrl+K',
       description:
-        'Use the + Generate Document modal to scaffold PRDs, Tech Specs, or Strategy Plans grounded in retrieved evidence and live KPI metrics.',
-      example: 'Scaffolds 5 templates with customizable analytical directives.',
-      connector: 'generates executive specifications ready for export',
+        'Use the Spotlight Command Palette (Ctrl+K / Cmd+K) to switch views, search projects, or execute actions with fuzzy keyboard matching.',
+      example: 'Keybindings: Ctrl+K (Spotlight), Ctrl+B (Sidebar), Ctrl+1–6 (Modules).',
+      connector: 'eliminates mouse friction and context switching',
     },
     {
       step: '04',
-      name: 'Export & Decompose',
-      headline: 'Export Word (.docx) or Decompose to Agile Stories',
+      name: 'Scaffold & Export',
+      headline: '1-Click PM Document Generator & Word (.docx) Export',
       description:
-        'Export styled Word documents with 1-click or trigger instant decomposition into 4–8 discrete Agile user stories with Fibonacci points via the action toolbar.',
+        'Scaffold PRDs or Architecture Specs grounded in retrieved evidence. Export styled Word documents or clean Markdown with 1-click.',
       example: 'Quick Action Toolbar: Copy, Word DOCX, Save to Docs, Decompose.',
-      connector: 'saves directly to local SQLite database',
+      connector: 'transfers specs straight to sprint backlog',
     },
     {
       step: '05',
       name: 'Sprint Execution',
-      headline: 'Track & Drag on Sprint Kanban Board',
+      headline: 'Execute Backlog on Interactive Kanban Board',
       description:
-        'Execute sprints on the interactive Kanban board. Drag tasks across Backlog, In Progress, Blocked, and Completed lanes with real-time velocity metrics.',
+        'Decompose PRDs into Fibonacci-weighted user stories and drag tasks across Backlog, In Progress, Blocked, and Completed lanes with real-time velocity metrics.',
       example: 'Optimistic UI updates saved immediately to pmtool.db via PATCH /api/tasks/:id.',
       connector: 'completes the end-to-end data-driven execution loop',
     },
@@ -470,15 +478,16 @@ export const siteConfig = {
   architectureLayers: [
     {
       id: 'shell',
-      title: 'Tier 1: Desktop Shell & Resilient Error Boundary',
-      tech: 'Electron 44 &bull; Chromium &bull; ErrorBoundary.tsx',
-      latency: 'Native Desktop Shell',
-      summary: 'Manages windowing, cascading port discovery (5050-5065), background delta updates, and dark carbon ErrorBoundary crash resilience.',
+      title: 'Tier 1: Desktop SPA Shell & Spotlight Command Engine',
+      tech: 'Electron 44 &bull; React 19 SPA &bull; TypeScript &bull; CommandPalette.tsx',
+      latency: 'Zero-Iframe Single-DOM',
+      summary: 'Single-DOM React 19 desktop client with Spotlight Command Palette (Ctrl+K), universal keyboard shortcuts (Ctrl+1–6, Ctrl+B), automated 60-min background updates, and Dark Carbon ErrorBoundary crash resilience.',
       specs: [
-        'Port discovery: sweeps ports 5050 to 5065 dynamically on startup',
-        'electron-updater: background delta updates from GitHub Releases',
-        'ErrorBoundary: catches rendering exceptions preventing desktop unmounts',
-        'Graceful Flask backend termination on window close to release SQLite locks',
+        'Zero-iframe architecture: React 19 single-DOM eliminating legacy Jinja2 template latency',
+        'Spotlight Command Palette (Ctrl+K / Cmd+K): fuzzy search across views, projects, and actions',
+        'Universal shortcuts: Ctrl+1–6 direct view switcher, Ctrl+B sidebar toggle, ESC modal dismissal',
+        'electron-updater: automated 60-min silent background polling with live sidebar pulse indicator',
+        'Dark Carbon ErrorBoundary guaranteeing uninterrupted desktop shell stability',
       ],
     },
     {
@@ -486,11 +495,11 @@ export const siteConfig = {
       title: 'Tier 2: Localhost Micro-Backend & Document Exporter',
       tech: 'Python Flask 3.x &bull; python-docx &bull; 127.0.0.1',
       latency: 'Localhost REST Protocol',
-      summary: 'Local service bound to 127.0.0.1 handling entity operations, Word DOCX generation, tabular data ingestion, and gateway dispatch.',
+      summary: 'Local service bound to 127.0.0.1 handling entity operations, Word DOCX generation, tabular & native SQLite data ingestion, and gateway dispatch.',
       specs: [
         'Bound strictly to 127.0.0.1 (rejects external network connections)',
         'Document Exporter (POST /api/export/docx) generating styled Word files in-memory',
-        'Data Studio Engine (data_engine.py) with openpyxl, CSV, and JSON parsing',
+        'Data Studio Engine (data_engine.py) with openpyxl, native SQLite streaming copy, and CSV parsing',
         'Automated tools: /breakdown, /summarize, and guarded /data analytical synthesis',
       ],
     },
@@ -502,7 +511,7 @@ export const siteConfig = {
       summary: 'Separates operational relational records, volatile AI context, and materialized business datasets.',
       specs: [
         'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6: tasks, data_sources, dashboards, widgets)',
-        'Analytics DB: %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db (Materialized tabular data)',
+        'Analytics DB: %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db (Materialized tabular & SQLite data)',
         'AI Context DB: %LOCALAPPDATA%\\AIContextTool\\ai_context.db (FTS5 BM25 index & tool_runs)',
         'Safe read-only URI mode file:... ?mode=ro with 5-layer SQL sandbox defense',
       ],
@@ -527,6 +536,26 @@ export const siteConfig = {
   // ==========================================
   comparisonRows: [
     {
+      feature: 'Desktop Architecture & Speed',
+      pmtool: 'Zero-iframe React 19 SPA inside Electron with instant hardware-accelerated transitions',
+      cloud: 'Heavy web browser apps or multi-iframe wrappers with network rendering lag',
+    },
+    {
+      feature: 'Keyboard Navigation & Spotlight',
+      pmtool: 'Built-in Spotlight Command Palette (Ctrl+K) & universal keybindings (Ctrl+1–6, Ctrl+B)',
+      cloud: 'Inconsistent shortcuts across multiple SaaS tools, browser tab hopping',
+    },
+    {
+      feature: 'KPI Metric & Chart Studio',
+      pmtool: 'Interactive AddWidgetModal: KPI Cards (with milestone variance badges), Bar & Donut charts',
+      cloud: 'Requires separate BI subscriptions (Tableau, PowerBI Cloud, Mixpanel, Datadog)',
+    },
+    {
+      feature: 'Database & Dataset Ingestion',
+      pmtool: 'Native SQLite (.db, .sqlite3), Excel (.xlsx), CSV, and JSON into isolated local store',
+      cloud: 'Requires uploading company data to remote cloud warehouses or SaaS storage',
+    },
+    {
       feature: 'PM Document Generation & Templates',
       pmtool: 'Built-in 1-click Document Generator with 5 structured PM templates (PRD, Tech Spec, Breakdown, KPI Plan, Brief)',
       cloud: 'Fragmented across Notion AI, Google Docs, Confluence AI, or separate paid add-on plugins',
@@ -540,11 +569,6 @@ export const siteConfig = {
       feature: 'Data & Dashboard Storage Location',
       pmtool: 'Local storage inside Windows AppData (%LOCALAPPDATA%\\PMTool & datasets\\analytics_store.db)',
       cloud: 'Cloud-hosted multi-tenant infrastructure managed by vendor',
-    },
-    {
-      feature: 'Business Spreadsheet Ingestion',
-      pmtool: 'Direct local ingestion of Excel (.xlsx) and CSV into isolated local SQLite store',
-      cloud: 'Spreadsheets uploaded to cloud BI servers (e.g. Tableau/PowerBI cloud, Jira SaaS)',
     },
     {
       feature: 'SQL Data Exploration',
@@ -573,7 +597,7 @@ export const siteConfig = {
     },
     {
       feature: 'Application Updates',
-      pmtool: 'Transparent GitHub Releases auto-updating with delta blockmaps via electron-updater',
+      pmtool: 'Automated 60-min silent background checks with delta blockmaps via electron-updater',
       cloud: 'Silent continuous cloud deployments without user version control',
     },
   ],
@@ -583,20 +607,20 @@ export const siteConfig = {
   // ==========================================
   designTenets: [
     {
-      title: 'Eliminate Context Switching',
-      desc: 'Fragmenting product context across spreadsheets, analytics tools, browser tabs, separate document editors, and task managers increases cognitive friction. PM Tool unifies document generation, datasets, PRDs, story breakdown, and sprint boards in a single desktop frame.',
+      title: 'Zero-Iframe SPA Speed',
+      desc: 'Desktop applications should feel instantaneous. Migrating to a single-DOM React 19 architecture eliminated iframe barriers, rendering complex dashboards, Kanban boards, and document editors with fluid 60fps transitions.',
     },
     {
-      title: 'Useful Complexity Over Shallow Simplicity',
-      desc: 'Simplified to-do apps often hide necessary planning, document scaffolding, and analytical controls. We believe professional product software should be information-dense, keyboard-friendly, and oriented toward real data-informed agile execution.',
+      title: 'Eliminate Context Switching',
+      desc: 'Fragmenting product context across spreadsheets, analytics tools, browser tabs, separate document editors, and task managers increases cognitive friction. PM Tool unifies Spotlight search, datasets, PRDs, story breakdown, and sprint boards in a single frame.',
+    },
+    {
+      title: 'Keyboard First, Always',
+      desc: 'High-output product leaders think in keystrokes. With Ctrl+K Spotlight command palette, Ctrl+B sidebar toggle, and Ctrl+1 through Ctrl+6 direct view switching, you command the entire workspace without touching the mouse.',
     },
     {
       title: 'Local Control as a Foundational Default',
       desc: 'Your strategic roadmaps, draft requirements, executive briefs, business metrics, and sprint tickets should remain under your control by default. Core indexing, analytics storage, and backlog management run locally without mandatory remote accounts.',
-    },
-    {
-      title: 'Sovereign Aesthetic Craft',
-      desc: 'Software used daily should respect your focus. Obsidian and charcoal palettes, high-density layouts, pure SVG charts, and responsive micro-interactions preserve flow and reduce visual strain.',
     },
   ],
 
@@ -605,8 +629,47 @@ export const siteConfig = {
   // ==========================================
   releases: [
     {
-      version: 'v1.5.0',
+      version: 'v2.0.1',
       badge: 'CURRENT STABLE RELEASE',
+      title: 'Interactive KPI Dashboard Lifecycle, Native SQLite File Ingestion & Analytical Hardening',
+      tagline: 'AddWidgetModal full CRUD, 3 widget types (kpi_card, bar_chart, donut_chart), native .db ingestion, and Dark Carbon dialogs.',
+      date: 'Oct 2026',
+      decisionRationale:
+        'Empowering product managers to build customized, living KPI metric dashboards directly from their datasets without manual code or browser dialogs. Implemented AddWidgetModal with full CRUD for KPI cards, bar charts, and donut charts, extended ingestion to native SQLite databases (.db, .sqlite, .sqlite3), replaced browser alerts with DeleteDatasetModal, hardened polymorphic table row rendering, and fixed the story decomposer gateway signature.',
+      highlights: [
+        'Interactive KPI Dashboard Studio (AddWidgetModal.tsx) with full metric & chart CRUD lifecycle and in-place card deletion',
+        'Three supported widget types: KPI Cards (kpi_card with target milestone variance badges ▲ +12.5%), Bar Distribution Charts (bar_chart), and Donut Share Breakdown (donut_chart)',
+        'Live evaluation engine: compute_widget_data executed against analytics_store.db with PRAGMA validations and AST SQL inspection',
+        'Native SQLite Database Ingestion: materialize .db, .sqlite, and .sqlite3 files alongside Excel, CSV, TSV, and JSON formats',
+        'App-Themed Dataset Deletion Modal (DeleteDatasetModal.tsx) replacing browser-native window.confirm with dark carbon aesthetic',
+        'Polymorphic Row Rendering in StudioView.tsx supporting both array-shaped and object-shaped SQL query result sets',
+        'Story Decomposer Gateway Resilience: fixed call_llm() signature parameter in tools/story_decomposer.py restoring 1-click breakdown',
+        'Automated 60-minute silent background updates polling and verified zero-vulnerability AST query sandbox',
+      ],
+      isCurrent: true,
+    },
+    {
+      version: 'v2.0.0',
+      badge: 'SHIPPED',
+      title: 'Desktop SPA Modernization, Global Spotlight Command Palette & Zero-Iframe Architecture',
+      tagline: 'React 19 single-DOM migration, Ctrl+K Raycast/Linear-style command engine, and universal keyboard shortcuts.',
+      date: 'Oct 2026',
+      decisionRationale:
+        'Eliminating desktop latency and friction once and for all. Migrated the entire desktop client from legacy multi-frame Jinja2 templates to a single-DOM React 19 + TypeScript + Tailwind CSS SPA inside Electron. Introduced a global Spotlight Command Palette (Ctrl+K / Cmd+K), universal application keybindings (Ctrl+1–6, Ctrl+B, ESC), automated 60-minute silent background updates, and streamlined workspace view.',
+      highlights: [
+        'Single Page Application (SPA) Complete: migrated entire desktop client to single-DOM React 19 + TypeScript + Tailwind CSS inside Electron',
+        'Decommissioned legacy Jinja2 templates bundling from flask.spec, trimming bundle overhead and guaranteeing zero iframe latency',
+        'Global Spotlight Command Palette (CommandPalette.tsx) triggered via Ctrl+K / Cmd+K with fuzzy search across views, projects, and actions',
+        'Keyboard-driven palette navigation with Arrow keys (↑, ↓), Enter execution, Escape dismissal, and Titlebar trigger badge',
+        'Universal Keyboard Shortcuts Engine (App.tsx): Ctrl+K (Spotlight), Ctrl+B (Sidebar), Ctrl+1–6 (Direct module switching), ESC (Modal dismissal)',
+        'Fully automated silent background updates polling every 60 minutes via electron-updater with live sidebar pulse indicator',
+        'Workspace Overview Streamlining (HomeView.tsx): removed redundant launchpad grid for direct initiative and story viewing',
+      ],
+      isCurrent: false,
+    },
+    {
+      version: 'v1.5.0',
+      badge: 'SHIPPED',
       title: 'AI PM Document Generator, Multi-Format Export Subsystem & Zero-Crash Resilience',
       tagline: '5 executive PM templates, Word (.docx) & Markdown export, action toolbar, and hardened markdown rendering.',
       date: 'Oct 2026',
@@ -623,7 +686,7 @@ export const siteConfig = {
         'Zero-Crash Resilience: non-capturing group regex conversion in MarkdownContent.tsx preventing undefined match exceptions',
         'Dark Carbon ErrorBoundary (ErrorBoundary.tsx) in application shell guaranteeing desktop stability against transient rendering errors',
       ],
-      isCurrent: true,
+      isCurrent: false,
     },
     {
       version: 'v1.4.0',

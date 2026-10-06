@@ -12,7 +12,12 @@ import {
   Sparkles,
   BarChart3,
   ShieldCheck,
-  Download
+  Download,
+  Command,
+  Sliders,
+  PieChart,
+  Trash2,
+  RefreshCw
 } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
@@ -21,21 +26,22 @@ export function CoreFeatures() {
 
   const getFeatureIcon = (id) => {
     switch (id) {
+      case 'desktop-spa-engine': return Cpu;
+      case 'spotlight-palette': return Command;
+      case 'universal-shortcuts': return Sliders;
+      case 'kpi-widget-crud': return PieChart;
+      case 'sqlite-native-ingest': return Database;
+      case 'deletedataset-modal': return ShieldCheck;
+      case 'polymorphic-row-render': return Database;
+      case 'story-decomposer-fix': return Sparkles;
       case 'pm-doc-generator': return FileText;
       case 'multi-export-docx-md': return Download;
       case 'response-action-toolbar': return Sparkles;
-      case 'zero-crash-hardening': return ShieldCheck;
-      case 'data-studio-engine': return BarChart3;
+      case 'silent-updater': return RefreshCw;
       case 'sql-sandbox-safety': return Terminal;
-      case 'guarded-ai-data': return ShieldCheck;
       case 'sprint-kanban-board': return Layers;
-      case 'story-breakdown-tool': return Sparkles;
-      case 'doc-summarizer-tool': return FileText;
-      case 'command-pills': return Terminal;
       case 'dual-db-v6': return Database;
       case 'bm25-search': return Search;
-      case 'parsers-dual-scroll': return FileCode;
-      case 'electron-updater-pipe': return GitBranch;
       case 'port-collision-shield': return Terminal;
       default: return Sparkles;
     }
@@ -81,7 +87,7 @@ export function CoreFeatures() {
         ))}
       </div>
 
-      {/* 3x3 Feature Grid with Spotlight Cards */}
+      {/* Feature Grid with Spotlight Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredFeatures.map((feat) => {
           const Icon = getFeatureIcon(feat.id);
