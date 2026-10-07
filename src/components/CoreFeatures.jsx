@@ -22,7 +22,11 @@ import {
   TrendingUp,
   Calendar,
   AlertCircle,
-  CheckSquare
+  CheckSquare,
+  Columns,
+  History,
+  BookOpen,
+  Bot
 } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
@@ -31,6 +35,12 @@ export function CoreFeatures() {
 
   const getFeatureIcon = (id) => {
     switch (id) {
+      case 'artifacts-studio': return FileText;
+      case 'split-preview': return Columns;
+      case 'revision-snapshots': return History;
+      case 'onboarding-wizard': return Sparkles;
+      case 'chat-to-artifact': return Bot;
+      case 'segregated-artifacts-db': return Database;
       case 'funnel-analyzer': return TrendingDown;
       case 'cohort-matrix': return Calendar;
       case 'outlier-stats': return AlertCircle;

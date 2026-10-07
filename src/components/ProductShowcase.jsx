@@ -32,12 +32,18 @@ import {
   Calendar,
   AlertCircle,
   CheckSquare,
-  Square
+  Square,
+  Columns,
+  History,
+  BookOpen,
+  Edit3,
+  Bold,
+  Italic
 } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
 export function ProductShowcase({ onCopyToast }) {
-  const [activeModule, setActiveModule] = useState('analytics-workbench');
+  const [activeModule, setActiveModule] = useState('artifacts-studio');
   const [selectedDocTemplate, setSelectedDocTemplate] = useState('prd');
   const [dataStudioTab, setDataStudioTab] = useState('canvas');
   const [selectedSqlPreset, setSelectedSqlPreset] = useState(0);
@@ -45,6 +51,11 @@ export function ProductShowcase({ onCopyToast }) {
   const [activeSlashCommand, setActiveSlashCommand] = useState('/data');
   const [kanbanFilter, setKanbanFilter] = useState('all');
   const [ftsSearchQuery, setFtsSearchQuery] = useState('offline key exchange');
+
+  // Living Document Editor & Artifacts Studio State (v2.2.0)
+  const [artifactsDoc, setArtifactsDoc] = useState('prd');
+  const [artifactsMode, setArtifactsMode] = useState('split');
+  const [showRevisionHistory, setShowRevisionHistory] = useState(false);
 
   // Spotlight State
   const [spotlightQuery, setSpotlightQuery] = useState('');
@@ -65,6 +76,7 @@ export function ProductShowcase({ onCopyToast }) {
 
   const getModuleIcon = (id) => {
     switch (id) {
+      case 'artifacts-studio': return FileText;
       case 'analytics-workbench': return Activity;
       case 'story-decomposer': return Sparkles;
       case 'command-palette': return Command;
@@ -202,7 +214,317 @@ export function ProductShowcase({ onCopyToast }) {
           {/* Right Interactive Simulator Column */}
           <div className="lg:col-span-7 bg-[#121218] border border-white/[0.12] rounded-xl p-4 sm:p-6 shadow-inner">
             
-            {/* 0. NEW IN v2.1.0: Advanced Analytics Workbench Simulation */}
+            {/* 0. NEW IN v2.2.0: Living Document Editor & Artifacts Studio Simulation */}
+            {activeModule === 'artifacts-studio' && (
+              <div className="space-y-4 font-mono text-xs">
+                {/* Header Controls Bar */}
+                <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                    <span className="text-xs text-white font-semibold">Living Document Editor & Artifacts Studio</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-gold/15 text-gold-bright border border-gold/30">
+                      v2.2.0 New
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[10px] text-zinc-400">
+                    <span className="flex items-center gap-1 text-emerald-400">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span>All changes saved</span>
+                    </span>
+                    <span>&bull;</span>
+                    <span>1,248 words</span>
+                  </div>
+                </div>
+
+                {/* Document Selector Pills */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px]">
+                  {[
+                    { id: 'prd', label: 'PRD: Conversion Analytics Engine', type: 'prd', status: 'Approved' },
+                    { id: 'rfc', label: 'RFC: Four-Database Segregated SQLite', type: 'rfc', status: 'In Review' },
+                    { id: 'brief', label: 'Sprint Brief: Scribe Release v2.2', type: 'brief', status: 'Active Sprint' },
+                  ].map((doc) => (
+                    <button
+                      key={doc.id}
+                      onClick={() => setArtifactsDoc(doc.id)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap ${
+                        artifactsDoc === doc.id
+                          ? 'bg-gold/20 border-gold text-gold-bright font-bold'
+                          : 'bg-surface border-white/10 text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      <span>{doc.label}</span>
+                      <span className="text-[9px] px-1 py-0.2 rounded bg-white/[0.04] text-zinc-300">
+                        {doc.status}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Sub-toolbar: Modes & Bridges */}
+                <div className="flex flex-wrap items-center justify-between gap-2 p-2 rounded-lg bg-[#0e0e14] border border-white/[0.06]">
+                  {/* Mode switcher */}
+                  <div className="flex items-center gap-1 bg-[#161622] p-0.5 rounded-md border border-white/10 text-[10px]">
+                    <button
+                      onClick={() => setArtifactsMode('split')}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded transition-colors ${
+                        artifactsMode === 'split' ? 'bg-gold text-zinc-950 font-bold' : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      <Columns className="w-3 h-3" />
+                      <span>Split View</span>
+                    </button>
+                    <button
+                      onClick={() => setArtifactsMode('edit')}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded transition-colors ${
+                        artifactsMode === 'edit' ? 'bg-gold text-zinc-950 font-bold' : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      <Edit3 className="w-3 h-3" />
+                      <span>Edit Only</span>
+                    </button>
+                    <button
+                      onClick={() => setArtifactsMode('preview')}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded transition-colors ${
+                        artifactsMode === 'preview' ? 'bg-gold text-zinc-950 font-bold' : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      <BookOpen className="w-3 h-3" />
+                      <span>Preview Only</span>
+                    </button>
+                  </div>
+
+                  {/* Bridge actions */}
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={() => {
+                        setActiveModule('story-decomposer');
+                        onCopyToast && onCopyToast('Bridged living PRD to Agile Story Decomposer!');
+                      }}
+                      className="px-2.5 py-1 rounded bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/30 flex items-center gap-1 font-bold text-[10px] transition-all"
+                    >
+                      <Sparkles className="w-3 h-3 text-purple-400" />
+                      <span>Decompose into Stories</span>
+                    </button>
+
+                    <button
+                      onClick={() => onCopyToast && onCopyToast('Generated formatted Microsoft Word document (.docx)')}
+                      className="px-2.5 py-1 rounded bg-gold/15 hover:bg-gold/25 text-gold-bright border border-gold/40 flex items-center gap-1 font-bold text-[10px] transition-all"
+                    >
+                      <Download className="w-3 h-3" />
+                      <span>Export .docx</span>
+                    </button>
+
+                    <button
+                      onClick={() => setShowRevisionHistory(!showRevisionHistory)}
+                      className={`px-2 py-1 rounded border text-[10px] flex items-center gap-1 transition-all ${
+                        showRevisionHistory
+                          ? 'bg-gold text-zinc-950 font-bold border-gold'
+                          : 'bg-surface text-zinc-400 hover:text-white border-white/10'
+                      }`}
+                    >
+                      <History className="w-3 h-3" />
+                      <span>History (4)</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Revision History Slide-Over Drawer */}
+                {showRevisionHistory && (
+                  <div className="bg-[#0e0e14] rounded-xl border border-gold/40 p-4 space-y-2.5 animate-in fade-in duration-150">
+                    <div className="flex items-center justify-between pb-1.5 border-b border-white/[0.08]">
+                      <span className="font-bold text-white flex items-center gap-1.5 text-xs">
+                        <History className="w-3.5 h-3.5 text-gold" />
+                        <span>Snapshot Revision History Tree (artifacts_versions table)</span>
+                      </span>
+                      <button onClick={() => setShowRevisionHistory(false)} className="text-zinc-400 hover:text-white">
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    <div className="space-y-1.5 text-[11px]">
+                      {[
+                        { ver: 'Snapshot v4 (Latest)', time: '15 mins ago', note: 'Finalized INVEST acceptance criteria with 3x Gherkin scenarios', active: true },
+                        { ver: 'Snapshot v3', time: 'Today 13:10', note: 'Added four-database architecture and artifacts.db storage contract', active: false },
+                        { ver: 'Snapshot v2', time: 'Yesterday 18:45', note: 'Promoted from AI Copilot assistant response in Chat View', active: false },
+                        { ver: 'Snapshot v1', time: 'Oct 06, 2026', note: 'Initialized from standard PRD executive template', active: false },
+                      ].map((snap) => (
+                        <div
+                          key={snap.ver}
+                          className={`p-2 rounded-lg border flex items-center justify-between ${
+                            snap.active ? 'bg-gold/15 border-gold/50 text-gold-bright' : 'bg-surface border-white/10 text-zinc-300'
+                          }`}
+                        >
+                          <div>
+                            <div className="font-bold flex items-center gap-2">
+                              <span>{snap.ver}</span>
+                              <span className="text-[10px] text-zinc-400">{snap.time}</span>
+                              {snap.active && <span className="text-[9px] px-1 rounded bg-gold/20 text-gold font-bold">CURRENT</span>}
+                            </div>
+                            <div className="text-[10px] text-zinc-400">{snap.note}</div>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setShowRevisionHistory(false);
+                              onCopyToast && onCopyToast(`Restored snapshot ${snap.ver}`);
+                            }}
+                            className="px-2 py-0.5 rounded bg-white/[0.06] hover:bg-gold hover:text-zinc-950 text-[10px] text-zinc-300 font-bold transition-all"
+                          >
+                            Restore
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Split Mode Simulation */}
+                {artifactsMode === 'split' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 min-h-[320px]">
+                    {/* Left Pane: Markdown Source Editor */}
+                    <div className="bg-[#0b0b10] rounded-xl border border-white/10 p-3 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        {/* Markdown Formatting Toolbar */}
+                        <div className="flex items-center gap-1 pb-1.5 border-b border-white/[0.06] text-zinc-400 text-[10px]">
+                          <button className="px-1.5 py-0.5 hover:text-white rounded hover:bg-white/[0.04] font-bold">B</button>
+                          <button className="px-1.5 py-0.5 hover:text-white rounded hover:bg-white/[0.04] italic font-serif">I</button>
+                          <button className="px-1.5 py-0.5 hover:text-white rounded hover:bg-white/[0.04]">H1</button>
+                          <button className="px-1.5 py-0.5 hover:text-white rounded hover:bg-white/[0.04]">H2</button>
+                          <button className="px-1.5 py-0.5 hover:text-white rounded hover:bg-white/[0.04]">`Code`</button>
+                          <button className="px-1.5 py-0.5 hover:text-white rounded hover:bg-white/[0.04]">&ldquo;Quote&rdquo;</button>
+                          <button className="px-1.5 py-0.5 hover:text-white rounded hover:bg-white/[0.04]">Table</button>
+                          <button className="px-1.5 py-0.5 hover:text-white rounded hover:bg-white/[0.04]">[x] Tasks</button>
+                        </div>
+
+                        <div className="space-y-1 text-zinc-300 text-[11px] leading-relaxed">
+                          <div className="text-gold font-bold"># PRD: Analytics Engine & Living Artifacts Studio</div>
+                          <div className="text-zinc-500">## 1. Executive Summary & Problem</div>
+                          <div className="text-zinc-300 pl-2">Product teams need an on-device living document editor with zero database bloat and instant PRD-to-sprint bridges.</div>
+                          <div className="text-zinc-500">## 2. Core Functional Requirements</div>
+                          <div className="text-zinc-400 pl-2">- [x] Multi-mode Markdown editing: Split & Preview</div>
+                          <div className="text-zinc-400 pl-2">- [x] Segregated artifacts.db with SQLite FTS5</div>
+                          <div className="text-zinc-400 pl-2">- [ ] Subnet peer-to-peer sync (Target: v2.3)</div>
+                          <div className="text-zinc-500">## 3. Database Architecture</div>
+                          <div className="text-zinc-400 bg-black/40 p-1.5 rounded text-[10px]">
+                            <code>CREATE VIRTUAL TABLE artifacts_fts USING fts5...</code>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[10px] text-zinc-500">
+                        <span>Markdown Source Pane</span>
+                        <span className="text-gold">artifacts.db (FTS5)</span>
+                      </div>
+                    </div>
+
+                    {/* Right Pane: Live Rendered Output */}
+                    <div className="bg-[#0e0e14] rounded-xl border border-gold/40 p-4 space-y-3 overflow-hidden">
+                      <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                        <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-gold-bright" />
+                          <span>PRD: Analytics Engine & Living Artifacts</span>
+                        </span>
+                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-green-500/10 text-green-400 border border-green-500/20">
+                          v2.2.0 Spec
+                        </span>
+                      </div>
+
+                      <div className="p-2.5 rounded bg-surface border border-gold/25 text-[11px] text-zinc-300 leading-relaxed">
+                        <strong className="text-gold-bright">Executive Summary:</strong> Deliver an on-device living document editor with synchronized split preview, snapshot revision trees, and direct 1-click bridges into sprint backlogs.
+                      </div>
+
+                      <div className="space-y-1 text-[11px]">
+                        <div className="text-white font-bold text-[10px] uppercase tracking-wider">Functional Requirements Checklist:</div>
+                        <div className="space-y-0.5 text-zinc-300">
+                          <div className="flex items-center gap-1.5 text-emerald-400">
+                            <CheckSquare className="w-3 h-3" />
+                            <span>Multi-mode Markdown editing: Split, Edit, Preview</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-emerald-400">
+                            <CheckSquare className="w-3 h-3" />
+                            <span>Segregated artifacts.db with SQLite FTS5 search</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-zinc-500">
+                            <Square className="w-3 h-3" />
+                            <span>Subnet peer-to-peer sync (Target: v2.3)</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[10px] text-zinc-400">
+                        <span>Synchronized HTML Preview</span>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => {
+                              setActiveModule('story-decomposer');
+                              onCopyToast && onCopyToast('Bridged living PRD to Agile Story Decomposer!');
+                            }}
+                            className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold hover:bg-purple-500/30"
+                          >
+                            ⚡ Decompose
+                          </button>
+                          <button
+                            onClick={() => onCopyToast && onCopyToast('Exported styled Microsoft Word (.docx)')}
+                            className="px-2 py-0.5 rounded bg-gold text-zinc-950 font-bold hover:brightness-110"
+                          >
+                            📥 .docx
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Edit Only Mode Simulation */}
+                {artifactsMode === 'edit' && (
+                  <div className="bg-[#0b0b10] rounded-xl border border-white/10 p-4 min-h-[320px] space-y-2">
+                    <div className="text-[11px] text-zinc-400">Full-Canvas Distraction-Free Markdown Drafting:</div>
+                    <textarea
+                      readOnly
+                      className="w-full h-56 bg-transparent text-zinc-200 resize-none focus:outline-none leading-relaxed text-[11px]"
+                      value={`# PRD-2026: Conversion Analytics & Living Docs Studio
+Author: Product & Platform Engineering
+Status: Approved Draft (Target: v2.2.0)
+
+## 1. Problem Statement
+Product managers need an in-built living document editor rather than relying on external cloud SaaS wikis.
+
+## 2. Architecture & Database Isolation
+All document bodies and AST revisions are persisted in %LOCALAPPDATA%\\PMTool\\artifacts.db to guarantee zero bloat on pmtool.db.`}
+                    />
+                  </div>
+                )}
+
+                {/* Preview Only Mode Simulation */}
+                {artifactsMode === 'preview' && (
+                  <div className="bg-[#0e0e14] rounded-xl border border-gold/40 p-6 min-h-[320px] space-y-4">
+                    <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
+                      <h2 className="text-base font-bold text-white">PRD: Conversion Analytics & Living Docs Studio</h2>
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-gold/15 text-gold-bright border border-gold/30">
+                        Publication-Ready Draft
+                      </span>
+                    </div>
+                    <p className="text-xs text-zinc-300 leading-relaxed">
+                      PM Tool v2.2.0 introduces an in-built living document editor for PRDs and architecture RFCs (PranshulOS style), contextual AI artifacts promotion, isolated database architecture (artifacts.db), and a friction-free first-launch onboarding wizard.
+                    </p>
+                    <div className="p-3 bg-surface rounded-lg border border-white/10 text-[11px] text-zinc-400">
+                      Export formatted copies with 1-click Microsoft Word (.docx), Markdown (.md), and styled HTML.
+                    </div>
+                  </div>
+                )}
+
+                {/* Isolated Storage Callout */}
+                <div className="p-2.5 rounded-lg bg-[#0b0b10] border border-white/[0.06] flex items-center justify-between text-[10px] text-zinc-400">
+                  <span className="flex items-center gap-1.5">
+                    <Database className="w-3.5 h-3.5 text-gold" />
+                    <span>Four-Database Segregation: <code>%LOCALAPPDATA%\PMTool\artifacts.db</code></span>
+                  </span>
+                  <span className="text-gold font-bold">SQLite FTS5 Sub-Millisecond Search</span>
+                </div>
+              </div>
+            )}
+
+            {/* 1. Advanced Analytics Workbench Simulation (v2.1.0) */}
             {activeModule === 'analytics-workbench' && (
               <div className="space-y-4 font-mono text-xs">
                 <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">

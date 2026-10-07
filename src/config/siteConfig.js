@@ -1,7 +1,27 @@
 /**
  * PM Tool — Central Site & Release Configuration
  * 
- * Accurately reflects the current release state of the application (v2.1.0):
+ * Accurately reflects the current release state of the application (v2.2.0):
+ * - In-Built Living Document Editor & Artifacts Studio (ArtifactsStudio.tsx)
+ *   * Living document workstation supporting PRDs, Architecture RFCs, Sprint Briefs, and Meeting Notes
+ *   * Multi-mode reading and authoring: Edit, Split (side-by-side synchronized preview), and Preview
+ *   * Comprehensive Markdown formatting toolbar (Headings, Bold, Italic, Code, Table, Checklists, Quotes)
+ *   * Built-in document template selector (Standard PRD, Architecture RFC, Sprint Brief, Blank)
+ *   * Debounced auto-save engine with live status indicator ("All changes saved" / "Saving...") and live word counter
+ *   * Segregated Database Architecture (artifacts_db.py & %LOCALAPPDATA%\PMTool\artifacts.db)
+ *   * SQLite FTS5 index (artifacts_fts) for sub-millisecond document query performance
+ *   * Snapshot revision history tree (artifact_versions) with 1-click inspection and restoration
+ *   * Direct 1-click bridge from living PRDs/RFCs into the Agile Decomposer modal (DecomposerModal.tsx)
+ *   * Direct 1-click bridge to vectorize and ingest living documents into RAG Knowledge Base
+ * - Friction-Free First-Launch Onboarding Wizard (OnboardingModal.tsx)
+ *   * Clean-launch detection via pm_tool_onboarding_completed signal
+ *   * Step 1: Workspace & Initiative Setup (Project naming, domain preset, tech stack, seed backlog)
+ *   * Step 2: AI Gateway Probe (Live Ollama local instance probe, Gemini, OpenAI configuration)
+ *   * Step 3: Workstation Tour & Hotkey Spotlight (Spotlight Ctrl+K, Sidebar Ctrl+B, Quick View Ctrl+1..6)
+ * - AI Copilot Chat-to-Artifact Promotion Bridge (ChatView.tsx)
+ *   * 1-Click "Save as Living Artifact" on assistant markdown responses into artifacts.db
+ * - Post-Update Restart Enforcement & Lifecycle Hardening (v2.1.1)
+ *   * Gated automatic "What's New" modal display exclusively to genuine post-update application restarts
  * - Advanced Analytics Workbench (tools/analytics_engine.py & AdvancedAnalyticsWorkbench.tsx)
  *   * Multi-Stage Conversion Funnel & Drop-Off Analyzer (sequential drop-offs & lost volume)
  *   * Period-over-Period Cohort Retention Matrix Heatmap (MoM, WoW, DoD cohorts)
@@ -24,7 +44,7 @@
  * - AI Workspace PM Document Generator (DocumentGeneratorModal.tsx: 5 executive templates)
  * - Multi-Format Export Subsystem (POST /api/export/docx with python-docx & POST /api/export/markdown)
  * - Safe Read-Only SQL Sandbox with 5-Layer Defense-in-Depth
- * - Three-database local storage segregation (pmtool.db, ai_context.db, analytics_store.db)
+ * - Four-database local storage segregation (pmtool.db, ai_context.db, analytics_store.db, artifacts.db)
  * - Dynamic cascading port collision resilience (5050 through 5065)
  */
 
@@ -34,22 +54,22 @@ export const siteConfig = {
   // ==========================================
   name: 'PM Tool',
   shortName: 'PmT',
-  tagline: 'Local-First Product Management Workspace & Advanced Analytics Studio',
+  tagline: 'Local-First Product Management Workspace, Living Artifacts Studio & Advanced Analytics',
   description:
-    'A zero-iframe React 19 desktop SPA that turns organizational knowledge and local data into publication-grade PM deliverables. Profile conversion funnels and cohort retention heatmaps in the Advanced Analytics Workbench, decompose requirements into INVEST user stories with calibrated Fibonacci points and pre-commit review, navigate instantly with Spotlight (Ctrl+K), and export styled Microsoft Word (.docx) files — from one native Windows desktop workstation.',
+    'A zero-iframe React 19 desktop SPA that turns organizational knowledge and local data into publication-grade PM deliverables. Author living PRDs and RFCs in the Artifacts Studio with split-view preview and revision trees, profile conversion funnels and cohort retention heatmaps in the Analytics Workbench, decompose requirements into INVEST user stories with calibrated Fibonacci points, navigate instantly with Spotlight (Ctrl+K), and export styled Microsoft Word (.docx) files — from one native Windows desktop workstation.',
 
   // ==========================================
   // 2. ACTIVE VERSION & RELEASE METADATA
   // ==========================================
   release: {
-    version: 'v2.1.0',
-    versionFull: 'v2.1.0 (Codename Atlas)',
-    badge: 'v2.1.0 STABLE RELEASE',
+    version: 'v2.2.0',
+    versionFull: 'v2.2.0 (Codename Scribe & Foundry)',
+    badge: 'v2.2.0 STABLE RELEASE',
     releaseDate: 'October 2026',
-    buildDate: '2026-10-06',
+    buildDate: '2026-10-07',
     channel: 'Stable Channel',
     platform: 'Windows 10/11 (64-bit)',
-    statusText: 'Advanced Analytics Workbench &bull; Calibrated Story Decomposer &bull; v2.1.0 Stable',
+    statusText: 'Living Artifacts Studio &bull; Segregated artifacts.db &bull; Setup Wizard &bull; v2.2.0 Stable',
     isAirGappedReady: false,
   },
 
@@ -58,19 +78,19 @@ export const siteConfig = {
   // ==========================================
   downloads: {
     installer: {
-      fileName: 'PM-Tool-Setup-2.1.0.exe',
+      fileName: 'PM-Tool-Setup-2.2.0.exe',
       label: 'Download NSIS Setup (.exe)',
-      size: '85.2 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.1.0/PM-Tool-Setup-2.1.0.exe',
+      size: '86.4 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.2.0/PM-Tool-Setup-2.2.0.exe',
       directDownload: true,
     },
     portable: {
-      fileName: 'PM-Tool-2.1.0.exe',
+      fileName: 'PM-Tool-2.2.0.exe',
       label: 'Portable Standalone (.exe)',
-      size: '78.4 MB',
-      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.1.0/PM-Tool-2.1.0.exe',
+      size: '79.8 MB',
+      url: 'https://github.com/Pranshul-Chopra/pm_tool/releases/download/v2.2.0/PM-Tool-2.2.0.exe',
     },
-    sha256: '4f8b2c19e5d7a3016f4e820c71a95b34e8205417df890b2345e82109a18d9f52',
+    sha256: 'e7b1a48c9034d612e5829a03b5190c74f5193c7280ab441091d83c27103ba241',
     gitCloneCommand: 'git clone https://github.com/Pranshul-Chopra/pm_tool.git',
     systemPrerequisites: [
       'Windows 10 / Windows 11 (64-bit)',
@@ -99,6 +119,7 @@ export const siteConfig = {
   // 5. NAVIGATION LINKS
   // ==========================================
   navLinks: [
+    { name: 'Living Docs Studio', href: '#artifacts-studio' },
     { name: 'Analytics Workbench', href: '#demo' },
     { name: 'Story Decomposer', href: '#decomposer' },
     { name: 'Spotlight (Ctrl+K)', href: '#spotlight' },
@@ -112,37 +133,44 @@ export const siteConfig = {
   // 6. HERO SECTION CONFIG
   // ==========================================
   hero: {
-    pillBadge: 'ADVANCED ANALYTICS WORKBENCH &bull; CALIBRATED STORY DECOMPOSER &bull; V2.1.0',
+    pillBadge: 'LIVING ARTIFACTS STUDIO &bull; ADVANCED ANALYTICS WORKBENCH &bull; V2.2.0',
     pillVersionTag: 'Windows 10/11 Native',
     headlineMain: 'From Organizational Knowledge & Data',
     headlineAccent: 'to Publication-Grade PM Deliverables.',
     headlineEnd: '',
     subtitle:
-      'Zero-iframe React 19 desktop SPA with advanced dataset analytics (conversion funnels, cohort retention heatmaps, correlation matrices, outlier profiling), calibrated INVEST story decomposer with live pre-commit review, global Spotlight (Ctrl+K), and Word (.docx) export — running entirely on local SQLite storage.',
+      'Zero-iframe React 19 desktop SPA with an in-built Living Document Editor for PRDs & RFCs with split live preview, advanced dataset analytics (funnels, cohort retention heatmaps, outlier profiling), calibrated INVEST story decomposer, global Spotlight (Ctrl+K), and Word (.docx) export — running across four dedicated local SQLite databases.',
     notice:
-      'Core workflows operate offline with local models (Ollama) and local SQLite analytics. Optional cloud-model support (Gemini) is available when configured.',
+      'Core workflows operate offline with local models (Ollama) and local SQLite storage. Optional cloud-model support (Gemini, OpenAI) is available when configured.',
     specsBadges: [
+      { text: 'Living Artifacts Studio', type: 'file' },
+      { text: 'Segregated artifacts.db', type: 'database' },
+      { text: 'Onboarding Setup Wizard', type: 'sparkles' },
       { text: 'Advanced Analytics Workbench', type: 'chart' },
-      { text: 'Calibrated Story Decomposer', type: 'sparkles' },
-      { text: 'Cohort Retention & Funnels', type: 'trending' },
-      { text: 'Zero-Iframe React 19 SPA', type: 'cpu' },
     ],
     // Desktop App Simulator Mockup
     simulator: {
       windowTitle: 'PmT Desktop Shell (React 19 SPA)',
-      workspaceTitle: 'Workspace: Core Platform v2.1.0',
+      workspaceTitle: 'Workspace: Core Platform v2.2.0',
       backendHost: '127.0.0.1:5050 [Handshake OK]',
       activeModel: 'Ollama: llama3.2 (Local Mode)',
-      localDbPath: '%LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6)',
-      dbStats: 'Analytics Workbench • Funnel & Cohort Heatmap • Pre-Commit Decomposer • Velocity: 76%',
-      shortcut: 'Shortcuts: Ctrl+K Spotlight • Ctrl+3 Analytics Workbench • /breakdown Decomposer',
+      localDbPath: '%LOCALAPPDATA%\\PMTool\\artifacts.db & pmtool.db',
+      dbStats: 'Artifacts Studio • Split Markdown • FTS5 Search • Revision Tree • 4 Isolated DBs',
+      shortcut: 'Shortcuts: Ctrl+K Spotlight • Ctrl+4 Docs Studio • Ctrl+B Sidebar • /breakdown Decomposer',
     },
   },
 
   // ==========================================
-  // 7. TECH MARQUEE (Reflecting Real v2.1.0 Capabilities)
+  // 7. TECH MARQUEE (Reflecting Real v2.2.0 Capabilities)
   // ==========================================
   techMarquee: [
+    'IN-BUILT LIVING DOCUMENT EDITOR & ARTIFACTS STUDIO',
+    'SPLIT-VIEW SYNCHRONIZED MARKDOWN PREVIEW',
+    'FOUR-DATABASE SQLITE ARCHITECTURE (ARTIFACTS.DB)',
+    'SUB-MILLISECOND ARTIFACT FTS5 SEARCH & REVISION TREES',
+    'FRICTION-FREE FIRST-LAUNCH ONBOARDING WIZARD',
+    '1-CLICK AI COPILOT CHAT-TO-ARTIFACT PROMOTION',
+    'LIVING PRD DIRECT SPRINT DECOMPOSITION BRIDGE',
     'ADVANCED ANALYTICS WORKBENCH (FUNNELS, COHORTS, CORRELATIONS)',
     'MULTI-STAGE CONVERSION FUNNEL & DROP-OFF ANALYZER',
     'PERIOD-OVER-PERIOD COHORT RETENTION HEATMAP MATRIX',
@@ -157,7 +185,6 @@ export const siteConfig = {
     'NATIVE SQLITE (.DB, .SQLITE3) DATASET MATERIALIZATION',
     'SAFE READ-ONLY SQL SANDBOX (5-LAYER DEFENSE-IN-DEPTH)',
     '1-CLICK MICROSOFT WORD (.DOCX) & MARKDOWN EXPORT',
-    'ASSISTANT RESPONSE ACTION TOOLBAR (SAVE TO DOCS & DECOMPOSE)',
     'AUTOMATED 60-MIN SILENT BACKGROUND UPDATES (ELECTRON-UPDATER)',
     'ZERO MANDATORY CLOUD ACCOUNTS',
   ],
@@ -167,9 +194,17 @@ export const siteConfig = {
   // ==========================================
   showcaseModules: [
     {
+      id: 'artifacts-studio',
+      name: 'Living Document Editor & Artifacts Studio',
+      tag: 'New in v2.2.0',
+      headline: 'Author living PRDs, Architecture RFCs, and Sprint Briefs with split preview and revision history.',
+      description:
+        'In-built living document workstation (PranshulOS style) supporting Edit, Split (side-by-side synchronized preview), and Preview modes. Features a rich markdown toolbar, built-in templates (Standard PRD, Architecture RFC, Sprint Brief), debounced auto-save with live word count, snapshot version trees with instant rollback, and direct 1-click bridges to the Agile Story Decomposer and RAG Knowledge Base.',
+    },
+    {
       id: 'analytics-workbench',
       name: 'Advanced Analytics Workbench',
-      tag: 'New in v2.1.0',
+      tag: 'Analytics Engine (v2.1)',
       headline: 'Conversion funnels, cohort retention heatmaps, correlation grids, and statistical outlier detection.',
       description:
         'Transform raw business data into deep executive intelligence. Features 5 specialized analytical instruments: Multi-Stage Conversion Funnel with step-to-step drop-off percentages, Period-over-Period Cohort Retention matrix heatmaps, Parametric & Non-Parametric Distribution profiling with Tukey IQR & Z-score outlier flagging, Pairwise Pearson Correlation coefficient matrix, and Linear Trendline forecasting.',
@@ -177,7 +212,7 @@ export const siteConfig = {
     {
       id: 'story-decomposer',
       name: 'Calibrated Story Decomposer',
-      tag: 'Overhauled in v2.1.0',
+      tag: 'Agile Engine (v2.1)',
       headline: 'INVEST atomic story slicing with multi-scenario Gherkin criteria and live pre-commit preview.',
       description:
         'Re-engineered decomposition engine enforcing INVEST principles, target persona filtering (End-User, Admin, API Consumer, DevOps), and 3 distinct Given/When/Then scenarios (Happy Path, Negative/Validation, Boundary/Resilience). Includes an interactive pre-commit approval modal allowing engineers to review, adjust calibrated Fibonacci points (1, 2, 3, 5, 8, 13), and batch-commit directly to the sprint Kanban board.',
@@ -271,6 +306,7 @@ export const siteConfig = {
   // ==========================================
   featureCategories: [
     { id: 'all', label: 'All Capabilities' },
+    { id: 'artifacts', label: 'Living Docs & Artifacts (v2.2)' },
     { id: 'analytics', label: 'Advanced Analytics (v2.1)' },
     { id: 'agile', label: 'Agile & Decomposer (v2.1)' },
     { id: 'spa', label: 'Desktop SPA & Spotlight (v2.0)' },
@@ -281,6 +317,60 @@ export const siteConfig = {
     { id: 'security', label: 'Security & Auto-Updates' },
   ],
   features: [
+    {
+      id: 'artifacts-studio',
+      category: 'artifacts',
+      title: 'Living Document Editor & Artifacts Studio',
+      tagline: 'Multi-mode living document workstation (PranshulOS style).',
+      description:
+        'Author living PRDs, Architecture RFCs, and Sprint Briefs in Edit, Split (side-by-side synchronized preview), or Preview modes with debounced auto-saving, live word counting, and rich formatting.',
+      highlight: 'Artifacts Studio (v2.2)',
+    },
+    {
+      id: 'split-preview',
+      category: 'artifacts',
+      title: 'Split-View Synchronized Markdown Canvas',
+      tagline: 'Side-by-side authoring with synchronized preview rendering.',
+      description:
+        'Dual-pane editing environment featuring Markdown formatting shortcuts (Headings, Bold, Italic, Tables, Checklists, Code blocks) alongside immediate live styling and table rendering.',
+      highlight: 'Split Preview (v2.2)',
+    },
+    {
+      id: 'revision-snapshots',
+      category: 'artifacts',
+      title: 'Immutable Snapshot Revision History Tree',
+      tagline: 'Zero data loss with 1-click version inspection & restoration.',
+      description:
+        'Automatic revision tree (artifact_versions table) recording document evolutions over time. Inspect historical diffs and restore prior snapshots with zero friction.',
+      highlight: 'Revision Trees (v2.2)',
+    },
+    {
+      id: 'onboarding-wizard',
+      category: 'spa',
+      title: 'First-Launch Onboarding & Setup Wizard',
+      tagline: 'Friction-free 3-step project setup, AI probe & hotkey tour.',
+      description:
+        'Multi-step setup wizard detecting first-time launches to configure initial projects, probe local Ollama connectivity and models, and introduce core keyboard shortcuts.',
+      highlight: 'Setup Wizard (v2.2)',
+    },
+    {
+      id: 'chat-to-artifact',
+      category: 'artifacts',
+      title: '1-Click AI Chat-to-Artifact Promotion Bridge',
+      tagline: 'Promote transient assistant responses to living documents.',
+      description:
+        'Quick promotion button under Copilot chat responses that automatically infers document titles and types, persisting drafts directly into artifacts.db with a toast notification.',
+      highlight: 'Copilot Bridge (v2.2)',
+    },
+    {
+      id: 'segregated-artifacts-db',
+      category: 'architecture',
+      title: 'Segregated Documents Database (artifacts.db)',
+      tagline: 'Independent SQLite engine strictly isolating document ASTs.',
+      description:
+        'Guarantees zero database bloat: all document bodies, markdown ASTs, and revision snapshots reside in %LOCALAPPDATA%\\PMTool\\artifacts.db with SQLite FTS5 search.',
+      highlight: 'artifacts.db (v2.2)',
+    },
     {
       id: 'funnel-analyzer',
       category: 'analytics',
@@ -422,7 +512,7 @@ export const siteConfig = {
       title: 'Automated 60-Minute Silent Background Updates',
       tagline: 'Continuous update lifecycle via electron-updater.',
       description:
-        'Automated background polling on launch and every 60 minutes. Non-intrusive live status indicator in Sidebar displays v2.1.0 with pulse animation, presenting UpdaterToast with 1-click "Restart Now" on download.',
+        'Automated background polling on launch and every 60 minutes. Non-intrusive live status indicator in Sidebar displays v2.2.0 with pulse animation, presenting UpdaterToast with 1-click "Restart Now" on download.',
       highlight: 'Silent Updater (60m)',
     },
     {
@@ -437,11 +527,11 @@ export const siteConfig = {
     {
       id: 'dual-db-v6',
       category: 'architecture',
-      title: 'Three-Database Storage Segregation (Schema v6)',
-      tagline: 'Clean separation across operational, AI context, and analytics stores.',
+      title: 'Four-Database Storage Segregation (Schema v6 + artifacts.db)',
+      tagline: 'Clean separation across operational, documents, AI context, and analytics stores.',
       description:
-        'Operational entities (%LOCALAPPDATA%\\PMTool\\pmtool.db, Schema v6), volatile AI context (ai_context.db), and isolated materialized tabular datasets (datasets\\analytics_store.db) in SQLite WAL mode.',
-      highlight: 'Schema v6 Engine',
+        'Operational entities (%LOCALAPPDATA%\\PMTool\\pmtool.db, Schema v6), living documents (artifacts.db), volatile AI context (ai_context.db), and isolated materialized tabular datasets (datasets\\analytics_store.db) in SQLite WAL mode.',
+      highlight: '4 Isolated SQLite DBs',
     },
     {
       id: 'bm25-search',
@@ -487,19 +577,19 @@ export const siteConfig = {
     },
     {
       step: '03',
-      name: 'Spotlight Navigation',
-      headline: 'Jump Across Workstation Instantly via Ctrl+K',
+      name: 'Living Artifacts Studio',
+      headline: 'Draft PRDs & RFCs with Split Live Preview',
       description:
-        'Use the Spotlight Command Palette (Ctrl+K / Cmd+K) to switch views, search projects, or execute actions with fuzzy keyboard matching.',
-      example: 'Keybindings: Ctrl+K (Spotlight), Ctrl+B (Sidebar), Ctrl+1–6 (Modules).',
-      connector: 'eliminates mouse friction and context switching',
+        'Author living specifications in the Artifacts Studio with side-by-side synchronized preview, debounced auto-save, template scaffolding, and snapshot revision history.',
+      example: 'Persisted to artifacts.db with instant FTS5 full-text indexing.',
+      connector: 'bridges specifications into agile sprint backlogs',
     },
     {
       step: '04',
       name: 'Calibrated Story Decomposer',
       headline: 'INVEST Atomic Stories with Pre-Commit Review',
       description:
-        'Decompose PRDs into atomic user stories with 3 distinct Gherkin scenarios (Happy, Negative, Boundary) and calibrated Fibonacci points, reviewing before committing.',
+        'Decompose living PRDs into atomic user stories with 3 distinct Gherkin scenarios (Happy, Negative, Boundary) and calibrated Fibonacci points, reviewing before committing.',
       example: 'Interactive Decomposer Studio Modal with persona filters (3–10 stories).',
       connector: 'batch-commits approved stories to sprint backlog',
     },
@@ -535,25 +625,27 @@ export const siteConfig = {
     {
       id: 'backend',
       title: 'Tier 2: Localhost Micro-Backend & Analytics Engine',
-      tech: 'Python Flask 3.x &bull; analytics_engine.py &bull; python-docx &bull; 127.0.0.1',
+      tech: 'Python Flask 3.x &bull; analytics_engine.py &bull; artifacts_db.py &bull; 127.0.0.1',
       latency: 'Localhost REST Protocol',
       summary: 'Local service bound to 127.0.0.1 handling entity operations, Word DOCX generation, conversion funnel calculations, cohort heatmaps, and gateway dispatch.',
       specs: [
         'Bound strictly to 127.0.0.1 (rejects external network connections)',
         'Advanced Analytics Engine (analytics_engine.py): conversion funnels, retention matrices, Pearson correlations',
+        'Living Artifacts Subsystem (artifacts_db.py): markdown AST parsing, revision tree snapshots, FTS5 search',
         'Document Exporter (POST /api/export/docx) generating styled Word files in-memory',
         'Automated tools: calibrated /breakdown, /summarize, and guarded /data analytical synthesis',
       ],
     },
     {
       id: 'db',
-      title: 'Tier 3: Three-Database SQLite Storage (Schema v6)',
-      tech: 'SQLite 3 &bull; WAL Journal &bull; analytics_store.db',
+      title: 'Tier 3: Four-Database SQLite Architecture (Zero Bloat)',
+      tech: 'SQLite 3 &bull; WAL Journal &bull; artifacts.db &bull; analytics_store.db',
       latency: 'Local SSD Operations',
-      summary: 'Separates operational relational records, volatile AI context, and materialized business datasets.',
+      summary: 'Strictly isolates living documents, operational relational records, volatile AI context, and materialized business datasets across four independent SQLite engines.',
       specs: [
-        'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6: tasks, data_sources, dashboards, widgets)',
-        'Analytics DB: %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db (Materialized tabular & SQLite data)',
+        'Documents DB: %LOCALAPPDATA%\\PMTool\\artifacts.db (Living docs, markdown ASTs, artifact_versions snapshots, artifacts_fts FTS5)',
+        'Operational DB: %LOCALAPPDATA%\\PMTool\\pmtool.db (Schema v6: tasks, projects, data_sources, dashboards, widgets)',
+        'Analytics DB: %LOCALAPPDATA%\\PMTool\\datasets\\analytics_store.db (Materialized tabular & SQLite datasets)',
         'AI Context DB: %LOCALAPPDATA%\\AIContextTool\\ai_context.db (FTS5 BM25 index & tool_runs)',
         'Safe read-only URI mode file:... ?mode=ro with 5-layer SQL sandbox defense',
       ],
@@ -577,6 +669,11 @@ export const siteConfig = {
   // 13. PRIVACY & SAAS COMPARISON MATRIX
   // ==========================================
   comparisonRows: [
+    {
+      feature: 'Living Document Authoring & Artifacts',
+      pmtool: 'Built-in Artifacts Studio: Split-view markdown canvas, revision history trees, local FTS5, and direct sprint decomposition',
+      cloud: 'Requires cloud wikis (Notion, Confluence, Google Docs) with subscription lock-in and remote cloud storage',
+    },
     {
       feature: 'Dataset Analytics & Funnels',
       pmtool: 'Built-in Advanced Analytics Workbench: Funnels, Cohort Retention Heatmaps, Outliers, Correlations',
@@ -614,7 +711,7 @@ export const siteConfig = {
     },
     {
       feature: 'Data & Dashboard Storage Location',
-      pmtool: 'Local storage inside Windows AppData (%LOCALAPPDATA%\\PMTool & datasets\\analytics_store.db)',
+      pmtool: 'Local storage inside Windows AppData (%LOCALAPPDATA%\\PMTool, artifacts.db & analytics_store.db)',
       cloud: 'Cloud-hosted multi-tenant infrastructure managed by vendor',
     },
     {
@@ -634,16 +731,16 @@ export const siteConfig = {
   // ==========================================
   designTenets: [
     {
+      title: 'Living Documents as Core Operating Primitives',
+      desc: 'Requirements and architecture specs should not gather dust in static PDFs or remote cloud wikis. In PM Tool, living documents reside directly inside your workstation with snapshot revision trees, live markdown previews, and instant bridges into sprint backlogs.',
+    },
+    {
       title: 'Empirical Data Science Over Guesswork',
       desc: 'Great product decisions require numbers, not intuition alone. With built-in conversion funnels, cohort heatmaps, and correlation matrices, PM Tool puts professional analytical instruments directly at your fingertips.',
     },
     {
       title: 'INVEST-Grade Atomic Specifications',
       desc: 'Engineering teams need crisp, unambiguous requirements. Enforcing INVEST criteria, calibrated Fibonacci points, and 3 distinct Gherkin scenarios per story guarantees smooth sprint handoffs.',
-    },
-    {
-      title: 'Zero-Iframe SPA Speed',
-      desc: 'Desktop applications should feel instantaneous. Migrating to a single-DOM React 19 architecture eliminated iframe barriers, rendering complex dashboards, Kanban boards, and document editors with fluid 60fps transitions.',
     },
     {
       title: 'Local Control as a Foundational Default',
@@ -656,8 +753,31 @@ export const siteConfig = {
   // ==========================================
   releases: [
     {
-      version: 'v2.1.0',
+      version: 'v2.2.0',
       badge: 'CURRENT STABLE RELEASE',
+      title: 'Living Document Editor, Artifacts Studio & First-Launch Setup Wizard',
+      tagline: 'In-built living document editor (PranshulOS style), split-view markdown canvas, dedicated artifacts.db, and onboarding wizard.',
+      date: 'Oct 2026',
+      decisionRationale:
+        'Elevating PM Tool from prompt-and-export into a permanent living document operating environment. Built the Artifacts Studio in Docs View with Edit, Split (side-by-side synchronized preview), and Preview modes, rich markdown formatting toolbars, and template scaffolding. Isolated all document bodies, markdown ASTs, and revision snapshots into a dedicated artifacts.db SQLite engine with FTS5 sub-millisecond search to eliminate database bloat. Added a friction-free 3-step First-Launch Onboarding Wizard with local Ollama probing, and 1-click Copilot chat-to-artifact promotion.',
+      highlights: [
+        'Artifacts Studio in Docs View (ArtifactsStudio.tsx) with Edit, Split (synchronized live preview), and Preview modes',
+        'Segregated Database Architecture: dedicated %LOCALAPPDATA%\\PMTool\\artifacts.db strictly isolating document bodies and revisions',
+        'Sub-millisecond full-text search powered by SQLite FTS5 index (artifacts_fts)',
+        'Immutable Snapshot Revision History Tree (artifact_versions) with 1-click inspection and historical restoration',
+        'Built-in Living Document Templates: Product Requirement Document (PRD), Architecture RFC, Sprint Brief, and Blank',
+        'Debounced Auto-Save Engine with live status indicators ("All changes saved" / "Saving...") and live word counter',
+        'Multi-Format Export Engine: 1-click client-side export to Microsoft Word (.docx), Markdown (.md), and styled HTML',
+        'Direct 1-Click Bridge to Agile Decomposer (DecomposerModal.tsx) synthesizing INVEST stories straight from living document text',
+        'Direct 1-Click Bridge to vectorize and ingest living documents into RAG Knowledge Base',
+        'First-Launch Onboarding Wizard (OnboardingModal.tsx) guiding initiative setup, live Ollama probe, and keyboard shortcut tour',
+        'AI Copilot 1-Click "Save as Living Artifact" in ChatView.tsx promoting transient answers into permanent documents',
+      ],
+      isCurrent: true,
+    },
+    {
+      version: 'v2.1.0',
+      badge: 'SHIPPED',
       title: 'Advanced Analytics Workbench & Calibrated Agile Story Decomposer',
       tagline: 'Multi-stage conversion funnels, cohort retention heatmaps, correlation matrix, statistical outlier profiling, and INVEST atomic story decomposition with live pre-commit preview.',
       date: 'Oct 2026',
@@ -676,7 +796,7 @@ export const siteConfig = {
         'Calibrated Fibonacci point estimation (1, 2, 3, 5, 8, 13) based on architectural complexity and schema impact',
         'Live Pre-Commit Review Studio allowing engineers to inspect, adjust story points, and batch-commit approved stories to sprint backlog',
       ],
-      isCurrent: true,
+      isCurrent: false,
     },
     {
       version: 'v2.0.1',

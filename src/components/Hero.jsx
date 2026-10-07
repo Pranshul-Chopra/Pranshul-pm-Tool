@@ -34,14 +34,23 @@ import {
   CheckSquare,
   Square,
   Percent,
-  Calendar
+  Calendar,
+  Columns,
+  History,
+  BookOpen,
+  Edit3,
+  Bold,
+  Italic,
+  List,
+  Quote,
+  Code
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 import { PmtLogo } from './PmtLogo';
 import { siteConfig } from '../config/siteConfig';
 
 export function Hero({ onDownloadClick, onCopyToast }) {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('artifacts');
   const [dashboardSubView, setDashboardSubView] = useState('analytics');
   const [analyticsInstrument, setAnalyticsInstrument] = useState('funnel');
   const [activeTemplate, setActiveTemplate] = useState('prd');
@@ -51,12 +60,21 @@ export function Hero({ onDownloadClick, onCopyToast }) {
   const [newWidgetType, setNewWidgetType] = useState('kpi_card');
   const [newWidgetMetricOp, setNewWidgetMetricOp] = useState('SUM');
 
+  // Living Document Editor & Artifacts Studio State (v2.2.0)
+  const [artifactsDoc, setArtifactsDoc] = useState('prd');
+  const [artifactsMode, setArtifactsMode] = useState('split'); // 'split' | 'edit' | 'preview'
+  const [showRevisionHistory, setShowRevisionHistory] = useState(false);
+
+  // First-Launch Onboarding Wizard State (v2.2.0)
+  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+  const [onboardingStep, setOnboardingStep] = useState(1); // 1 | 2 | 3
+
   // Decomposer Studio Modal Simulator (v2.1.0)
   const [showDecomposerModal, setShowDecomposerModal] = useState(false);
   const [decomposerStep, setDecomposerStep] = useState('preview');
   const [decomposerPersona, setDecomposerPersona] = useState('End-User');
 
-  // What's New Modal (v2.1.0)
+  // What's New Modal (v2.2.0)
   const [showWhatsNew, setShowWhatsNew] = useState(false);
 
   const getBadgeIcon = (type) => {
@@ -76,11 +94,13 @@ export function Hero({ onDownloadClick, onCopyToast }) {
   };
 
   const spotlightCommands = [
+    { id: 'tab-artifacts', label: 'Open Living Docs & Artifacts Studio (Split Preview)', category: 'Docs Studio (v2.2)', shortcut: 'Ctrl+4', icon: FileText, action: () => { setActiveTab('artifacts'); setSpotlightOpen(false); } },
+    { id: 'open-onboarding', label: 'Launch First-Time Onboarding & Gateway Wizard', category: 'Experience (v2.2)', shortcut: '↵', icon: Sparkles, action: () => { setShowOnboardingModal(true); setSpotlightOpen(false); } },
     { id: 'tab-analytics', label: 'Open Advanced Analytics Workbench (Funnels & Cohorts)', category: 'Analytics (v2.1)', shortcut: 'Ctrl+3', icon: Activity, action: () => { setActiveTab('dashboard'); setDashboardSubView('analytics'); setSpotlightOpen(false); } },
     { id: 'open-decomposer', label: 'Decompose PRD with Pre-Commit Review (INVEST)', category: 'Agile (v2.1)', shortcut: '/breakdown', icon: Sparkles, action: () => { setShowDecomposerModal(true); setSpotlightOpen(false); } },
     { id: 'tab-board', label: 'Go to Sprint Kanban Board', category: 'Navigation', shortcut: 'Ctrl+2', icon: Kanban, action: () => { setActiveTab('board'); setSpotlightOpen(false); } },
     { id: 'tab-copilot', label: 'Open AI Copilot & Document Generator', category: 'Navigation', shortcut: 'Ctrl+5', icon: Bot, action: () => { setActiveTab('copilot'); setSpotlightOpen(false); } },
-    { id: 'tab-documents', label: 'Open Knowledge Base & FTS5 Search', category: 'Navigation', shortcut: 'Ctrl+4', icon: FileText, action: () => { setActiveTab('documents'); setSpotlightOpen(false); } },
+    { id: 'tab-documents', label: 'Open Knowledge Base & FTS5 Search', category: 'Navigation', shortcut: 'Ctrl+6', icon: BookOpen, action: () => { setActiveTab('documents'); setSpotlightOpen(false); } },
     { id: 'tab-workspace', label: 'Go to Workspace Overview', category: 'Navigation', shortcut: 'Ctrl+1', icon: FolderGit2, action: () => { setActiveTab('workspace'); setSpotlightOpen(false); } },
     { id: 'add-widget', label: '+ Add KPI Metric or Distribution Chart', category: 'Data Studio', shortcut: '↵', icon: Plus, action: () => { setActiveTab('dashboard'); setDashboardSubView('canvas'); setShowAddWidgetModal(true); setSpotlightOpen(false); } },
     { id: 'ingest-sqlite', label: 'Ingest Native SQLite Database (.db, .sqlite3)', category: 'Data Studio', shortcut: '↵', icon: Database, action: () => { setActiveTab('dashboard'); setDashboardSubView('datasets'); setSpotlightOpen(false); onCopyToast && onCopyToast('Opened SQLite Ingestion Dialog'); } },
@@ -196,7 +216,16 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               className="hidden lg:flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-gold/15 text-gold-bright border border-gold/30 hover:bg-gold/25 transition-colors"
             >
               <Sparkles className="w-3 h-3" />
-              <span>What's New in v2.1.0</span>
+              <span>What's New in v2.2.0</span>
+            </button>
+
+            {/* First-Launch Tour Pill */}
+            <button
+              onClick={() => setShowOnboardingModal(true)}
+              className="hidden xl:flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-white/[0.04] text-zinc-300 border border-white/10 hover:border-gold/30 hover:text-white transition-colors"
+            >
+              <BookOpen className="w-3 h-3 text-gold" />
+              <span>Setup Tour</span>
             </button>
 
             {/* Clickable Spotlight Command Palette Trigger */}
@@ -228,7 +257,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
             <div className="space-y-1">
               <div className="px-3 py-1.5 text-[10px] font-mono uppercase text-zinc-400 font-bold tracking-wider flex items-center justify-between">
                 <span>SPA Modules</span>
-                <span className="text-gold text-[9px] font-mono">v2.1.0</span>
+                <span className="text-gold text-[9px] font-mono">v2.2.0</span>
               </div>
 
               {/* Spotlight Trigger in Sidebar */}
@@ -292,16 +321,19 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               </button>
 
               <button 
-                onClick={() => setActiveTab('documents')}
+                onClick={() => setActiveTab('artifacts')}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-left transition-colors ${
-                  activeTab === 'documents' 
+                  activeTab === 'artifacts' 
                     ? 'bg-gold/15 text-gold-bright border border-gold/30' 
                     : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
                   <FileText className="w-3.5 h-3.5 text-gold" />
-                  <span>Knowledge Base</span>
+                  <span className="font-semibold flex items-center gap-1.5">
+                    <span>Living Docs</span>
+                    <span className="text-[9px] px-1 py-0.2 rounded bg-gold/20 text-gold-bright font-mono">v2.2</span>
+                  </span>
                 </div>
                 <kbd className="text-[9px] font-mono text-zinc-500">Ctrl+4</kbd>
               </button>
@@ -320,6 +352,21 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 </div>
                 <kbd className="text-[9px] font-mono text-zinc-500">Ctrl+5</kbd>
               </button>
+
+              <button 
+                onClick={() => setActiveTab('documents')}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-left transition-colors ${
+                  activeTab === 'documents' 
+                    ? 'bg-gold/15 text-gold-bright border border-gold/30' 
+                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <BookOpen className="w-3.5 h-3.5 text-gold" />
+                  <span>Knowledge Base</span>
+                </div>
+                <kbd className="text-[9px] font-mono text-zinc-500">Ctrl+6</kbd>
+              </button>
             </div>
 
             {/* Auto-Updater Status in Sidebar */}
@@ -332,10 +379,10 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 <span className="text-emerald-400">60m Polling</span>
               </div>
               <div className="text-[11px] font-mono text-zinc-300 truncate">
-                v2.1.0 (Codename Atlas)
+                v2.2.0 (Scribe & Foundry)
               </div>
               <div className="text-[10px] font-mono text-zinc-500 mt-1 truncate">
-                datasets\analytics_store.db
+                artifacts.db &bull; pmtool.db
               </div>
               <div className="flex items-center justify-between text-[10px] text-zinc-400 mt-2 font-mono">
                 <span>{siteConfig.hero.simulator.dbStats}</span>
@@ -346,7 +393,308 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           {/* Central Main Viewport */}
           <div className="md:col-span-9 p-4 sm:p-6 bg-[#0a0a0e] flex flex-col justify-between relative">
             
-            {/* VIEW 0: Data Studio & Advanced Analytics Workbench (NEW IN v2.1.0) */}
+            {/* VIEW -1: Living Document Editor & Artifacts Studio (NEW IN v2.2.0) */}
+            {activeTab === 'artifacts' && (
+              <div className="space-y-4">
+                {/* Header Controls Bar */}
+                <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                    <span className="text-xs font-mono text-white font-semibold">Living Artifacts Studio</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gold/15 text-gold-bright border border-gold/30">
+                      v2.2.0
+                    </span>
+                    <div className="hidden sm:flex items-center gap-1.5 ml-2 text-[10px] font-mono text-zinc-400">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span>All changes saved</span>
+                      <span className="text-zinc-600">&bull;</span>
+                      <span>1,248 words</span>
+                    </div>
+                  </div>
+
+                  {/* Mode & Action Controls */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    {/* View mode switcher */}
+                    <div className="flex items-center gap-0.5 bg-[#14141c] p-0.5 rounded-lg border border-white/10 text-[11px] font-mono">
+                      <button
+                        onClick={() => setArtifactsMode('split')}
+                        className={`flex items-center gap-1 px-2 py-0.5 rounded-md transition-colors ${
+                          artifactsMode === 'split'
+                            ? 'bg-gold text-zinc-950 font-bold'
+                            : 'text-zinc-400 hover:text-white'
+                        }`}
+                      >
+                        <Columns className="w-3 h-3" />
+                        <span>Split</span>
+                      </button>
+                      <button
+                        onClick={() => setArtifactsMode('edit')}
+                        className={`flex items-center gap-1 px-2 py-0.5 rounded-md transition-colors ${
+                          artifactsMode === 'edit'
+                            ? 'bg-gold text-zinc-950 font-bold'
+                            : 'text-zinc-400 hover:text-white'
+                        }`}
+                      >
+                        <Edit3 className="w-3 h-3" />
+                        <span>Edit</span>
+                      </button>
+                      <button
+                        onClick={() => setArtifactsMode('preview')}
+                        className={`flex items-center gap-1 px-2 py-0.5 rounded-md transition-colors ${
+                          artifactsMode === 'preview'
+                            ? 'bg-gold text-zinc-950 font-bold'
+                            : 'text-zinc-400 hover:text-white'
+                        }`}
+                      >
+                        <BookOpen className="w-3 h-3" />
+                        <span>Preview</span>
+                      </button>
+                    </div>
+
+                    {/* Bridges: Decomposer & Export */}
+                    <button
+                      onClick={() => setShowDecomposerModal(true)}
+                      className="px-2 py-1 rounded-lg bg-gold/15 hover:bg-gold/25 text-gold-bright border border-gold/40 text-[10px] font-mono font-bold flex items-center gap-1 transition-all"
+                      title="Decompose living document into INVEST user stories"
+                    >
+                      <Sparkles className="w-3 h-3 text-gold" />
+                      <span>Decompose</span>
+                    </button>
+
+                    <button
+                      onClick={() => setShowRevisionHistory(!showRevisionHistory)}
+                      className={`px-2 py-1 rounded-lg border text-[10px] font-mono flex items-center gap-1 transition-all ${
+                        showRevisionHistory
+                          ? 'bg-gold text-zinc-950 font-bold border-gold'
+                          : 'bg-surface text-zinc-400 hover:text-white border-white/10'
+                      }`}
+                    >
+                      <History className="w-3 h-3" />
+                      <span>History (4)</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Document Selector Pills */}
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 text-[11px] font-mono">
+                  {[
+                    { id: 'prd', label: 'PRD: Conversion Analytics Engine', type: 'prd', tag: 'Approved' },
+                    { id: 'rfc', label: 'RFC: Four-Database Segregated SQLite', type: 'rfc', tag: 'Review' },
+                    { id: 'brief', label: 'Sprint Brief: Scribe Release v2.2', type: 'brief', tag: 'In Progress' },
+                  ].map((doc) => (
+                    <button
+                      key={doc.id}
+                      onClick={() => setArtifactsDoc(doc.id)}
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap ${
+                        artifactsDoc === doc.id
+                          ? 'bg-gold/20 border-gold text-gold-bright font-bold'
+                          : 'bg-surface border-white/10 text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      <FileText className="w-3 h-3 text-gold" />
+                      <span>{doc.label}</span>
+                      <span className="text-[9px] px-1 py-0.2 rounded bg-white/[0.06] text-zinc-300">
+                        {doc.tag}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Studio Canvas Area */}
+                <div className="relative">
+                  {/* Revision History Slide-Over Drawer */}
+                  {showRevisionHistory && (
+                    <div className="absolute inset-0 z-20 bg-[#0e0e14]/95 backdrop-blur-md rounded-xl border border-gold/40 p-4 font-mono text-xs space-y-3 animate-in fade-in zoom-in-95 duration-150">
+                      <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
+                        <span className="font-bold text-white flex items-center gap-2">
+                          <History className="w-4 h-4 text-gold" />
+                          <span>Snapshot Revision History Tree (artifacts_versions)</span>
+                        </span>
+                        <button onClick={() => setShowRevisionHistory(false)} className="text-zinc-400 hover:text-white">
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      <div className="space-y-2">
+                        {[
+                          { ver: 'v4', time: '15 mins ago (Current)', note: 'Refined INVEST acceptance criteria & Gherkin scenarios', isCurrent: true },
+                          { ver: 'v3', time: 'Today 13:10', note: 'Added four-database architecture and artifacts.db storage contract', isCurrent: false },
+                          { ver: 'v2', time: 'Yesterday 18:45', note: 'Promoted from AI Copilot markdown assistant response', isCurrent: false },
+                          { ver: 'v1', time: 'Oct 06, 2026', note: 'Initialized from Standard PRD executive template', isCurrent: false },
+                        ].map((rev) => (
+                          <div
+                            key={rev.ver}
+                            className={`p-2.5 rounded-lg border flex items-center justify-between ${
+                              rev.isCurrent
+                                ? 'bg-gold/15 border-gold/50 text-gold-bright'
+                                : 'bg-surface border-white/10 text-zinc-300'
+                            }`}
+                          >
+                            <div className="space-y-0.5">
+                              <div className="flex items-center gap-2">
+                                <span className="font-bold">{rev.ver}</span>
+                                <span className="text-[10px] text-zinc-400">{rev.time}</span>
+                                {rev.isCurrent && (
+                                  <span className="text-[9px] px-1 rounded bg-gold/20 text-gold-bright font-bold">ACTIVE</span>
+                                )}
+                              </div>
+                              <div className="text-[11px] text-zinc-400">{rev.note}</div>
+                            </div>
+                            <button
+                              onClick={() => {
+                                setShowRevisionHistory(false);
+                                onCopyToast && onCopyToast(`Restored snapshot ${rev.ver} from artifacts.db`);
+                              }}
+                              className="px-2.5 py-1 rounded bg-white/[0.06] hover:bg-gold hover:text-zinc-950 text-[10px] text-zinc-300 font-bold transition-all"
+                            >
+                              Restore
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="text-[10px] text-zinc-500 pt-1">
+                        Snapshot tree stored in <code>%LOCALAPPDATA%\PMTool\artifacts.db</code> with immutable diff rollback.
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Split View: Editor + Live Synchronized Preview */}
+                  {artifactsMode === 'split' && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 min-h-[310px] font-mono text-xs">
+                      {/* Left: Markdown Drafting Pane with Toolbar */}
+                      <div className="bg-[#111116] rounded-xl border border-white/10 p-3 flex flex-col justify-between">
+                        <div>
+                          {/* Markdown formatting toolbar */}
+                          <div className="flex items-center gap-1 pb-2 mb-2 border-b border-white/[0.06] text-zinc-400 text-[10px] overflow-x-auto">
+                            <button className="p-1 hover:text-white rounded hover:bg-white/[0.04] font-bold">B</button>
+                            <button className="p-1 hover:text-white rounded hover:bg-white/[0.04] italic font-serif">I</button>
+                            <button className="p-1 hover:text-white rounded hover:bg-white/[0.04]">H1</button>
+                            <button className="p-1 hover:text-white rounded hover:bg-white/[0.04]">H2</button>
+                            <button className="p-1 hover:text-white rounded hover:bg-white/[0.04]">`Code`</button>
+                            <button className="p-1 hover:text-white rounded hover:bg-white/[0.04]">&ldquo;Quote&rdquo;</button>
+                            <button className="p-1 hover:text-white rounded hover:bg-white/[0.04]">Table</button>
+                            <button className="p-1 hover:text-white rounded hover:bg-white/[0.04]">[x] Task</button>
+                          </div>
+
+                          <div className="space-y-1 text-zinc-300 text-[11px] leading-relaxed">
+                            <div className="text-gold font-bold"># PRD-2026: Conversion Analytics & Living Docs</div>
+                            <div className="text-zinc-500">## 1. Executive Summary & Problem</div>
+                            <div className="text-zinc-300 pl-2">Product managers require on-device living documents with zero database bloat and instant PRD-to-sprint bridges.</div>
+                            <div className="text-zinc-500">## 2. Core Functional Requirements</div>
+                            <div className="text-zinc-400 pl-2">- [x] Multi-mode Markdown editing: Split & Preview</div>
+                            <div className="text-zinc-400 pl-2">- [x] Segregated artifacts.db with SQLite FTS5</div>
+                            <div className="text-zinc-400 pl-2">- [ ] Subnet peer-to-peer sync (Target: v2.3)</div>
+                            <div className="text-zinc-500">## 3. Database Architecture</div>
+                            <div className="text-zinc-400 bg-black/40 p-1.5 rounded text-[10px]">
+                              <code>CREATE VIRTUAL TABLE artifacts_fts USING fts5...</code>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[10px] text-zinc-500">
+                          <span>Markdown Source Pane</span>
+                          <span className="text-gold">artifacts.db (FTS5)</span>
+                        </div>
+                      </div>
+
+                      {/* Right: Rich Styled Preview */}
+                      <div className="bg-[#0e0e14] rounded-xl border border-gold/40 p-4 space-y-2.5 overflow-hidden">
+                        <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                          <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                            <Sparkles className="w-3 h-3 text-gold-bright" />
+                            <span>PRD: Conversion Analytics & Living Docs</span>
+                          </span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-green-500/10 text-green-400 border border-green-500/20">
+                            v2.2.0 Spec
+                          </span>
+                        </div>
+
+                        <div className="p-2.5 rounded bg-surface/80 border border-gold/20 text-[11px] text-zinc-300 leading-relaxed">
+                          <strong className="text-gold-bright">Executive Summary:</strong> Deliver an on-device living document editor with synchronized split preview, snapshot revision trees, and direct 1-click bridges into sprint backlogs.
+                        </div>
+
+                        <div className="space-y-1 text-[11px]">
+                          <div className="text-white font-bold text-[10px] uppercase tracking-wider">Functional Requirements Checklist:</div>
+                          <div className="space-y-0.5 text-zinc-300">
+                            <div className="flex items-center gap-1.5 text-emerald-400">
+                              <CheckSquare className="w-3 h-3" />
+                              <span>Multi-mode Markdown editing: Split, Edit, Preview</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-emerald-400">
+                              <CheckSquare className="w-3 h-3" />
+                              <span>Segregated artifacts.db with SQLite FTS5 search</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-zinc-500">
+                              <Square className="w-3 h-3" />
+                              <span>Subnet peer-to-peer sync (Target: v2.3)</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[10px] text-zinc-400">
+                          <span>Live Synchronized Preview</span>
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              onClick={() => setShowDecomposerModal(true)}
+                              className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold hover:bg-purple-500/30"
+                            >
+                              ⚡ Decompose
+                            </button>
+                            <button
+                              onClick={() => onCopyToast && onCopyToast('Exported styled Microsoft Word (.docx)')}
+                              className="px-2 py-0.5 rounded bg-gold text-zinc-950 font-bold hover:brightness-110"
+                            >
+                              📥 .docx
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Edit Only View */}
+                  {artifactsMode === 'edit' && (
+                    <div className="bg-[#111116] rounded-xl border border-white/10 p-4 min-h-[310px] font-mono text-xs space-y-3">
+                      <div className="text-zinc-400 text-[11px]">Full-Canvas Distraction-Free Markdown Drafting:</div>
+                      <textarea
+                        readOnly
+                        className="w-full h-56 bg-transparent text-zinc-200 resize-none focus:outline-none leading-relaxed text-[11px]"
+                        value={`# PRD-2026: Conversion Analytics & Living Docs Studio
+Author: Product & Platform Engineering
+Status: Approved Draft (Target: v2.2.0)
+
+## 1. Problem Statement
+Product managers need an in-built living document editor rather than relying on external cloud SaaS wikis.
+
+## 2. Architecture & Database Isolation
+All document bodies and AST revisions are persisted in %LOCALAPPDATA%\\PMTool\\artifacts.db to guarantee zero bloat on pmtool.db.`}
+                      />
+                    </div>
+                  )}
+
+                  {/* Preview Only View */}
+                  {artifactsMode === 'preview' && (
+                    <div className="bg-[#0e0e14] rounded-xl border border-gold/40 p-6 min-h-[310px] font-mono text-xs space-y-4">
+                      <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
+                        <h2 className="text-base font-bold text-white">PRD: Conversion Analytics & Living Docs Studio</h2>
+                        <span className="text-[10px] px-2 py-0.5 rounded bg-gold/15 text-gold-bright border border-gold/30">
+                          Publication-Ready Draft
+                        </span>
+                      </div>
+                      <p className="text-xs text-zinc-300 leading-relaxed">
+                        PM Tool v2.2.0 introduces an in-built living document editor for PRDs and architecture RFCs (PranshulOS style), contextual AI artifacts promotion, isolated database architecture (artifacts.db), and a friction-free first-launch onboarding wizard.
+                      </p>
+                      <div className="p-3 bg-surface rounded-lg border border-white/10 text-[11px] text-zinc-400">
+                        Export formatted copies with 1-click Microsoft Word (.docx), Markdown (.md), and styled HTML.
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* VIEW 0: Data Studio & Advanced Analytics Workbench (v2.1.0) */}
             {activeTab === 'dashboard' && (
               <div className="space-y-4">
                 {/* Header Controls Bar */}
@@ -1022,35 +1370,238 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               </div>
             )}
 
-            {/* What's New in v2.1.0 Modal */}
+            {/* What's New in v2.2.0 Modal (Codename Scribe & Foundry) */}
             {showWhatsNew && (
               <div className="absolute inset-0 z-40 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-                <div className="bg-[#121218] border border-gold/40 rounded-2xl w-full max-w-lg shadow-2xl p-5 font-mono text-xs space-y-4">
+                <div className="bg-[#121218] border border-gold/40 rounded-2xl w-full max-w-lg shadow-2xl p-5 font-mono text-xs space-y-4 animate-in fade-in zoom-in-95 duration-150">
                   <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-gold-bright" />
-                      <span className="text-white font-bold text-sm">What's New in PM Tool v2.1.0 (Codename Atlas)</span>
+                      <span className="text-white font-bold text-sm">What's New in PM Tool v2.2.0 (Scribe & Foundry)</span>
                     </div>
                     <button onClick={() => setShowWhatsNew(false)} className="text-zinc-400 hover:text-white">
                       <X className="w-4 h-4" />
                     </button>
                   </div>
-                  <div className="space-y-2 text-zinc-300">
-                    <div className="p-2 rounded bg-surface border border-gold/30">
-                      <div className="text-gold font-bold">📈 Advanced Analytics Workbench</div>
-                      <div className="text-[11px] text-zinc-400">Multi-stage conversion funnels, MoM cohort retention matrix heatmaps, Tukey IQR & Z-score outlier detection, and Pearson correlation grids.</div>
+                  <div className="space-y-2.5 text-zinc-300 max-h-72 overflow-y-auto pr-1">
+                    <div className="p-2.5 rounded-lg bg-surface border border-gold/40 space-y-1">
+                      <div className="text-gold font-bold flex items-center gap-1.5">
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>Living Document Editor & Artifacts Studio</span>
+                      </div>
+                      <div className="text-[11px] text-zinc-400 leading-relaxed">
+                        In-built living document workstation (PranshulOS style) supporting Edit, Split (side-by-side synchronized preview), and Preview modes for PRDs and architecture RFCs with template picker and debounced auto-save.
+                      </div>
                     </div>
-                    <div className="p-2 rounded bg-surface border border-white/10">
-                      <div className="text-white font-bold">🤖 Calibrated INVEST Story Decomposer</div>
-                      <div className="text-[11px] text-zinc-400">Atomic story slicing with 3 distinct Gherkin scenarios (Happy, Negative, Boundary), calibrated Fibonacci points, and live pre-commit approval.</div>
+
+                    <div className="p-2.5 rounded-lg bg-surface border border-white/10 space-y-1">
+                      <div className="text-white font-bold flex items-center gap-1.5">
+                        <Database className="w-3.5 h-3.5 text-gold-bright" />
+                        <span>Segregated artifacts.db SQLite Engine</span>
+                      </div>
+                      <div className="text-[11px] text-zinc-400 leading-relaxed">
+                        Dedicated SQLite database strictly isolating document bodies and revision snapshots from pmtool.db, featuring SQLite FTS5 search index and 1-click snapshot restoration.
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-lg bg-surface border border-white/10 space-y-1">
+                      <div className="text-white font-bold flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-gold" />
+                        <span>First-Launch Onboarding Wizard</span>
+                      </div>
+                      <div className="text-[11px] text-zinc-400 leading-relaxed">
+                        Friction-free 3-step setup wizard guiding first-time users through initial project creation, live local Ollama probe, and keyboard navigation shortcuts.
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-lg bg-surface border border-white/10 space-y-1">
+                      <div className="text-white font-bold flex items-center gap-1.5">
+                        <Bot className="w-3.5 h-3.5 text-purple-400" />
+                        <span>1-Click AI Chat-to-Artifact Promotion</span>
+                      </div>
+                      <div className="text-[11px] text-zinc-400 leading-relaxed">
+                        Promote transient Copilot assistant chat responses directly into permanent, version-controlled living documents in artifacts.db.
+                      </div>
                     </div>
                   </div>
                   <button
                     onClick={() => setShowWhatsNew(false)}
-                    className="w-full py-2 rounded-lg bg-gold text-zinc-950 font-bold hover:brightness-110"
+                    className="w-full py-2 rounded-lg bg-gold text-zinc-950 font-bold hover:brightness-110 shadow-md shadow-gold/20"
                   >
                     Got It &bull; Explore Workstation
                   </button>
+                </div>
+              </div>
+            )}
+
+            {/* First-Launch Onboarding Wizard Simulator (v2.2.0) */}
+            {showOnboardingModal && (
+              <div className="absolute inset-0 z-40 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+                <div className="bg-[#121218] border border-gold/40 rounded-2xl w-full max-w-xl shadow-2xl p-5 font-mono text-xs space-y-4 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-gold-bright" />
+                      <span className="text-white font-bold text-sm">
+                        Welcome to PM Tool &bull; Setup Wizard (Step {onboardingStep} of 3)
+                      </span>
+                    </div>
+                    <button onClick={() => setShowOnboardingModal(false)} className="text-zinc-400 hover:text-white">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Step 1: Workspace & Initiative */}
+                  {onboardingStep === 1 && (
+                    <div className="space-y-3">
+                      <div>
+                        <div className="text-white font-bold text-xs mb-1">Step 1: Workspace & Initiative Setup</div>
+                        <div className="text-[11px] text-zinc-400">Initialize your local product repository and tech stack constraints.</div>
+                      </div>
+
+                      <div className="space-y-2 bg-surface p-3 rounded-xl border border-white/10">
+                        <div>
+                          <label className="text-[10px] text-zinc-400 uppercase font-bold block mb-1">Initiative Name</label>
+                          <input
+                            type="text"
+                            readOnly
+                            value="Atlas Analytics Engine"
+                            className="w-full bg-[#161620] border border-white/10 rounded px-2.5 py-1 text-white text-[11px]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="text-[10px] text-zinc-400 uppercase font-bold block mb-1">Domain Preset</label>
+                          <div className="flex flex-wrap gap-1">
+                            {['Enterprise SaaS', 'Developer Tools', 'AI / ML Platform', 'FinTech'].map((d, i) => (
+                              <span
+                                key={d}
+                                className={`px-2 py-0.5 rounded text-[10px] border ${
+                                  i === 0
+                                    ? 'bg-gold/20 border-gold text-gold-bright font-bold'
+                                    : 'bg-surface border-white/10 text-zinc-400'
+                                }`}
+                              >
+                                {d}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="text-[10px] text-zinc-400 uppercase font-bold block mb-1">Technology Stack</label>
+                          <div className="text-[11px] text-zinc-300 bg-[#161620] p-1.5 rounded border border-white/06">
+                            React 19, TypeScript, Python 3.12, SQLite WAL
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-1 text-[11px] text-zinc-300">
+                          <CheckSquare className="w-3.5 h-3.5 text-gold-bright" />
+                          <span>Generate initial calibrated INVEST user stories for sprint backlog</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 2: AI Gateway Probe */}
+                  {onboardingStep === 2 && (
+                    <div className="space-y-3">
+                      <div>
+                        <div className="text-white font-bold text-xs mb-1">Step 2: AI Gateway Connectivity Probe</div>
+                        <div className="text-[11px] text-zinc-400">Probe running local inference servers or configure optional cloud keys.</div>
+                      </div>
+
+                      <div className="bg-surface p-3 rounded-xl border border-gold/40 space-y-2.5">
+                        <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
+                          <span className="font-bold text-white flex items-center gap-1.5">
+                            <Cpu className="w-3.5 h-3.5 text-gold" />
+                            <span>Local Ollama Probe (localhost:11434)</span>
+                          </span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-green-500/10 text-green-400 border border-green-500/20 font-bold">
+                            CONNECTED
+                          </span>
+                        </div>
+
+                        <div className="text-[11px] text-zinc-300 space-y-1">
+                          <div>&bull; <strong>Detected Models:</strong> llama3.2:latest, mistral:7b-instruct, gemma2:9b</div>
+                          <div>&bull; <strong>Active Selection:</strong> llama3.2:latest (Local Offline Mode)</div>
+                          <div>&bull; <strong>Output Budget:</strong> 8,192 tokens</div>
+                        </div>
+
+                        <div className="p-2 rounded bg-[#0b0b10] border border-white/[0.06] text-[10px] text-zinc-400">
+                          Zero external network calls required for local inference. Optional Google Gemini & OpenAI keys can be added in Settings.
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 3: Workstation Tour */}
+                  {onboardingStep === 3 && (
+                    <div className="space-y-3">
+                      <div>
+                        <div className="text-white font-bold text-xs mb-1">Step 3: Workstation Spotlight & Keyboard Tour</div>
+                        <div className="text-[11px] text-zinc-400">Master global keybindings for zero-latency desktop navigation.</div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <div className="p-2.5 rounded-lg bg-surface border border-gold/30 space-y-1">
+                          <div className="text-gold font-bold flex items-center justify-between">
+                            <span>Spotlight</span>
+                            <kbd className="px-1 text-[9px] bg-black/40 rounded border border-gold/30">Ctrl+K</kbd>
+                          </div>
+                          <div className="text-[10px] text-zinc-400">Raycast-style fuzzy search across all views and actions.</div>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-surface border border-white/10 space-y-1">
+                          <div className="text-white font-bold flex items-center justify-between">
+                            <span>Living Docs</span>
+                            <kbd className="px-1 text-[9px] bg-black/40 rounded border border-white/10">Ctrl+4</kbd>
+                          </div>
+                          <div className="text-[10px] text-zinc-400">Split-view PRD and RFC editor with revision history.</div>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-surface border border-white/10 space-y-1">
+                          <div className="text-white font-bold flex items-center justify-between">
+                            <span>Toggle Sidebar</span>
+                            <kbd className="px-1 text-[9px] bg-black/40 rounded border border-white/10">Ctrl+B</kbd>
+                          </div>
+                          <div className="text-[10px] text-zinc-400">Maximize canvas workspace on compact screens.</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Wizard Footer Navigation */}
+                  <div className="flex items-center justify-between pt-2 border-t border-white/[0.08]">
+                    <button
+                      onClick={() => setOnboardingStep((s) => (s > 1 ? s - 1 : 1))}
+                      disabled={onboardingStep === 1}
+                      className="px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white disabled:opacity-30 disabled:pointer-events-none"
+                    >
+                      Back
+                    </button>
+
+                    {onboardingStep < 3 ? (
+                      <button
+                        onClick={() => setOnboardingStep((s) => (s < 3 ? s + 1 : 3))}
+                        className="px-4 py-1.5 rounded-lg bg-gold text-zinc-950 font-bold hover:brightness-110 flex items-center gap-1.5"
+                      >
+                        <span>Continue</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setShowOnboardingModal(false);
+                          setOnboardingStep(1);
+                          onCopyToast && onCopyToast('Onboarding completed! Initial project and seed backlog initialized.');
+                        }}
+                        className="px-4 py-1.5 rounded-lg bg-gold text-zinc-950 font-bold hover:brightness-110 flex items-center gap-1.5 shadow-md shadow-gold/20"
+                      >
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                        <span>Enter Workstation</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
