@@ -94,11 +94,12 @@ export function Hero({ onDownloadClick, onCopyToast }) {
   };
 
   const spotlightCommands = [
+    { id: 'tab-outposts', label: 'Configure Jira & Notion Outposts (Pre-Sync Snapshots)', category: 'Outposts (v2.2.5)', shortcut: '↵', icon: ShieldCheck, action: () => { setActiveTab('board'); setSpotlightOpen(false); onCopyToast && onCopyToast('Opened Jira Outpost Link & Pre-Sync Safety Dialog'); } },
     { id: 'tab-artifacts', label: 'Open Living Docs & Artifacts Studio (Split Preview)', category: 'Docs Studio (v2.2)', shortcut: 'Ctrl+4', icon: FileText, action: () => { setActiveTab('artifacts'); setSpotlightOpen(false); } },
     { id: 'open-onboarding', label: 'Launch First-Time Onboarding & Gateway Wizard', category: 'Experience (v2.2)', shortcut: '↵', icon: Sparkles, action: () => { setShowOnboardingModal(true); setSpotlightOpen(false); } },
     { id: 'tab-analytics', label: 'Open Advanced Analytics Workbench (Funnels & Cohorts)', category: 'Analytics (v2.1)', shortcut: 'Ctrl+3', icon: Activity, action: () => { setActiveTab('dashboard'); setDashboardSubView('analytics'); setSpotlightOpen(false); } },
     { id: 'open-decomposer', label: 'Decompose PRD with Pre-Commit Review (INVEST)', category: 'Agile (v2.1)', shortcut: '/breakdown', icon: Sparkles, action: () => { setShowDecomposerModal(true); setSpotlightOpen(false); } },
-    { id: 'tab-board', label: 'Go to Sprint Kanban Board', category: 'Navigation', shortcut: 'Ctrl+2', icon: Kanban, action: () => { setActiveTab('board'); setSpotlightOpen(false); } },
+    { id: 'tab-board', label: 'Go to Sprint Kanban Board (Jira Outpost)', category: 'Navigation', shortcut: 'Ctrl+2', icon: Kanban, action: () => { setActiveTab('board'); setSpotlightOpen(false); } },
     { id: 'tab-copilot', label: 'Open AI Copilot & Document Generator', category: 'Navigation', shortcut: 'Ctrl+5', icon: Bot, action: () => { setActiveTab('copilot'); setSpotlightOpen(false); } },
     { id: 'tab-documents', label: 'Open Knowledge Base & FTS5 Search', category: 'Navigation', shortcut: 'Ctrl+6', icon: BookOpen, action: () => { setActiveTab('documents'); setSpotlightOpen(false); } },
     { id: 'tab-workspace', label: 'Go to Workspace Overview', category: 'Navigation', shortcut: 'Ctrl+1', icon: FolderGit2, action: () => { setActiveTab('workspace'); setSpotlightOpen(false); } },
@@ -169,11 +170,11 @@ export function Hero({ onDownloadClick, onCopyToast }) {
           </a>
 
           <button
-            onClick={() => setShowDecomposerModal(true)}
+            onClick={() => setShowWhatsNew(true)}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-mono text-xs text-gold-bright bg-gold/10 hover:bg-gold/20 border border-gold/30 transition-all"
           >
             <Sparkles className="w-3.5 h-3.5 text-gold" />
-            <span>Test Story Decomposer (v2.1)</span>
+            <span>Explore Outposts & Nexus (v2.2.5)</span>
           </button>
         </div>
 
@@ -216,7 +217,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
               className="hidden lg:flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-gold/15 text-gold-bright border border-gold/30 hover:bg-gold/25 transition-colors"
             >
               <Sparkles className="w-3 h-3" />
-              <span>What's New in v2.2.0</span>
+              <span>What's New in v2.2.5</span>
             </button>
 
             {/* First-Launch Tour Pill */}
@@ -257,7 +258,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
             <div className="space-y-1">
               <div className="px-3 py-1.5 text-[10px] font-mono uppercase text-zinc-400 font-bold tracking-wider flex items-center justify-between">
                 <span>SPA Modules</span>
-                <span className="text-gold text-[9px] font-mono">v2.2.0</span>
+                <span className="text-gold text-[9px] font-mono">v2.2.5</span>
               </div>
 
               {/* Spotlight Trigger in Sidebar */}
@@ -379,10 +380,10 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                 <span className="text-emerald-400">60m Polling</span>
               </div>
               <div className="text-[11px] font-mono text-zinc-300 truncate">
-                v2.2.0 (Scribe & Foundry)
+                v2.2.5 (Outpost & Nexus)
               </div>
               <div className="text-[10px] font-mono text-zinc-500 mt-1 truncate">
-                artifacts.db &bull; pmtool.db
+                outpost_configs &bull; artifacts.db
               </div>
               <div className="flex items-center justify-between text-[10px] text-zinc-400 mt-2 font-mono">
                 <span>{siteConfig.hero.simulator.dbStats}</span>
@@ -402,7 +403,7 @@ export function Hero({ onDownloadClick, onCopyToast }) {
                     <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
                     <span className="text-xs font-mono text-white font-semibold">Living Artifacts Studio</span>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gold/15 text-gold-bright border border-gold/30">
-                      v2.2.0
+                      Living Docs
                     </span>
                     <div className="hidden sm:flex items-center gap-1.5 ml-2 text-[10px] font-mono text-zinc-400">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -1075,8 +1076,36 @@ All document bodies and AST revisions are persisted in %LOCALAPPDATA%\\PMTool\\a
 
             {/* VIEW 1: Sprint Kanban Board */}
             {activeTab === 'board' && (
-              <div className="space-y-4 font-mono text-xs">
-                <div className="grid grid-cols-4 gap-2 bg-[#14141c] p-3 rounded-xl border border-white/[0.08]">
+              <div className="space-y-3 font-mono text-xs">
+                {/* Outpost Status Subheader */}
+                <div className="flex flex-wrap items-center justify-between p-2 rounded-xl bg-[#14141c] border border-gold/30 gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="font-bold text-white text-[11px]">Jira Outpost: ATLAS-PROJ</span>
+                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-blue-500/15 text-blue-300 border border-blue-500/30">
+                      Two-Way Sync Active
+                    </span>
+                    <span className="text-[9px] text-zinc-500 hidden sm:inline">&bull;</span>
+                    <span className="text-[10px] text-zinc-400 hidden sm:inline">Pre-Sync Snapshot: Verified</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={() => onCopyToast && onCopyToast('Pre-sync safety backup snapshot verified (%LOCALAPPDATA%\\PMTool\\backups)')}
+                      className="px-2 py-0.5 rounded text-[10px] bg-white/[0.04] text-zinc-300 border border-white/10 hover:border-gold/30"
+                    >
+                      🛡️ Snapshot Safe
+                    </button>
+                    <button
+                      onClick={() => onCopyToast && onCopyToast('Synchronized 22 issues with Atlassian Jira Cloud v3')}
+                      className="px-2 py-0.5 rounded text-[10px] bg-gold text-zinc-950 font-bold hover:brightness-110 flex items-center gap-1"
+                    >
+                      <RefreshCw className="w-2.5 h-2.5" />
+                      <span>Sync Jira</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-4 gap-2 bg-[#14141c] p-2.5 rounded-xl border border-white/[0.08]">
                   <div>
                     <div className="text-[10px] text-zinc-400 uppercase">Total Tasks</div>
                     <div className="text-base font-bold text-white">22</div>
@@ -1103,7 +1132,7 @@ All document bodies and AST revisions are persisted in %LOCALAPPDATA%\\PMTool\\a
                     <span className="text-[10px] uppercase font-bold text-zinc-400">Backlog (3)</span>
                     <div className="bg-surface p-2 rounded-lg border border-white/[0.06] space-y-1">
                       <div className="flex items-center justify-between text-[9px]">
-                        <span className="px-1 rounded bg-blue-500/20 text-blue-300">P2 Medium</span>
+                        <span className="px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-bold">ATLAS-104 ↗</span>
                         <span className="px-1 rounded bg-white/[0.06] text-gold font-bold">3 pts</span>
                       </div>
                       <div className="text-white text-[11px] font-semibold">Pearson correlation matrix</div>
@@ -1114,7 +1143,7 @@ All document bodies and AST revisions are persisted in %LOCALAPPDATA%\\PMTool\\a
                     <span className="text-[10px] uppercase font-bold text-gold">In Progress (2)</span>
                     <div className="bg-surface p-2 rounded-lg border border-gold/40 space-y-1">
                       <div className="flex items-center justify-between text-[9px]">
-                        <span className="px-1 rounded bg-red-500/20 text-red-300">P0 Critical</span>
+                        <span className="px-1.5 py-0.2 rounded bg-gold/20 text-gold-bright font-bold">ATLAS-102 ↗</span>
                         <span className="px-1 rounded bg-gold/20 text-gold-bright font-bold">5 pts</span>
                       </div>
                       <div className="text-white text-[11px] font-semibold">Cohort retention heatmaps</div>
@@ -1125,7 +1154,7 @@ All document bodies and AST revisions are persisted in %LOCALAPPDATA%\\PMTool\\a
                     <span className="text-[10px] uppercase font-bold text-zinc-400">Review (1)</span>
                     <div className="bg-surface p-2 rounded-lg border border-white/[0.06] space-y-1">
                       <div className="flex items-center justify-between text-[9px]">
-                        <span className="px-1 rounded bg-purple-500/20 text-purple-300">P1 High</span>
+                        <span className="px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 font-bold">ATLAS-98 ↗</span>
                         <span className="px-1 rounded bg-white/[0.06] text-gold font-bold">5 pts</span>
                       </div>
                       <div className="text-white text-[11px] font-semibold">Pre-commit review studio</div>
@@ -1136,10 +1165,10 @@ All document bodies and AST revisions are persisted in %LOCALAPPDATA%\\PMTool\\a
                     <span className="text-[10px] uppercase font-bold text-green-400">Done (16)</span>
                     <div className="bg-surface p-2 rounded-lg border border-green-500/20 space-y-1 opacity-80">
                       <div className="flex items-center justify-between text-[9px]">
-                        <span className="px-1 rounded bg-green-500/20 text-green-300">Shipped</span>
+                        <span className="px-1.5 py-0.2 rounded bg-green-500/20 text-green-300 font-bold">ATLAS-91 ↗</span>
                         <span className="text-zinc-500">8 pts</span>
                       </div>
-                      <div className="text-white text-[11px] line-through font-semibold">INVEST Decomposer Overhaul</div>
+                      <div className="text-white text-[11px] line-through font-semibold">Hexagonal Nexus & Outposts</div>
                     </div>
                   </div>
                 </div>
@@ -1370,14 +1399,14 @@ All document bodies and AST revisions are persisted in %LOCALAPPDATA%\\PMTool\\a
               </div>
             )}
 
-            {/* What's New in v2.2.0 Modal (Codename Scribe & Foundry) */}
+            {/* What's New in v2.2.5 Modal (Codename Outpost & Nexus) */}
             {showWhatsNew && (
               <div className="absolute inset-0 z-40 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
                 <div className="bg-[#121218] border border-gold/40 rounded-2xl w-full max-w-lg shadow-2xl p-5 font-mono text-xs space-y-4 animate-in fade-in zoom-in-95 duration-150">
                   <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-gold-bright" />
-                      <span className="text-white font-bold text-sm">What's New in PM Tool v2.2.0 (Scribe & Foundry)</span>
+                      <span className="text-white font-bold text-sm">What's New in PM Tool v2.2.5 (Outpost & Nexus)</span>
                     </div>
                     <button onClick={() => setShowWhatsNew(false)} className="text-zinc-400 hover:text-white">
                       <X className="w-4 h-4" />
@@ -1386,41 +1415,51 @@ All document bodies and AST revisions are persisted in %LOCALAPPDATA%\\PMTool\\a
                   <div className="space-y-2.5 text-zinc-300 max-h-72 overflow-y-auto pr-1">
                     <div className="p-2.5 rounded-lg bg-surface border border-gold/40 space-y-1">
                       <div className="text-gold font-bold flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5" />
-                        <span>Living Document Editor & Artifacts Studio</span>
+                        <Zap className="w-3.5 h-3.5 text-gold-bright" />
+                        <span>Hexagonal Architecture Nexus & 100% Local Parity</span>
                       </div>
                       <div className="text-[11px] text-zinc-400 leading-relaxed">
-                        In-built living document workstation (PranshulOS style) supporting Edit, Split (side-by-side synchronized preview), and Preview modes for PRDs and architecture RFCs with template picker and debounced auto-save.
+                        Decoupled domain core via formal TicketTrackerPort, DocumentRepositoryPort, and KnowledgeSourcePort contracts with 100% local parity SQLite adapters.
                       </div>
                     </div>
 
                     <div className="p-2.5 rounded-lg bg-surface border border-white/10 space-y-1">
                       <div className="text-white font-bold flex items-center gap-1.5">
-                        <Database className="w-3.5 h-3.5 text-gold-bright" />
-                        <span>Segregated artifacts.db SQLite Engine</span>
+                        <Kanban className="w-3.5 h-3.5 text-blue-400" />
+                        <span>Atlassian Jira Cloud REST API v3 Outpost</span>
                       </div>
                       <div className="text-[11px] text-zinc-400 leading-relaxed">
-                        Dedicated SQLite database strictly isolating document bodies and revision snapshots from pmtool.db, featuring SQLite FTS5 search index and 1-click snapshot restoration.
+                        Two-way sprint backlog synchronization with dynamic remote status column remapping, issue key badges ([PROJ-102 ↗]), and remote transition pushing.
                       </div>
                     </div>
 
                     <div className="p-2.5 rounded-lg bg-surface border border-white/10 space-y-1">
                       <div className="text-white font-bold flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5 text-gold" />
-                        <span>First-Launch Onboarding Wizard</span>
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Pre-Sync Safety Backup Snapshots & 1-Click Restore</span>
                       </div>
                       <div className="text-[11px] text-zinc-400 leading-relaxed">
-                        Friction-free 3-step setup wizard guiding first-time users through initial project creation, live local Ollama probe, and keyboard navigation shortcuts.
+                        Outpost-as-Dictator state safety model writes timestamped JSON backups to %LOCALAPPDATA%\PMTool\backups before any sync, allowing 1-click atomic restore.
                       </div>
                     </div>
 
                     <div className="p-2.5 rounded-lg bg-surface border border-white/10 space-y-1">
                       <div className="text-white font-bold flex items-center gap-1.5">
-                        <Bot className="w-3.5 h-3.5 text-purple-400" />
-                        <span>1-Click AI Chat-to-Artifact Promotion</span>
+                        <FileText className="w-3.5 h-3.5 text-purple-400" />
+                        <span>Notion & Google Docs Cloud Publishing</span>
                       </div>
                       <div className="text-[11px] text-zinc-400 leading-relaxed">
-                        Promote transient Copilot assistant chat responses directly into permanent, version-controlled living documents in artifacts.db.
+                        Publish living PRDs, RFCs, and sprint briefs directly from Artifacts Studio with automated Markdown-to-Block AST transformation.
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-lg bg-surface border border-white/10 space-y-1">
+                      <div className="text-white font-bold flex items-center gap-1.5">
+                        <ShieldCheck className="w-3.5 h-3.5 text-gold" />
+                        <span>SSRF Defensive Perimeter & PBKDF2 Credential Vault</span>
+                      </div>
+                      <div className="text-[11px] text-zinc-400 leading-relaxed">
+                        Strict defenses blocking loopback (127.0.0.1, ::1), cloud metadata (169.254.169.254), and RFC 1918 subnets, with machine-bound token encryption.
                       </div>
                     </div>
                   </div>

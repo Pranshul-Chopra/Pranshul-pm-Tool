@@ -43,7 +43,8 @@ import {
 import { siteConfig } from '../config/siteConfig';
 
 export function ProductShowcase({ onCopyToast }) {
-  const [activeModule, setActiveModule] = useState('artifacts-studio');
+  const [activeModule, setActiveModule] = useState('outposts-nexus');
+  const [outpostTab, setOutpostTab] = useState('jira');
   const [selectedDocTemplate, setSelectedDocTemplate] = useState('prd');
   const [dataStudioTab, setDataStudioTab] = useState('canvas');
   const [selectedSqlPreset, setSelectedSqlPreset] = useState(0);
@@ -76,6 +77,7 @@ export function ProductShowcase({ onCopyToast }) {
 
   const getModuleIcon = (id) => {
     switch (id) {
+      case 'outposts-nexus': return Shield;
       case 'artifacts-studio': return FileText;
       case 'analytics-workbench': return Activity;
       case 'story-decomposer': return Sparkles;
@@ -213,8 +215,246 @@ export function ProductShowcase({ onCopyToast }) {
 
           {/* Right Interactive Simulator Column */}
           <div className="lg:col-span-7 bg-[#121218] border border-white/[0.12] rounded-xl p-4 sm:p-6 shadow-inner">
-            
-            {/* 0. NEW IN v2.2.0: Living Document Editor & Artifacts Studio Simulation */}
+            {/* 0. NEW IN v2.2.5: Connection Outposts & Jira Two-Way Sync Simulator */}
+            {activeModule === 'outposts-nexus' && (
+              <div className="space-y-4 font-mono text-xs">
+                {/* Header Controls Bar */}
+                <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/[0.08] gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-xs text-white font-semibold">Connection Outposts & Hexagonal Nexus</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-gold/15 text-gold-bright border border-gold/30 font-bold">
+                      v2.2.5 New
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[10px] text-zinc-400">
+                    <span className="flex items-center gap-1 text-emerald-400">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span>100% Local Parity</span>
+                    </span>
+                    <span>&bull;</span>
+                    <span>SSRF Guard: Active</span>
+                  </div>
+                </div>
+
+                {/* Outpost Subsystem Switcher */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px]">
+                  {[
+                    { id: 'jira', label: '1. Jira Cloud v3 Backlog', icon: Layers, status: 'Connected' },
+                    { id: 'snapshot', label: '2. Pre-Sync Safety Snapshot', icon: Shield, status: 'Verified' },
+                    { id: 'notion', label: '3. Notion & GDocs Bridge', icon: FileText, status: 'Ready' },
+                    { id: 'security', label: '4. SSRF & Credential Vault', icon: Zap, status: 'Enforced' },
+                  ].map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => setOutpostTab(tab.id)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap ${
+                          outpostTab === tab.id
+                            ? 'bg-gold/20 border-gold text-gold-bright font-bold'
+                            : 'bg-surface border-white/10 text-zinc-400 hover:text-white'
+                        }`}
+                      >
+                        <Icon className="w-3.5 h-3.5" />
+                        <span>{tab.label}</span>
+                        <span className="text-[9px] px-1 py-0.2 rounded bg-white/[0.04] text-zinc-300">
+                          {tab.status}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Subsystem 1: Jira Cloud REST API v3 Two-Way Sync */}
+                {outpostTab === 'jira' && (
+                  <div className="bg-[#111116] p-4 rounded-xl border border-gold/40 space-y-3">
+                    <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                      <span className="font-bold text-white flex items-center gap-2">
+                        <Layers className="w-3.5 h-3.5 text-blue-400" />
+                        <span>Atlassian Jira Cloud REST API v3 Integration</span>
+                      </span>
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20">
+                        Latency: 142ms [OK]
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                      <div className="p-2 rounded bg-surface border border-white/10 space-y-0.5">
+                        <span className="text-[10px] text-zinc-500 uppercase">Jira Cloud Endpoint</span>
+                        <div className="text-white font-mono truncate">https://acme-corp.atlassian.net</div>
+                      </div>
+                      <div className="p-2 rounded bg-surface border border-white/10 space-y-0.5">
+                        <span className="text-[10px] text-zinc-500 uppercase">Linked Project</span>
+                        <div className="text-gold font-mono">ATLAS (Atlas Platform Core)</div>
+                      </div>
+                    </div>
+
+                    {/* Dynamic Status Workflow Mapping */}
+                    <div className="p-2.5 rounded-lg bg-[#0e0e14] border border-white/[0.06] space-y-1.5">
+                      <div className="text-[10px] text-zinc-400 uppercase font-bold flex items-center justify-between">
+                        <span>Dynamic Workflow Status Columns</span>
+                        <span className="text-gold text-[9px]">Mapped from /rest/api/3/project/statuses</span>
+                      </div>
+                      <div className="grid grid-cols-4 gap-1.5 text-[10px] text-center">
+                        <div className="p-1.5 rounded bg-surface border border-white/10 text-zinc-300 font-bold">To Do</div>
+                        <div className="p-1.5 rounded bg-gold/15 border border-gold/30 text-gold-bright font-bold">In Progress</div>
+                        <div className="p-1.5 rounded bg-purple-500/15 border border-purple-500/30 text-purple-300 font-bold">Code Review</div>
+                        <div className="p-1.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-bold">Done</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1 text-[10px] text-zinc-400">
+                      <span>Outpost-as-Dictator: Syncs status changes both ways</span>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => onCopyToast && onCopyToast('Tested Jira Cloud Connection: 142ms latency, Handshake Verified')}
+                          className="px-2 py-0.5 rounded bg-white/[0.06] text-zinc-200 hover:text-white"
+                        >
+                          Ping Test
+                        </button>
+                        <button
+                          onClick={() => onCopyToast && onCopyToast('Two-way sync completed: 22 Jira issues mapped to local Kanban board')}
+                          className="px-2.5 py-0.5 rounded bg-gold text-zinc-950 font-bold hover:brightness-110 flex items-center gap-1"
+                        >
+                          <RefreshCw className="w-2.5 h-2.5" />
+                          <span>Sync Board</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Subsystem 2: Pre-Sync Safety Backup Snapshot Engine */}
+                {outpostTab === 'snapshot' && (
+                  <div className="bg-[#111116] p-4 rounded-xl border border-emerald-500/40 space-y-3">
+                    <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                      <span className="font-bold text-white flex items-center gap-2">
+                        <Shield className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Pre-Sync Safety Backup Snapshot Vault</span>
+                      </span>
+                      <span className="text-[10px] text-emerald-400 font-bold">Snapshot Guard: Active</span>
+                    </div>
+
+                    <p className="text-[11px] text-zinc-300 leading-relaxed">
+                      Before clearing or remapping local tasks during an external Jira sync, PM Tool writes an atomic timestamped backup JSON snapshot to disk. You can rollback accidental overwrites with a single click.
+                    </p>
+
+                    <div className="p-2.5 rounded bg-surface border border-white/10 space-y-1.5 text-[11px]">
+                      <div className="flex items-center justify-between">
+                        <span className="text-white font-bold">pre_sync_jira_1_20261010_152730.json</span>
+                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">22 Tasks Stored</span>
+                      </div>
+                      <div className="text-[10px] text-zinc-400">
+                        Path: <code>%LOCALAPPDATA%\PMTool\backups\pre_sync_jira_1_20261010_152730.json</code>
+                      </div>
+                      <div className="text-[10px] text-zinc-500 flex items-center justify-between pt-1">
+                        <span>Hash: SHA-256 Verified &bull; Size: 34.2 KB</span>
+                        <span className="text-gold">Created 2m ago</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1 text-[10px] text-zinc-400">
+                      <span>Outpost Safety Guarantee: Zero Silent Data Loss</span>
+                      <button
+                        onClick={() => onCopyToast && onCopyToast('Atomic snapshot restored successfully! Local tasks reverted.')}
+                        className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 font-bold"
+                      >
+                        ↩ 1-Click Atomic Restore
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Subsystem 3: Notion & Google Docs Cloud Publishing */}
+                {outpostTab === 'notion' && (
+                  <div className="bg-[#111116] p-4 rounded-xl border border-purple-500/40 space-y-3">
+                    <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                      <span className="font-bold text-white flex items-center gap-2">
+                        <FileText className="w-3.5 h-3.5 text-purple-400" />
+                        <span>Living Artifact Cloud Publishing Outpost</span>
+                      </span>
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                        Markdown-to-Block AST
+                      </span>
+                    </div>
+
+                    <p className="text-[11px] text-zinc-300 leading-relaxed">
+                      Publish living PRDs, Architecture RFCs, and sprint briefs directly from Artifacts Studio to Notion databases and Google Docs, preserving markdown headings, checklists, callouts, and code blocks.
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                      <div className="p-2.5 rounded bg-surface border border-white/10 space-y-1">
+                        <div className="flex items-center justify-between font-bold text-white">
+                          <span>Notion Workspace</span>
+                          <span className="text-purple-400 text-[10px]">API v1</span>
+                        </div>
+                        <div className="text-[10px] text-zinc-400">Database: Product Specifications RFCs</div>
+                        <button
+                          onClick={() => onCopyToast && onCopyToast('Published PRD to Notion Workspace with block styling!')}
+                          className="w-full mt-1.5 py-1 rounded bg-purple-500/20 text-purple-300 hover:bg-purple-500/30 border border-purple-500/30 font-bold text-[10px]"
+                        >
+                          Publish to Notion
+                        </button>
+                      </div>
+
+                      <div className="p-2.5 rounded bg-surface border border-white/10 space-y-1">
+                        <div className="flex items-center justify-between font-bold text-white">
+                          <span>Google Docs</span>
+                          <span className="text-blue-400 text-[10px]">v1 Batch</span>
+                        </div>
+                        <div className="text-[10px] text-zinc-400">Target: Corporate Drive Folder</div>
+                        <button
+                          onClick={() => onCopyToast && onCopyToast('Exported document to Google Docs via batch AST updates!')}
+                          className="w-full mt-1.5 py-1 rounded bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 border border-blue-500/30 font-bold text-[10px]"
+                        >
+                          Export to Google Docs
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Subsystem 4: SSRF Defensive Perimeter & Credential Vault */}
+                {outpostTab === 'security' && (
+                  <div className="bg-[#111116] p-4 rounded-xl border border-gold/40 space-y-3">
+                    <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
+                      <span className="font-bold text-white flex items-center gap-2">
+                        <Zap className="w-3.5 h-3.5 text-gold-bright" />
+                        <span>SSRF Defensive Perimeter & Credential Vault</span>
+                      </span>
+                      <span className="text-[10px] text-gold font-bold">5-Layer Boundary</span>
+                    </div>
+
+                    <div className="space-y-1.5 text-[11px]">
+                      <div className="flex items-center justify-between p-2 rounded bg-surface border border-white/10">
+                        <span className="text-zinc-300">Loopback Blocking: <code>127.0.0.1</code>, <code>::1</code></span>
+                        <span className="text-red-400 font-bold text-[10px]">BLOCKED</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-surface border border-white/10">
+                        <span className="text-zinc-300">Cloud Metadata: <code>169.254.169.254</code></span>
+                        <span className="text-red-400 font-bold text-[10px]">BLOCKED</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-surface border border-white/10">
+                        <span className="text-zinc-300">RFC 1918 Private Subnets (10.0.0.0/8, 192.168.0.0/16)</span>
+                        <span className="text-red-400 font-bold text-[10px]">BLOCKED</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-surface border border-white/10">
+                        <span className="text-zinc-300">Outpost Token Storage: Machine-Bound PBKDF2</span>
+                        <span className="text-green-400 font-mono text-[10px]">ATATT...***4a2b</span>
+                      </div>
+                    </div>
+
+                    <div className="p-2 rounded bg-[#09090d] border border-white/[0.04] text-[10px] text-zinc-400 flex items-center justify-between">
+                      <span>Defense verified in <code>tools/outposts/security.py</code></span>
+                      <span className="text-gold">Strict HTTPS Required</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 1. Living Document Editor & Artifacts Studio Simulation */}
             {activeModule === 'artifacts-studio' && (
               <div className="space-y-4 font-mono text-xs">
                 {/* Header Controls Bar */}
@@ -223,7 +463,7 @@ export function ProductShowcase({ onCopyToast }) {
                     <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
                     <span className="text-xs text-white font-semibold">Living Document Editor & Artifacts Studio</span>
                     <span className="text-[10px] px-2 py-0.5 rounded bg-gold/15 text-gold-bright border border-gold/30">
-                      v2.2.0 New
+                      Living Docs
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-[10px] text-zinc-400">
